@@ -17,6 +17,7 @@ public class BalanceTestExercise : GenericExercise
     }
 
     public override void StartExercise() {
+        refs.RestUI.gameObject.SetActive(false);
         base.StartExercise();
         HeightCalibration();
     }

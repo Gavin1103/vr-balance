@@ -27,7 +27,7 @@ public class GenericExercise : Exercise {
             return Movements[currentMovementIndex];
         }
     }
-    private GenericExerciseReferences refs {
+    protected GenericExerciseReferences refs {
         get {
             return GenericExerciseReferences.Instance;
         }
