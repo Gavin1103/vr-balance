@@ -5,7 +5,7 @@ import type { EditUserDTO } from '@/DTO/request/User/EditUserDTO.ts'
 import { UserService } from '@/service/UserService.ts'
 import { useApiFeedback } from '@/composables/useApiFeedback'
 import ChangeCredentialComponent from '@/components/ChangeCredentialComponent.vue'
-import RegisterPatientComponent from '@/components/RegisterPatientComponent.vue'
+import router from '@/router/BaseRouter.ts'
 
 const userService = new UserService()
 
@@ -60,6 +60,7 @@ function switchComponent(componentName: 'profile' | 'password' | 'pincode') {
   <form @submit.prevent="handleEditProfile" v-if="activeComponent === 'profile'">
     <div class="title-container">
       <h2>Profile</h2>
+      <div @click="router.push('/dashboard')" class="close-icon">X</div>
     </div>
     <label for="email">E-mail:</label>
     <input

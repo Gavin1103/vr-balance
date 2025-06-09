@@ -67,4 +67,8 @@ export class UserService {
   public async fetchPatientDetail(userId: number): Promise<ApiResponse<PatientDetailResponse>> {
     return await this.ApiService.get(`user/get-patient-detail/${userId}`)
   }
+
+  public async fetchPatientDetailSelf(): Promise<ApiResponse<PatientDetailResponse>> {
+    return await this.ApiService.get(`user/get-patient-detail/self`)
+  }
 }

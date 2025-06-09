@@ -7,6 +7,7 @@ import profilePageView from '@/views/ProfilePageView.vue'
 import UnautorizedComponent from '@/components/UnautorizedComponent.vue'
 import StatisticsView from '@/views/StatisticsView.vue'
 import PatientDetailView from '@/views/PatientDetailView.vue'
+import PersonalActivityView from '@/views/PersonalActivityView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +65,15 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
         allowedRoles: ['PHYSIOTHERAPIST', 'ADMIN', 'PATIENT'],
+      },
+    },
+    {
+      path: '/personal-activity',
+      name: 'personal-activity',
+      component: PersonalActivityView,
+      meta: {
+        requiresAuth: true,
+        allowedRoles: ['PATIENT'],
       },
     },
   ],

@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 import { useAuthenticationStore } from '@/stores/AuthenticationStore.ts'
 import router from '@/router/BaseRouter.ts'
 import { useRoleAccess } from '@/composables/useRoleAcces.ts'
-import { LogOut, HelpCircle, Users, BarChart2, LayoutDashboard } from 'lucide-vue-next'
+import { LogOut, HelpCircle, Users, BarChart2, LayoutDashboard, Activity } from 'lucide-vue-next'
 
 
 const auth = useAuthenticationStore()
@@ -25,6 +25,9 @@ function logout() {
       </RouterLink>
       <RouterLink class="nav-link" to="/statistics">
         <BarChart2 class="icon" /> Statistics
+      </RouterLink>
+      <RouterLink v-if="hasRole(['PATIENT'])" class="nav-link" to="/personal-activity">
+        <Activity class="icon" /> Activity
       </RouterLink>
       <RouterLink v-if="hasRole(['ADMIN', 'PHYSIOTHERAPIST'])" class="nav-link" to="/patients">
         <Users class="icon" /> Patients

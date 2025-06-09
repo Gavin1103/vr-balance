@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { BarChart4Icon, Users, UserPlus, LucideUserRoundCog, Mail } from 'lucide-vue-next'
+import { BarChart4Icon, Users, UserPlus, LucideUserRoundCog, Mail, Activity } from 'lucide-vue-next'
 import DashboardCard from '@/components/dashboardViewComponent/DashboardCard.vue'
 import { ref } from 'vue'
 import RegisterPatientComponent from '@/components/RegisterPatientComponent.vue'
+import { useRoleAccess } from '@/composables/useRoleAcces.ts'
+
+const { hasRole } = useRoleAccess()
 
 const openFormState = ref(false)
 </script>
@@ -15,15 +18,28 @@ const openFormState = ref(false)
 
     <section class="card-container">
       <DashboardCard title="Statistics" :to="'/statistics'" :icon="BarChart4Icon" />
-      <DashboardCard title="Patients" :to="'/patients'" :icon="Users" />
+      <DashboardCard  v-if="hasRole(['PATIENT'])" title="Activity" :to="'/personal-activity'" :icon="Activity" />
+
       <DashboardCard
+        v-if="hasRole(['ADMIN', 'PHYSIOTHERAPIST'])"
+        title="Patients"
+        :to="'/patients'"
+        :icon="Users"
+      />
+      <DashboardCard
+        v-if="hasRole(['ADMIN', 'PHYSIOTHERAPIST'])"
         title="Create patient +"
         :icon="UserPlus"
         @click="openFormState = true"
         data-cy="registerPatientButton"
       />
       <DashboardCard title="Edit profile" :to="'/profile'" :icon="LucideUserRoundCog" />
-      <DashboardCard title="Mail" :to="'/#'" :icon="Mail" />
+      <DashboardCard
+        v-if="hasRole(['ADMIN', 'PHYSIOTHERAPIST'])"
+        title="Mail"
+        :to="'/#'"
+        :icon="Mail"
+      />
     </section>
   </div>
 
@@ -52,7 +68,7 @@ const openFormState = ref(false)
     margin: 30px 0 0 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    gap: 0 50px;
     flex-wrap: wrap;
   }
 }

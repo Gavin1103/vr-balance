@@ -59,5 +59,6 @@ const chartOptions = {
 .chart-container {
   width: 100%;
   height: 300px;
+  margin: 0 0 50px 0
 }
 </style>

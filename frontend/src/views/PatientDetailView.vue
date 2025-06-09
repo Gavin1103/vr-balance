@@ -74,6 +74,7 @@ function confirmDeleteUser(user: UserProfileResponse) {
 
   <!-- Patient Detail Content -->
   <div v-else class="patient-detail-container">
+    <h1>Patient activity</h1>
     <table
       class="users-table-container"
       v-if="patientDetail && patientDetail.data && patientDetail.data.user"

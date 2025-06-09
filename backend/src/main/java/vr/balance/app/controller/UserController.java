@@ -213,4 +213,38 @@ public class UserController {
                 )
         );
     }
+
+    /**
+     * Endpoint to retrieve patient detail from logged in user
+     */
+    @GetMapping("/get-patient-detail/self")
+    @PreAuthorize("isAuthenticated()")    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Retrieve patient detail from logged in user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully fetched patient detail"
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized - you need to be logged in",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden - you dont have the right permissions",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))
+            ),
+    })
+    public ResponseEntity<ApiStandardResponse<PatientDetailResponse>> fetchPatientDetailSelf() {
+        Long userId = authenticationService.getCurrentUserId();
+        PatientDetailResponse response = userService.fetchPatientDetail(userId);
+
+        return ResponseEntity.ok(new ApiStandardResponse<>(
+                        HttpStatus.OK,
+                        "Successfully fetched patient detail",
+                        response
+                )
+        );
+    }
 }
