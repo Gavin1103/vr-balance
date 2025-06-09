@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84976169597fe149accb9b7c9f6f002, type: 3}
+  m_Name: Balance Test
+  m_EditorClassIdentifier: 
+  Title: Balance Test
+  Description: 'Assess your stability by balancing your arms while standing still
+    or on one leg to measure your sway. This score will be used to calculate a recommended
+    difficulty. '
+  Requirements:
+  - 'Enough space to stand still without external support nearby.  '
+  PositionNeeded: 0
+  EasyDifficulty: 0
+  MediumDifficulty: 0
+  HardDifficulty: 0
+  Movements:
+  - {fileID: 11400000, guid: 5c859ba977f423048bacb3c7f3f10cb1, type: 2}
+  - {fileID: 11400000, guid: 751b48e9df95e45458a459947c571f79, type: 2}
+  - {fileID: 11400000, guid: c9fa903878164834cb2b90dd3f295564, type: 2}
+  - {fileID: 11400000, guid: 5aad495771da45545bd15fa57672c9b6, type: 2}
+  - {fileID: 11400000, guid: 09f7bdd46dec91646ae6e23ff1552cd5, type: 2}

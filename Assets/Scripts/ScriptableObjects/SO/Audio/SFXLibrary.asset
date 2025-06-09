@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d07111d7d620a343a5e55f056fa4f04, type: 3}
+  m_Name: SFXLibrary
+  m_EditorClassIdentifier: 
+  clips:
+  - name: FireFlyCatch
+    clip: {fileID: 8300000, guid: bd1dea08b1c4a6c4da5c11df0d26b9c2, type: 3}
+  - name: Leave Exercise
+    clip: {fileID: 8300000, guid: b635fe4db639cf149af7a4237c113089, type: 3}
+  - name: Exercise End
+    clip: {fileID: 8300000, guid: c44f4f2048cd63f4694ed7fa4cfacae9, type: 3}
+  - name: Exercise Start
+    clip: {fileID: 8300000, guid: d17cfb678490fbb4ba6fb6fe101ebcc2, type: 3}
+  - name: Login
+    clip: {fileID: 8300000, guid: 9466a5d0c8f2a7a45aed8b278259063e, type: 3}
+  - name: Button Hover
+    clip: {fileID: 8300000, guid: b319a2e4ff8f5d840b82d8635b645d22, type: 3}
+  - name: Button Click
+    clip: {fileID: 8300000, guid: d14b106713a74b448bcab90869f1706e, type: 3}
+  - name: Action Image Miss
+    clip: {fileID: 8300000, guid: ccecd8c084d91184a8924a59fed965bb, type: 3}
+  - name: Action Image Bad
+    clip: {fileID: 8300000, guid: b9168ac5e58392442b55b050e64da2c0, type: 3}
+  - name: Action Image Okay
+    clip: {fileID: 8300000, guid: e519438da5b2eee46b5b6d8a6f24e09f, type: 3}
+  - name: Action Image Good
+    clip: {fileID: 8300000, guid: 76e03fa37db8a1c46a12df6df4e26701, type: 3}
+  - name: Action Image Great
+    clip: {fileID: 8300000, guid: 2a463f052e4ef23498deab0b64e81aab, type: 3}
+  - name: Action Image Perfect
+    clip: {fileID: 8300000, guid: 6fa94fd2a0bf88a4093e3fe2ec242bdc, type: 3}
+  - name: Startup
+    clip: {fileID: 8300000, guid: 9604b3c224d465747a0fe69d8405b0a4, type: 3}
