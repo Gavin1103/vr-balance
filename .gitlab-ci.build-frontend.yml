@@ -1,0 +1,14 @@
+# Build frontend
+build-frontend:
+  image: node:lts
+  stage: build
+  tags:
+    - local
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - frontend/**/*

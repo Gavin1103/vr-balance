@@ -1,0 +1,15 @@
+# Unit tests backend
+unit-tests-backend:
+  stage: test
+  tags:
+    - local
+  script:
+    - cd backend
+    - ./gradlew test --no-daemon --tests "vr.balance.app.unit.*"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - backend/**/*
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - backend/**/*

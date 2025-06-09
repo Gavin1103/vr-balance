@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8820a8c4e97f2f84a9568fbd4253b3ef, type: 3}
+  m_Name: Stretch
+  m_EditorClassIdentifier: 
+  Title: Stretch
+  Description: 'Gently extend your muscles through guided poses to improve flexibility
+    and reduce tension. '
+  Requirements:
+  - 'Enough space to stand still without external support nearby.  '
+  PositionNeeded: 0
+  EasyDifficulty: 0
+  MediumDifficulty: 0
+  HardDifficulty: 0
+  Movements:
+  - {fileID: 11400000, guid: d7d14397a604bc4489f8222cc39a2658, type: 2}
+  - {fileID: 11400000, guid: 132a51e5171b2124aa803c6cfda6453f, type: 2}
+  - {fileID: 11400000, guid: 64488163adba5724297a5a910c03f9b2, type: 2}
+  - {fileID: 11400000, guid: 8719cba3731f07e4fa2ee4df0f006851, type: 2}
+  AmountOfSets: 3
+  WaitTimeBetweenSets: 0
+  AmountOfReps: 5
+  WaitTimeBetweenReps: 0
+  CheckPositions: []

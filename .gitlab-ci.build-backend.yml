@@ -1,0 +1,13 @@
+# Build backend
+build-backend:
+  image: gradle:8.5-jdk21
+  stage: build
+  tags:
+    - local
+  script:
+    - cd backend
+    - ./gradlew clean bootJar --no-daemon
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - backend/**/*

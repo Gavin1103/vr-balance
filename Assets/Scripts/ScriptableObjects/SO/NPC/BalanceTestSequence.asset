@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a6271dbae2c2f42838c497fc2ecf74, type: 3}
+  m_Name: BalanceTestSequence
+  m_EditorClassIdentifier: 
+  exercises:
+  - {fileID: 11400000, guid: f0da49a2051d6f342ba671eebb4b6c3c, type: 2}
+  - {fileID: 11400000, guid: 78797e7377c985742960016a39dcc73e, type: 2}
+  - {fileID: 11400000, guid: 2571f993bcbadb54c8c17a4764477388, type: 2}
+  - {fileID: 11400000, guid: f4a31cc0c183e214bbf80aa97ad5abca, type: 2}
+  - {fileID: 11400000, guid: fc3bf566a5b09094c9d4c1ed574486b3, type: 2}
