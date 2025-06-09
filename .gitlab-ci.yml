@@ -1,0 +1,23 @@
+variables:
+  RAILWAY_TOKEN: $RAILWAY_TOKEN
+
+stages:
+  - test
+  - build
+  - deploy
+
+include:
+  - ".gitlab-ci.tests.yml"
+  - ".gitlab-ci.build-frontend.yml"
+  - ".gitlab-ci.build-backend.yml"
+  - ".gitlab-ci.deploy-frontend.yml"
+  - ".gitlab-ci.deploy-backend.yml"
+
+
+
+
+
+
+
+
+

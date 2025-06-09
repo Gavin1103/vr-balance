@@ -1,0 +1,18 @@
+# Deploy backend
+deploy-backend:
+  stage: deploy
+  tags:
+    - local
+  before_script:
+    - apt update && apt install -y curl unzip
+    - curl -fsSL https://railway.app/install.sh | sh
+    - export PATH="$HOME/.railway/bin:$PATH"
+  script:
+    - cd backend
+    - mkdir -p .railway
+    - echo "{\"projectId\":\"$RAILWAY_PROJECT_ID\",\"environmentId\":\"production\",\"serviceId\":\"$RAILWAY_SERVICE_ID_BACKEND\"}" > .railway/project.json
+    - railway up --ci --service=$RAILWAY_SERVICE_ID_BACKEND
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - backend/**/*

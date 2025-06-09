@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 852b20e314a75bd41b608b285575fe81
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - LeftStickAffordance: {instanceID: 0}
+  - RightStickAffordance: {instanceID: 0}
+  - HeadsetAffordance: {instanceID: 0}
+  - LeftTextPercentage: {instanceID: 0}
+  - RightTextPercentage: {instanceID: 0}
+  - HeadTextPercentage: {instanceID: 0}
+  - SequenceUI: {instanceID: 0}
+  - MovementImageObject: {instanceID: 0}
+  - ActionImageLine: {instanceID: 0}
+  - HoldMovementText: {instanceID: 0}
+  - HoldImageLine: {instanceID: 0}
+  - InformationObject: {instanceID: 0}
+  - InformationText: {instanceID: 0}
+  - EyesClosedSphere: {instanceID: 0}
+  - FeedbackLine: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

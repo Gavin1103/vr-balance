@@ -1,0 +1,1 @@
+When applying behaviours to an exercise movement in the Resources folder, the order in which you apply the behaviours matters a lot. Some behaviours might have yield return which will stop the next behaviours from executing. This is by design so behaviour like the Must movement can withhold the rest
