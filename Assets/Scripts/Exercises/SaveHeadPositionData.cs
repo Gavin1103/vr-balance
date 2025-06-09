@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class SaveHeadPositionData : MonoBehaviour
 {
-    PositionManager positionManager;
     List<List<Vector3>> AllPhasePositions = new List<List<Vector3>>();
     ExerciseService exerciseService;
     HeadSway headSway;
