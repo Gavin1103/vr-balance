@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DTO.Response;
 using DTO.Response.Statistics;
-using Models.User;
+using DTO.Response.User;
 using UnityEngine;
 using Utils;
 
