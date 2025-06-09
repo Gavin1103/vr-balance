@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 407644db5737f024587e8139116b50db, type: 3}
+  m_Name: TPoseEyesOpen
+  m_EditorClassIdentifier: 
+  keyPoseFrame: 0
+  frameRate: 30
+  exerciseName: TPoseEyesOpen
+  description: 
+  npcAnimation: {fileID: -203655887218126122, guid: 5838ab873dfa0e1408e51f144e25a6fb, type: 3}
+  holdTimeAtKeyPoint: 29
+  repetitions: 1
+  instructionAudio: {fileID: 8300000, guid: 22329fa055d3d9343a651d33adadaada, type: 3}
+  exerciseIcon: {fileID: 0}

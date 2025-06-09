@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d07111d7d620a343a5e55f056fa4f04, type: 3}
+  m_Name: AmbientLibrary
+  m_EditorClassIdentifier: 
+  clips:
+  - name: Forest_Ambience
+    clip: {fileID: 8300000, guid: 6e2599816bd8ac54eba33d09650916b7, type: 3}
+  - name: Chirping_Ambience
+    clip: {fileID: 8300000, guid: 0340da51dbd125540a8c0d628e7ba8f4, type: 3}
+  - name: Cicadas_Ambience
+    clip: {fileID: 8300000, guid: 34a17fb5c1cc77940892778b2d91bc05, type: 3}
+  - name: Chirping_Ambience
+    clip: {fileID: 8300000, guid: 75e1140e171bb8f4086c6aefab688ea7, type: 3}
+  - name: River_Ambience
+    clip: {fileID: 8300000, guid: c4fbe3203d8ff1344a2cef1f376c252a, type: 3}
+  - name: Small_Town_Ambience
+    clip: {fileID: 8300000, guid: 761111b1a22cddf4e9f962709a877271, type: 3}
+  - name: Tree_Rustling_Ambience
+    clip: {fileID: 8300000, guid: 221ce85aac094014d960fa063f77afe5, type: 3}
+  - name: Waterfall_Ambience
+    clip: {fileID: 8300000, guid: 0d10dab2e9824be4e9437c130794995b, type: 3}
+  - name: Wind_Ambience
+    clip: {fileID: 8300000, guid: 16a3350b0acef5c47aeec542839c4c94, type: 3}
