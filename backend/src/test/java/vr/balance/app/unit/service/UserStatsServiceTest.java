@@ -9,6 +9,7 @@ import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.models.User;
 import vr.balance.app.models.UserStats;
 import vr.balance.app.models.exercise.CompletedFireflyExercise;
+import vr.balance.app.repository.UserRepository;
 import vr.balance.app.repository.UserStatsRepository;
 import vr.balance.app.repository.exercise.CompletedExerciseRepository;
 import vr.balance.app.service.UserStatsService;
@@ -29,7 +30,8 @@ class UserStatsServiceTest {
     void setUp() {
         userStatsRepository = mock(UserStatsRepository.class);
         completedExerciseRepository = mock(CompletedExerciseRepository.class);
-        userStatsService = new UserStatsService(userStatsRepository, completedExerciseRepository, null);
+        UserRepository userRepository = mock(UserRepository.class);
+        userStatsService = new UserStatsService(userStatsRepository, completedExerciseRepository, null, userRepository);
     }
 
     @Test

@@ -3,34 +3,39 @@ package vr.balance.app.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import vr.balance.app.DTO.request.CompletedBalanceTestExerciseDTO;
 import vr.balance.app.DTO.request.base.CompletedExerciseDTO;
+import vr.balance.app.DTO.response.CompletedExerciseResponse;
 import vr.balance.app.enums.ExerciseEnum;
+import vr.balance.app.exceptions.NotFoundException;
 import vr.balance.app.models.User;
 import vr.balance.app.models.exercise.CompletedBalanceTestExercise;
 import vr.balance.app.models.exercise.CompletedExercise;
 import vr.balance.app.repository.UserRepository;
 import vr.balance.app.repository.exercise.CompletedExerciseRepository;
 
+import java.util.List;
+
 @Service
 public class CompletedExerciseService {
 
     private final CompletedExerciseRepository completedExerciseRepository;
     private final UserRepository userRepository;
-    private final ModelMapper mapper;
     private final UserStatsService userStatsService;
+    private final ModelMapper modelMapper;
 
     public CompletedExerciseService(
             CompletedExerciseRepository completedExerciseRepository,
             UserRepository userRepository,
-            ModelMapper mapper,
-            UserStatsService userStatsService) {
+            UserStatsService userStatsService,
+            ModelMapper modelMapper) {
         this.completedExerciseRepository = completedExerciseRepository;
         this.userRepository = userRepository;
-        this.mapper = mapper;
         this.userStatsService = userStatsService;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -45,7 +50,7 @@ public class CompletedExerciseService {
      * @param userId       the ID of the user who completed the exercise
      * @param exerciseEnum the enum representing the exercise type, used to look up the exercise entity
      * @param <CE>         the type of {@link CompletedExercise} (must extend CompletedExercise)
-     * @param <DTO>         the type of {@link CompletedExerciseDTO} (must extend CompletedExerciseDTO)
+     * @param <DTO>        the type of {@link CompletedExerciseDTO} (must extend CompletedExerciseDTO)
      * @throws UsernameNotFoundException if the user with the provided ID does not exist
      */
     public <CE extends CompletedExercise, DTO extends CompletedExerciseDTO> void saveExercise(
@@ -54,7 +59,7 @@ public class CompletedExerciseService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-        CE completedExercise = mapper.map(dto, entityClass);
+        CE completedExercise = modelMapper.map(dto, entityClass);
         completedExercise.setUser(user);
         completedExercise.setExercise(exerciseEnum);
 
@@ -73,5 +78,22 @@ public class CompletedExerciseService {
         }
 
         completedExerciseRepository.save(completedExercise);
+    }
+
+    public List<CompletedExerciseResponse> getLast10CompletedExercises(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found."));
+
+        // Fetch 10 most recent exercises (excluding balance tests) for this user
+        List<CompletedExercise> recentExercises = completedExerciseRepository
+                .findByUserIdAndExerciseNotOrderByCompletedAtDesc(
+                        user.getId(),
+                        ExerciseEnum.BALANCE_TEST_EXERCISE,
+                        PageRequest.of(0, 10)
+                );
+
+        return recentExercises.stream()
+                .map(exercise -> modelMapper.map(exercise, CompletedExerciseResponse.class))
+                .toList();
     }
 }

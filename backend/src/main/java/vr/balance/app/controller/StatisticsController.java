@@ -1,14 +1,19 @@
 package vr.balance.app.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vr.balance.app.DTO.response.ExerciseStatsResponse;
 import vr.balance.app.DTO.response.LeaderboardExerciseResponse;
+import vr.balance.app.DTO.response.user_stats.CurrentStreakRankingDTO;
+import vr.balance.app.DTO.response.user_stats.HighestStreakRankingDTO;
 import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.response.ApiStandardResponse;
 import vr.balance.app.service.StatisticsService;
+import vr.balance.app.service.UserStatsService;
 
 import java.util.List;
 

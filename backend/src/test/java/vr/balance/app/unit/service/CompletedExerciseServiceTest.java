@@ -28,17 +28,20 @@ public class CompletedExerciseServiceTest {
     private ModelMapper modelMapper;
     private UserStatsService userStatsService;
 
+
+
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
         completedExerciseRepository = mock(CompletedExerciseRepository.class);
         modelMapper = mock(ModelMapper.class);
         userStatsService = mock(UserStatsService.class);
+
         completedExerciseService = new CompletedExerciseService(
                 completedExerciseRepository,
                 userRepository,
-                modelMapper,
-                userStatsService
+                userStatsService,
+                modelMapper
         );
     }
 
