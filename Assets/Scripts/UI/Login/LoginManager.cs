@@ -5,6 +5,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DTO.Request.User;
 
 
 public class LoginManager : MonoBehaviour

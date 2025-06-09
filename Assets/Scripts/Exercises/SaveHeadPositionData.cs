@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DTO.Request.Exercise;
 using Exercises.Implemented_Exercises._2Balance_Test;
-using Models.DTO.Exercise;
 using NUnit.Framework;
 using Unity.XR.GoogleVr;
 using UnityEditor;
@@ -41,7 +41,7 @@ public class SaveHeadPositionData : MonoBehaviour
 
         headSway.DetermineDifficultyFromFirstTwoPhases(dto.phase_1, dto.phase_2);
         
-        StartCoroutine(exerciseService.SaveEX(
+        StartCoroutine(exerciseService.SaveExercise(
             dto,
             onSuccess: ApiResponse => { Debug.Log(ApiResponse.message); },
             onError: error => { Debug.Log(error.message); },

@@ -1,9 +1,9 @@
-using Models.DTO.Exercise;
 using Models.User;
 using Service;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DTO.Request.Exercise;
 using TMPro;
 using UnityEngine;
 
@@ -118,7 +118,7 @@ public class FireFlyWaveManager : MonoBehaviour {
         dto.difficulty = DifficultyManager.Instance.SelectedDifficulty;
         dto.completedAt = System.DateTime.UtcNow;
         
-        StartCoroutine(exerciseService.SaveEX(
+        StartCoroutine(exerciseService.SaveExercise(
             dto,
                 // Login completed
                 onSuccess: ApiResponse => {
@@ -135,7 +135,7 @@ public class FireFlyWaveManager : MonoBehaviour {
     }
 
     private void GetLeaderBoardData() {
-        StartCoroutine(statistics.GetLeaderboard(
+        StartCoroutine(statistics.GetFireflyLeaderboard(
     response => {
         Debug.Log("succes");
         foreach (var entry in response.data) {
@@ -148,7 +148,7 @@ public class FireFlyWaveManager : MonoBehaviour {
     }
 
     private void GetLeaderBoardData2() {
-        StartCoroutine(statistics.GetLeaderboard(
+        StartCoroutine(statistics.GetFireflyLeaderboard(
             response => {
                 Debug.Log("Succes");
 

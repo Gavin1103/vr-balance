@@ -72,7 +72,7 @@ public class SaveFireflyExerciseIntegrationTest {
         String payload = objectMapper.writeValueAsString(dto);
 
         // Act
-        ResultActions result = mockMvc.perform(post("/api/store-exercise/firefly")
+        ResultActions result = mockMvc.perform(post("/api/exercise/store-exercise/firefly")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload));

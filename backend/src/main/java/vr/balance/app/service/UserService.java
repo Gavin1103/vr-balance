@@ -19,7 +19,6 @@ import vr.balance.app.exceptions.EmailAlreadyInUseException;
 import vr.balance.app.exceptions.NotFoundException;
 import vr.balance.app.exceptions.UsernameAlreadyInUseException;
 import vr.balance.app.models.User;
-import vr.balance.app.models.exercise.CompletedBalanceTestExercise;
 import vr.balance.app.models.exercise.CompletedExercise;
 import vr.balance.app.repository.UserRepository;
 import vr.balance.app.repository.exercise.CompletedBalanceTestExerciseRepository;
@@ -35,13 +34,15 @@ public class UserService {
     private final CompletedExerciseRepository completedExerciseRepository;
     private final CompletedBalanceTestExerciseRepository completedBalanceTestExerciseRepository;
     private final ModelMapper modelMapper;
+    private final CompletedExerciseService completedExerciseService;
 
     @Autowired
-    public UserService(ModelMapper modelMapper, UserRepository userRepository, CompletedExerciseRepository completedExerciseRepository, CompletedBalanceTestExerciseRepository completedBalanceTestExerciseRepository) {
+    public UserService(ModelMapper modelMapper, UserRepository userRepository, CompletedExerciseRepository completedExerciseRepository, CompletedBalanceTestExerciseRepository completedBalanceTestExerciseRepository, CompletedExerciseService completedExerciseService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.completedExerciseRepository = completedExerciseRepository;
         this.completedBalanceTestExerciseRepository = completedBalanceTestExerciseRepository;
+        this.completedExerciseService = completedExerciseService;
     }
 
     public UserProfileResponse getUserProfileById(Long userId) {

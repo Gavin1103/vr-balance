@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using DTO.Request.User;
+using DTO.Response;
+using DTO.Response.Authentication;
 using Models;
-using Models.Authentication;
 using Models.User;
 using Newtonsoft.Json;
 using Utils;
-using Void = Models.Void;
+using Void = DTO.Response.Void;
 
 namespace Service
 {

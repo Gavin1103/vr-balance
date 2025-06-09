@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Models.DTO.Exercise;
+using DTO.Request.Exercise;
 using UnityEngine;
 
 namespace Exercises.Implemented_Exercises._2Balance_Test
