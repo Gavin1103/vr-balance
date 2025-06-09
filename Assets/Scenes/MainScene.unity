@@ -79587,6 +79587,7 @@ MonoBehaviour:
   SequenceUI: {fileID: 1399271968}
   MovementImageObject: {fileID: 1521872227}
   ActionImageLine: {fileID: 940528818}
+  RepsAndSetsObject: {fileID: 392975140}
   RepsAndSetsText: {fileID: 157500649}
   RestUI: {fileID: 591675632}
   TakeABreakText: {fileID: 168884214}
