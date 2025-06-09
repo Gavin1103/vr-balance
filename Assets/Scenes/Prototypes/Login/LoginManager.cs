@@ -1,4 +1,3 @@
-using Models.User;
 using Service;
 using UnityEngine;
 using TMPro;

@@ -1,4 +1,4 @@
-namespace Models.User
+namespace DTO.Response.User
 {
     public class UserStreakDTO
     {

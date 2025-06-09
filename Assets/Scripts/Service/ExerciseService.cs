@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DTO.Request.Exercise;
 using DTO.Request.Exercise.@base;
 using DTO.Response;
-using Models;
 using Newtonsoft.Json;
 using UnityEngine;
 using Utils;

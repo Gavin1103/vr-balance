@@ -3,8 +3,6 @@ using System.Collections;
 using DTO.Request.User;
 using DTO.Response;
 using DTO.Response.Authentication;
-using Models;
-using Models.User;
 using Newtonsoft.Json;
 using Utils;
 using Void = DTO.Response.Void;

@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Models.User;
 using Service;
 
 public class FireFlyExercise : Exercise {
