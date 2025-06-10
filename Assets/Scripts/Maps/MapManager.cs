@@ -103,16 +103,13 @@ public class MapManager : MonoBehaviour {
         // Set camera background type based on map name
         Camera mainCam = Camera.main;
         if (mainCam != null) {
-            if (maps[index].name == "Passthrough") {
+            if (maps[index].skyboxMaterial == null) {
+                // If no skybox material is set, use a solid color (passsthrough)
                 mainCam.clearFlags = CameraClearFlags.SolidColor;
             } else {
                 mainCam.clearFlags = CameraClearFlags.Skybox;
+                RenderSettings.skybox = maps[index].skyboxMaterial;
             }
-        }
-
-        // Set the skybox for this map
-        if (maps[index].skyboxMaterial != null) {
-            RenderSettings.skybox = maps[index].skyboxMaterial;
         }
 
         SwapFontsGlobally(maps[index].uiFont);
