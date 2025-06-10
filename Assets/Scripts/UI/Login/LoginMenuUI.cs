@@ -1,17 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LoginMenuUI : MonoBehaviour {
     [SerializeField] private GameObject loginMenu;
     [SerializeField] private GameObject mainMenu;
 
     void Start() {
-        SoundManager.soundInstance.PlaySFX("Startup");
+        StartCoroutine(PlayStartupAndThenMusic());
     }
-    
-    public void OnLoginButtonPressed() {
-        loginMenu.SetActive(false);
-        mainMenu.SetActive(true);
+
+    private IEnumerator PlayStartupAndThenMusic() {
+        SoundManager.soundInstance.PlaySFX("Startup");
+        yield return new WaitForSeconds(2f); // Wait for SFX to finish (adjust time)
+        SoundManager.soundInstance.PlayMusic("Jazz_chill");
     }
 }

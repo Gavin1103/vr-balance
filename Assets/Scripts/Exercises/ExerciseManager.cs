@@ -138,9 +138,9 @@ public class ExerciseManager : MonoBehaviour {
     }
     private IEnumerator WaitBeforeStarting(Exercise exercise) {
         // Countdown from 5 seconds to 0
-        float countdownTime = 5f;
+        float countdownTime = 4f;
         ExerciseTimer.SetActive(true);
-
+        SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
         while (countdownTime > 0) {
             // Update the TimeLeft UI with the remaining time (rounded to an integer)
             TimeLeft.text = Mathf.Ceil(countdownTime).ToString();
