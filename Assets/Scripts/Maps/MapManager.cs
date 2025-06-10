@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour {
         public Color themeColor;
         public TMP_FontAsset subtitleFont;
         public TMP_FontAsset uiFont;
-
+        public Material skyboxMaterial;
     }
     public List<MapEntry> maps;
     // References and prefabs
@@ -103,10 +103,12 @@ public class MapManager : MonoBehaviour {
         // Set camera background type based on map name
         Camera mainCam = Camera.main;
         if (mainCam != null) {
-            if (maps[index].name == "Passthrough") {
+            if (maps[index].skyboxMaterial == null) {
+                // If no skybox material is set, use a solid color (passsthrough)
                 mainCam.clearFlags = CameraClearFlags.SolidColor;
             } else {
                 mainCam.clearFlags = CameraClearFlags.Skybox;
+                RenderSettings.skybox = maps[index].skyboxMaterial;
             }
         }
 
