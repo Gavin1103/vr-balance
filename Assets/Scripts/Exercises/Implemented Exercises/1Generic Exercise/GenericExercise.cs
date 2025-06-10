@@ -57,6 +57,7 @@ public class GenericExercise : Exercise {
     }
 
     public override void StartExercise() {
+        refs.RepsAndSetsObject.SetActive(true);
 
         refs.LeftStickAffordance.SetActive(true);
         refs.RightStickAffordance.SetActive(true);
@@ -70,7 +71,6 @@ public class GenericExercise : Exercise {
         refs.EasyDifficulty = Easy;
         refs.MediumDifficulty = Medium;
         refs.HardDifficulty = Hard;
-
 
         // Adjust reps based on difficulty
         string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
