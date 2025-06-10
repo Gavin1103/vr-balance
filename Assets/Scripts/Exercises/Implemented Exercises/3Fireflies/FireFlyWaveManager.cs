@@ -1,5 +1,6 @@
 //using Models.DTO.Exercise;
 //using Models.User;
+using DTO.Request.Exercise;
 using Service;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public class FireFlyWaveManager : MonoBehaviour {
     [SerializeField] private int wavesPerSession = 3; // Waves per session (can be easily adjusted)
     [SerializeField] private float breakDuration = 3f; // Break duration between sessions
 
-    //private ExcerciseSerice excerciseSerice;
+    private ExerciseService excerciseSerice;
     private StatisticsService statistics;
     private int currentWave = 0;
     private int remainingFireflies;
@@ -29,7 +30,7 @@ public class FireFlyWaveManager : MonoBehaviour {
 
     protected virtual void Awake() {
         FireFlyInstance = this;
-        //excerciseSerice = new ExcerciseSerice();
+        excerciseSerice = new ExerciseService();
         statistics = new StatisticsService();
     }
 
@@ -116,8 +117,7 @@ public class FireFlyWaveManager : MonoBehaviour {
         // End the session and show the leaderboard
         Debug.Log("Session complete!");
         DisableNets();
-        //SendFireflyData();
-        //GetLeaderBoardData();
+        SendFireflyData();
         ResetWave();
     }
 
@@ -141,56 +141,26 @@ public class FireFlyWaveManager : MonoBehaviour {
         }
     }
 
-    //private void SendFireflyData() {
-    //    CompletedFireflyExerciseDTO dto = new CompletedFireflyExerciseDTO {
-    //        caughtFirefliesCount = fireFliesCaught,
-    //        caughtWrongFirefliesCount = 100, // Adjust this value as per your needs
-    //        earnedPoints = (int)ScoreManager.Instance.Score,
-    //        difficulty = DifficultyManager.Instance.SelectedDifficulty,
-    //        completedAt = System.DateTime.UtcNow
-    //    };
+    private void SendFireflyData() {
+       CompletedFireflyExerciseDTO dto = new CompletedFireflyExerciseDTO {
+           caughtFirefliesCount = fireFliesCaught,
+           caughtWrongFirefliesCount = 100, // Adjust this value as per your needs
+           earnedPoints = (int)ScoreManager.Instance.Score,
+           difficulty = DifficultyManager.Instance.SelectedDifficulty,
+           completedAt = System.DateTime.UtcNow
+       };
 
-    //    StartCoroutine(excerciseSerice.SaveEX(
-    //        dto,
-    //        onSuccess: ApiResponse => {
-    //            Debug.Log(ApiResponse.message);
-    //        },
-    //        onError: error => {
-    //            Debug.Log(error.message);
-    //        }
-    //    ));
-    //}
+       StartCoroutine(excerciseSerice.SaveExercise(
+           dto,
+           onSuccess: ApiResponse => {
+               Debug.Log(ApiResponse.message);
+           },
+           onError: error => {
+               Debug.Log(error.message);
+           },
+           "firefly"
+       ));
+    }
 
-    //private void GetLeaderBoardData() {
-    //    StartCoroutine(statistics.GetLeaderboard(
-    //        response => {
-    //            Debug.Log("Success");
-
-    //            var sorted = response.data
-    //                .OrderByDescending(e => e.highscore)
-    //                .Take(10)
-    //                .ToList();
-
-    //            for (int i = 0; i < leaderboardRows.Length; i++) {
-    //                GameObject row = leaderboardRows[i];
-
-    //                if (i < sorted.Count) {
-    //                    var entry = sorted[i];
-
-    //                    var nameText = row.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
-    //                    var scoreText = row.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
-
-    //                    nameText.text = entry.username;
-    //                    scoreText.text = entry.highscore.ToString();
-    //                } else {
-    //                    row.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "---";
-    //                    row.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-    //                }
-    //            }
-    //        },
-    //        error => {
-    //            Debug.LogError("Failed to get leaderboard");
-    //        }
-    //    ));
-    //}
+    
 }
