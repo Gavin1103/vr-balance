@@ -9,6 +9,7 @@ using TMPro;
 
 public class DashboardUI : MonoBehaviour {
     public TextMeshProUGUI streakText;
+    public TextMeshProUGUI usernameText;
     private UserStatsService userStatsService = new UserStatsService();
     void Start() {
         HandleUsername();
