@@ -8,12 +8,11 @@ public class LoginMenuUI : MonoBehaviour {
     [SerializeField] private GameObject mainMenu;
 
     void Start() {
-        StartCoroutine(PlayStartupAndThenMusic());
+        SoundManager.soundInstance.PlaySFX("Startup");
     }
 
-    private IEnumerator PlayStartupAndThenMusic() {
-        SoundManager.soundInstance.PlaySFX("Startup");
-        yield return new WaitForSeconds(2f); // Wait for SFX to finish (adjust time)
-        SoundManager.soundInstance.PlayMusic("Jazz_chill");
+    public void OnLoginButtonPressed() {
+        loginMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
-}
+}   

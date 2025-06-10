@@ -42,6 +42,19 @@ public class SoundManager : MonoBehaviour {
             Debug.LogWarning($"Ambient clip '{name}' not found in the library.");
         }
     }
+
+    public void StopAllSound() {
+        sfxSource.enabled = false;
+        musicSource.enabled = false;
+        ambientSource.enabled = false;
+    }
+
+    public void EnableAllSound() {
+        sfxSource.enabled = true;
+        musicSource.enabled = true;
+        ambientSource.enabled = true;
+    }
+
     public void SetSFXVolume(float value) {
         sfxSource.volume = value;
     }

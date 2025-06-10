@@ -5,5 +5,6 @@ using UnityEngine.SceneManagement;
 public class QuitMenu : MonoBehaviour {
     public void QuitApp() {
         Application.Quit();
+        SoundManager.soundInstance.StopAllSound();
     }
 }
