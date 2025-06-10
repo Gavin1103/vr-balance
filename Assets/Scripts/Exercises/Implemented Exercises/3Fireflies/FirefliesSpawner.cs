@@ -20,7 +20,20 @@ public class FirefliesSpawner : MonoBehaviour {
     /// Spawns a given number of fireflies at random spawn points with random prefabs.
     /// </summary>
     /// <param name="amount">The number of fireflies to spawn</param>
-    public void SpawnFireFly(int amount) {
+
+    public void SpawnFireFly(int amount, int type) {
+        for (int i = 0; i < amount; i++) {
+
+            // Pick a random spawn point
+            int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);
+            Transform spawnPoint = spawnPoints[randomIndex];
+
+            // Instantiate the firefly at the selected spawn point
+            GameObject instance = Instantiate(fireFly[type], spawnPoint.position, Quaternion.identity);
+            spawnedFireflies.Add(instance);
+        }
+    }
+    public void SpawnRandomFireFly(int amount) {
         for (int i = 0; i < amount; i++) {
 
             // Pick a random prefab and a random spawn point

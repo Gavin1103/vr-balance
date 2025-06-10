@@ -1,105 +1,120 @@
+//using Models.DTO.Exercise;
+//using Models.User;
 using Service;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DTO.Request.Exercise;
 using TMPro;
 using UnityEngine;
 
 public class FireFlyWaveManager : MonoBehaviour {
-
     public static FireFlyWaveManager FireFlyInstance { get; private set; }
 
     [SerializeField] private FirefliesSpawner spawner;
-    [SerializeField] private int baseFireflyCount = 3; // Base number of fireflies per wave
+    [SerializeField] private int baseFireflyCount = -1; // Base number of fireflies per wave
     [SerializeField] private float timeBetweenWaves = 2f; // Delay before starting the next wave
     [SerializeField] private List<GameObject> nets;
     [SerializeField] private GameObject[] leaderboardRows;
+    [SerializeField] private int wavesPerSession = 3; // Waves per session (can be easily adjusted)
+    [SerializeField] private float breakDuration = 3f; // Break duration between sessions
 
-    ExerciseService exerciseService;
-    StatisticsService statistics;
+    //private ExcerciseSerice excerciseSerice;
+    private StatisticsService statistics;
     private int currentWave = 0;
     private int remainingFireflies;
     private int fireFliesCaught;
+    private int completedSessions = 0; // Track the number of completed sessions
+
     protected virtual void Awake() {
         FireFlyInstance = this;
-        exerciseService = new ExerciseService();
+        //excerciseSerice = new ExcerciseSerice();
         statistics = new StatisticsService();
-        
     }
+
     private void OnEnable() {
-        // Subscribe to the static event when a Firefly is caught
         FireFly.OnCaught += FireFly_OnCaught;
     }
+
     private void OnDisable() {
-        // Unsubscribe when disabled to prevent memory leaks or double calls
         FireFly.OnCaught -= FireFly_OnCaught;
     }
 
     private void FireFly_OnCaught() {
-        // Decrease the counter each time a firefly is caught
         remainingFireflies--;
         fireFliesCaught++;
         ScoreManager.Instance.AddScore(100);
-        // If all fireflies are caught, start the next wave after a delay
+
         if (remainingFireflies <= 0) {
             Invoke(nameof(NextWave), timeBetweenWaves);
         }
     }
+
     public void StartWaves() {
-        // Start the first wave
         EnableNets();
+        completedSessions = 0;
+        StartSession();
+    }
+
+    private void StartSession() {
+        if (completedSessions >= 2) {
+            EndSession();
+            return;
+        }
 
         currentWave = 1;
         StartWave(currentWave);
-
     }
-    public async void StopWaves() {
-        CancelInvoke();
-        DisableNets();
 
-        SendFireflyData();        
-        GetLeaderBoardData2();
-
-        ResetWave();
-    }
     private void StartWave(int waveNumber) {
-        // Determine how many fireflies to spawn this wave
         int spawnCount = baseFireflyCount + (waveNumber + 2);
+        int fireflyType;
         remainingFireflies = spawnCount;
 
         switch (DifficultyManager.Instance.SelectedDifficulty) {
             case Difficulty.Easy:
+                fireflyType = 0;
+                spawner.SpawnFireFly(spawnCount, fireflyType);
                 break;
-
             case Difficulty.Medium:
+                spawner.SpawnRandomFireFly(spawnCount);
                 break;
-
             case Difficulty.Hard:
+                spawner.SpawnRandomFireFly(spawnCount);
                 break;
-
             default:
-                Debug.Log(DifficultyManager.Instance.SelectedDifficulty);
                 Debug.LogWarning("Not valid difficulty selected!");
                 return;
         }
-        // Tell the spawner to spawn the fireflies
-        spawner.SpawnFireFly(spawnCount);
     }
-    private void EnableNets() {
-        foreach (GameObject net in nets) {
-            net.SetActive(true);
-        }
-    }
-    private void DisableNets() {
-        foreach (GameObject net in nets) {
-            net.SetActive(false);
-        }
-    }
+
     private void NextWave() {
-        // Increase the wave count and start the next wave
         currentWave++;
-        StartWave(currentWave);
+        if (currentWave <= wavesPerSession) {
+            StartWave(currentWave);
+        } else {
+            // After 3 waves, start the break period
+            StartCoroutine(BreakSession());
+        }
+    }
+
+    private IEnumerator BreakSession() {
+        // After completing the waves in a session, give a break
+        //DisableNets();
+        Debug.Log("Break! Waiting for " + breakDuration + " seconds...");
+        yield return new WaitForSeconds(breakDuration);
+
+        completedSessions++;
+        StartSession();
+    }
+
+    public async void EndSession() {
+        // End the session and show the leaderboard
+        Debug.Log("Session complete!");
+        DisableNets();
+        //SendFireflyData();
+        //GetLeaderBoardData();
+        ResetWave();
     }
 
     private void ResetWave() {
@@ -109,76 +124,68 @@ public class FireFlyWaveManager : MonoBehaviour {
         spawner.ClearAllFireflies();
     }
 
-    private void SendFireflyData() {
-        CompletedFireflyExerciseDTO dto = new CompletedFireflyExerciseDTO();
-        dto.caughtFirefliesCount = fireFliesCaught;
-        dto.caughtWrongFirefliesCount = 100;
-        dto.earnedPoints = (int)ScoreManager.Instance.Score;
-        dto.difficulty = DifficultyManager.Instance.SelectedDifficulty;
-        dto.completedAt = System.DateTime.UtcNow;
-        
-        StartCoroutine(exerciseService.SaveExercise(
-            dto,
-                // Login completed
-                onSuccess: ApiResponse => {
-                    Debug.Log(ApiResponse.message);
-                },
-                // Error message
-                onError: error => {
-                    Debug.Log(error.message);
-                }
-                ,
-                "firefly"
-        ));
-
-    }
-
-    private void GetLeaderBoardData() {
-        StartCoroutine(statistics.GetFireflyLeaderboard(
-    response => {
-        Debug.Log("succes");
-        foreach (var entry in response.data) {
-            Debug.Log($"User: {entry.username}, Points: {entry.highscore}");
+    private void EnableNets() {
+        foreach (GameObject net in nets) {
+            net.SetActive(true);
         }
-    },
-    error => {
-        Debug.LogError("Failed to get leaderboard");
-    }));
     }
 
-    private void GetLeaderBoardData2() {
-        StartCoroutine(statistics.GetFireflyLeaderboard(
-            response => {
-                Debug.Log("Succes");
-
-                var sorted = response.data
-                    .OrderByDescending(e => e.highscore)
-                    .Take(10)
-                    .ToList();
-
-                for (int i = 0; i < leaderboardRows.Length; i++) {
-                    GameObject row = leaderboardRows[i];
-
-                    if (i < sorted.Count) {
-                        var entry = sorted[i];
-
-                        // Zoek de naam en score tekstvelden
-                        var nameText = row.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
-                        var scoreText = row.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
-
-                        nameText.text = entry.username;
-                        scoreText.text = entry.highscore.ToString();
-                    }
-                    else {
-                        // Als er minder dan 10 scores zijn, leeg maken
-                        row.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "---";
-                        row.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-                    }
-                }
-            },
-            error => {
-                Debug.LogError("Failed to get leaderboard");
-            }));
+    private void DisableNets() {
+        foreach (GameObject net in nets) {
+            net.SetActive(false);
+        }
     }
 
+    //private void SendFireflyData() {
+    //    CompletedFireflyExerciseDTO dto = new CompletedFireflyExerciseDTO {
+    //        caughtFirefliesCount = fireFliesCaught,
+    //        caughtWrongFirefliesCount = 100, // Adjust this value as per your needs
+    //        earnedPoints = (int)ScoreManager.Instance.Score,
+    //        difficulty = DifficultyManager.Instance.SelectedDifficulty,
+    //        completedAt = System.DateTime.UtcNow
+    //    };
+
+    //    StartCoroutine(excerciseSerice.SaveEX(
+    //        dto,
+    //        onSuccess: ApiResponse => {
+    //            Debug.Log(ApiResponse.message);
+    //        },
+    //        onError: error => {
+    //            Debug.Log(error.message);
+    //        }
+    //    ));
+    //}
+
+    //private void GetLeaderBoardData() {
+    //    StartCoroutine(statistics.GetLeaderboard(
+    //        response => {
+    //            Debug.Log("Success");
+
+    //            var sorted = response.data
+    //                .OrderByDescending(e => e.highscore)
+    //                .Take(10)
+    //                .ToList();
+
+    //            for (int i = 0; i < leaderboardRows.Length; i++) {
+    //                GameObject row = leaderboardRows[i];
+
+    //                if (i < sorted.Count) {
+    //                    var entry = sorted[i];
+
+    //                    var nameText = row.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+    //                    var scoreText = row.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
+
+    //                    nameText.text = entry.username;
+    //                    scoreText.text = entry.highscore.ToString();
+    //                } else {
+    //                    row.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "---";
+    //                    row.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+    //                }
+    //            }
+    //        },
+    //        error => {
+    //            Debug.LogError("Failed to get leaderboard");
+    //        }
+    //    ));
+    //}
 }
