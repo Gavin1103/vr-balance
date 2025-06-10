@@ -173,7 +173,7 @@ public class GenericExercise : Exercise
     public override void ExerciseEnded()
     {
         SaveExercise();
-        
+
         if (playSetsCoroutine != null)
         {
             ExerciseManager.Instance.StopCoroutine(playSetsCoroutine);
@@ -191,10 +191,6 @@ public class GenericExercise : Exercise
         refs.SequenceUI.SetActive(false);
         refs.RestUI.SetActive(false);
     }
-    
-
-
-
 
     private void SaveExercise() {
         CompletedExerciseDTO dto = new CompletedExerciseDTO {
