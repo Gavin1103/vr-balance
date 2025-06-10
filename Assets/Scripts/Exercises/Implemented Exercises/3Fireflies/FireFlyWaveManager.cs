@@ -92,6 +92,7 @@ public class FireFlyWaveManager : MonoBehaviour {
     }
 
     private void NextWave() {
+        butterfliesSpawner.ClearAllButterflies();
         currentWave++;
         if (currentWave <= wavesPerSession) {
             StartWave(currentWave);
@@ -125,6 +126,7 @@ public class FireFlyWaveManager : MonoBehaviour {
         remainingFireflies = 0;
         fireFliesCaught = 0;
         firefliesSpawner.ClearAllFireflies();
+        butterfliesSpawner.ClearAllButterflies();
     }
 
     private void EnableNets() {

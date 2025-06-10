@@ -7,7 +7,7 @@ public class ButterFlySpawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;      // List of spawn points in the scene
     [SerializeField] private float gizmoRadius = 1f;           // Radius for visualizing spawn areas
 
-    private List<GameObject> spawnedButterflies = new(); // bijhouden wat gespawned is
+    private List<GameObject> spawnedButterflies = new(); 
 
     private void Awake() {
         // Ensure that spawn points are assigned, otherwise log an error
@@ -24,13 +24,28 @@ public class ButterFlySpawner : MonoBehaviour
     public void SpawnButterfly(int amount, int type) {
         for (int i = 0; i < amount; i++) {
 
-            // Pick a random spawn point
+            // Pick a random spawn point from the list
             int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);
             Transform spawnPoint = spawnPoints[randomIndex];
 
-            // Instantiate the firefly at the selected spawn point
+            // Instantiate the butterfly prefab at the selected spawn point
             GameObject instance = Instantiate(butterFly[type], spawnPoint.position, Quaternion.identity);
             spawnedButterflies.Add(instance);
+
+            // Assign the spawn point as the movement center for this butterfly
+            RandomFlightWithinRadius flightScript = instance.GetComponent<RandomFlightWithinRadius>();
+            if (flightScript != null) {
+                flightScript.SetCenterPoint(spawnPoint);
+            }
         }
     }
+    public void ClearAllButterflies() {
+        foreach (var f in spawnedButterflies) {
+            if (f != null)
+                Destroy(f);
+        }
+
+        spawnedButterflies.Clear();
+    }
+
 }

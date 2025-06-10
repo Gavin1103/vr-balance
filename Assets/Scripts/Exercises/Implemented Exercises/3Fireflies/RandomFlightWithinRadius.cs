@@ -3,15 +3,16 @@ using UnityEngine;
 public class RandomFlightWithinRadius : MonoBehaviour {
     [SerializeField] private float radius = 5f;
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float rotationSpeed = 5f; // hoe snel hij draait
+    [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float stoppingDistance = 0.5f;
-    [SerializeField] private Transform centerPoint;
+    [SerializeField] private Transform centerTransform; // Editor-preview voor Gizmos
 
+    private Vector3 centerPoint;
     private Vector3 targetPosition;
 
     private void Start() {
-        if (centerPoint == null)
-            centerPoint = transform;
+        // Gebruik ofwel een meegegeven transform, of gewoon eigen positie
+        centerPoint = centerTransform != null ? centerTransform.position : transform.position;
 
         PickNewTargetPosition();
     }
@@ -24,29 +25,32 @@ public class RandomFlightWithinRadius : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // Beweeg pas als hij bijna goed gericht is (kleine hoek-afwijking)
         float angleToTarget = Vector3.Angle(transform.forward, direction);
         if (angleToTarget < 10f) {
             transform.position += transform.forward * moveSpeed * Time.deltaTime;
         }
 
-        // Nieuwe target als dichtbij
         if (Vector3.Distance(transform.position, targetPosition) < stoppingDistance) {
             PickNewTargetPosition();
         }
     }
 
+    public void SetCenterPoint(Transform newCenter) {
+        centerTransform = newCenter;
+        centerPoint = newCenter.position;
+    }
 
     private void PickNewTargetPosition() {
         Vector3 randomOffset = Random.insideUnitSphere * radius;
-        targetPosition = centerPoint.position + randomOffset;
+        targetPosition = centerPoint + randomOffset;
     }
 
     private void OnDrawGizmosSelected() {
-        if (centerPoint == null)
-            centerPoint = transform;
+        if (centerTransform == null)
+            return;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(centerPoint.position, radius);
+        Gizmos.DrawWireSphere(centerTransform.position, radius);
     }
 }
+
