@@ -17,7 +17,7 @@ public interface UserStatsRepository extends JpaRepository<UserStats, Long> {
     UserStats findByUser(User user);
 
     @Query("""
-                SELECT new vr.balance.app.DTO.response.user_stats.UserStreakDTO(us.currentStreak, us.highestStreak)
+                SELECT new vr.balance.app.DTO.response.user_stats.UserStreakDTO(us.user.username,us.currentStreak, us.highestStreak)
                 FROM UserStats us
                 WHERE us.user.id = :userId
             """)
