@@ -33,14 +33,14 @@ namespace Service
         }
 
         public IEnumerator GetUserStreak(
-            System.Action<ApiResponse<List<UserStreakDTO>>> onSuccess,
+            System.Action<ApiResponse<UserStreakDTO>> onSuccess,
             System.Action<ApiErrorResponse<Void>> onError)
         {
             string userToken = PlayerPrefs.GetString("Login-Token");
 
             if (userToken != "")
             {
-                yield return ApiClient.Get<ApiResponse<List<UserStreakDTO>>, ApiErrorResponse<Void>>(
+                yield return ApiClient.Get<ApiResponse<UserStreakDTO>, ApiErrorResponse<Void>>(
                     "/user-stats/get-streak",
                     response => onSuccess?.Invoke(response),
                     error => onError?.Invoke(error),
