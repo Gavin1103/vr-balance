@@ -10,19 +10,7 @@ import vr.balance.app.models.User;
 
 import java.time.Instant;
 
-/**
- * Abstract base class representing a completed exercise session.
- * <p>
- * This class is used as the superclass for all specific types of completed exercises,
- * such as balance tests or firefly exercises. It stores common metadata such as the
- * associated user, which exercise, completion timestamp, difficulty level, and
- * earned points.
- * <p>
- * This class is mapped using the {@code JOINED} inheritance strategy, meaning each subclass
- * will be stored in its own table and joined with this base table via their shared ID.
- *
- * <p><strong>Note:</strong> This class should not be instantiated directly.
- */
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "completed_exercise")
@@ -31,7 +19,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public abstract class CompletedExercise {
+public class CompletedExercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

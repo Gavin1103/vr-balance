@@ -8,9 +8,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vr.balance.app.DTO.request.CompletedBalanceTestExerciseDTO;
 import vr.balance.app.DTO.request.CompletedFireflyExerciseDTO;
+import vr.balance.app.DTO.request.base.CompletedExerciseDTO;
 import vr.balance.app.DTO.response.CompletedExerciseResponse;
 import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.models.exercise.CompletedBalanceTestExercise;
+import vr.balance.app.models.exercise.CompletedExercise;
 import vr.balance.app.models.exercise.CompletedFireflyExercise;
 import vr.balance.app.response.ApiStandardResponse;
 import vr.balance.app.service.AuthenticationService;
@@ -28,6 +30,41 @@ public class ExerciseController {
     public ExerciseController(CompletedExerciseService completedExerciseService, AuthenticationService authenticationService) {
         this.completedExerciseService = completedExerciseService;
         this.authenticationService = authenticationService;
+    }
+
+    /**
+     * Endpoint to store completed exercises that do not require any additional data.
+     * <p>
+     * This is intended for simple exercises such as:
+     * - Squats
+     * - Lunges
+     * <p>
+     * These exercises only use the base fields from CompletedExerciseDTO:
+     * - exercise (enum)
+     * - difficulty (enum)
+     * - earnedPoints (int)
+     * - completedAt (DateTime)
+     * <p>
+     * ⚠️ Do not use this endpoint for exercises that require extra tracking data,
+     * like the balance test or firefly exercise.
+     */
+    @PostMapping("/store-exercise/standard")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Store a completed standard exercise (no extra fields required)")
+    public ResponseEntity<ApiStandardResponse<Void>> storeStandardExercise(@RequestBody CompletedExerciseDTO dto) {
+        completedExerciseService.saveExercise(
+                CompletedExercise.class,
+                dto,
+                authenticationService.getCurrentUserId(),
+                dto.getExercise()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiStandardResponse<>(
+                        HttpStatus.CREATED,
+                        "Exercise saved successfully"
+                ));
     }
 
     @PostMapping("/store-exercise/firefly")
