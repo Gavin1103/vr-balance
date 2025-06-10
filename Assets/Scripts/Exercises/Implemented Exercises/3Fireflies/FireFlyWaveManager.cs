@@ -11,7 +11,8 @@ using UnityEngine;
 public class FireFlyWaveManager : MonoBehaviour {
     public static FireFlyWaveManager FireFlyInstance { get; private set; }
 
-    [SerializeField] private FirefliesSpawner spawner;
+    [SerializeField] private FirefliesSpawner firefliesSpawner;
+    [SerializeField] private ButterFlySpawner butterfliesSpawner;
     [SerializeField] private int baseFireflyCount = -1; // Base number of fireflies per wave
     [SerializeField] private float timeBetweenWaves = 2f; // Delay before starting the next wave
     [SerializeField] private List<GameObject> nets;
@@ -74,13 +75,15 @@ public class FireFlyWaveManager : MonoBehaviour {
         switch (DifficultyManager.Instance.SelectedDifficulty) {
             case Difficulty.Easy:
                 fireflyType = 0;
-                spawner.SpawnFireFly(spawnCount, fireflyType);
+                firefliesSpawner.SpawnFireFly(spawnCount, fireflyType);
                 break;
             case Difficulty.Medium:
-                spawner.SpawnRandomFireFly(spawnCount);
+                firefliesSpawner.SpawnRandomFireFly(spawnCount);
                 break;
             case Difficulty.Hard:
-                spawner.SpawnRandomFireFly(spawnCount);
+                fireflyType = 0; // TEMP
+                firefliesSpawner.SpawnRandomFireFly(spawnCount);
+                butterfliesSpawner.SpawnButterfly(3,fireflyType);
                 break;
             default:
                 Debug.LogWarning("Not valid difficulty selected!");
@@ -121,7 +124,7 @@ public class FireFlyWaveManager : MonoBehaviour {
         currentWave = 0;
         remainingFireflies = 0;
         fireFliesCaught = 0;
-        spawner.ClearAllFireflies();
+        firefliesSpawner.ClearAllFireflies();
     }
 
     private void EnableNets() {
