@@ -4,5 +4,6 @@ namespace DTO.Response.User
     {
         public int highestStreak;
         public int currentStreak;
+        public string username;
     }
 }

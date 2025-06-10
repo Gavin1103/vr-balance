@@ -57,6 +57,8 @@ public class GenericExercise : Exercise {
     }
 
     public override void StartExercise() {
+        refs.RepsAndSetsObject.SetActive(true);
+
         refs.LeftStickAffordance.SetActive(true);
         refs.RightStickAffordance.SetActive(true);
         refs.HeadsetAffordance.SetActive(true);
@@ -70,33 +72,26 @@ public class GenericExercise : Exercise {
         refs.MediumDifficulty = Medium;
         refs.HardDifficulty = Hard;
 
+        // Adjust reps based on difficulty
+        string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
+        // if (chosenDifficulty == "Medium") {
+        //     AmountOfReps = Mathf.CeilToInt(AmountOfReps * 1.5f); // 1.5x as hard when medium
+        // } else if (chosenDifficulty == "Hard") {
+        //     AmountOfReps = AmountOfReps * 2; // Twice as hard when hard
+        // }
 
-        if (PosNeeded == true)
-        {
-            string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
-
+        if (PosNeeded == true) {
             int Count = chosenDifficulty == "Easy" ? 0 : chosenDifficulty == "Medium" ? 1 : chosenDifficulty == "Hard" ? 2 : 0;
-            if (Count == 0)
-            {
+            if (Count >= 0 && Count < Checkers.Count) {
                 refs.currentPosSO = Checkers[Count];
             }
-            else if (Count == 1)
-            {
-                refs.currentPosSO = Checkers[Count];
-            }
-            else if (Count == 2)
-            {
-                refs.currentPosSO = Checkers[Count];
-            }
-
-            //Debug.Log("Assigned currentPosSO: " + refs.currentPosSO);
         }     
 
         base.StartExercise();
     }
 
     protected override void PlayExercise() {
-        actionImageComponent.sprite = currentMovement.InstructionImage;
+        
         refs.MovementImageObject.transform.localPosition = new Vector3(300, 0, 0);
         refs.ActionImageLine.sizeDelta = new Vector2(0, refs.ActionImageLine.sizeDelta.y);
 
@@ -110,14 +105,15 @@ public class GenericExercise : Exercise {
                 currentMovementIndex = 0;
 
                 foreach (var movement in Movements) {
-                    currentMovementIndex++;
                     movement.exercise = this;
 
                     // Update UI for current set/rep/movement
                     refs.RepsAndSetsText.text = $"Set {currentSetIndex + 1}/{AmountOfSets}\nRep {currentRepIndex + 1}/{AmountOfReps}";
 
+                    actionImageComponent.sprite = currentMovement.InstructionImage;
                     yield return moveImageCoroutine = ExerciseManager.Instance.StartCoroutine(movement.Play());
                     movement.MovementEnded();
+                    currentMovementIndex++;
                 }
 
                 // Wait between reps, except after the last rep
@@ -156,7 +152,6 @@ public class GenericExercise : Exercise {
 
         refs.RestUI.SetActive(false);
     }
-
 
     public override void ExerciseEnded()
     {
