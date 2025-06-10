@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class ExerciseManager : MonoBehaviour {
     public static ExerciseManager Instance { get; private set; }
@@ -13,6 +14,7 @@ public class ExerciseManager : MonoBehaviour {
     public GameObject MainUI;
     public GameObject ExerciseUI;
     public GameObject EndUI;
+    public GameObject ExerciseTimer;
     [Header("Spawn Exercise Buttons")]
     public GameObject ButtonPrefab;
     public Transform ButtonContainer;
@@ -23,6 +25,7 @@ public class ExerciseManager : MonoBehaviour {
     public TMP_Text SelectedExerciseTitle;
     public TMP_Text SelectedExerciseDescription;
     public TMP_Text SelectedExerciseRequirements;
+    public TMP_Text TimeLeft;
     private Button currentSelectedExerciseButton;
     private TMP_Text currentSelectedExerciseText;
     public GameObject VideoPlayer;
@@ -126,21 +129,45 @@ public class ExerciseManager : MonoBehaviour {
         ScoreManager.Instance.ResetScore();
         MainUI.SetActive(false);
         ExerciseUI.SetActive(true);
+
+        // Start the 5 second delay coroutine
+        StartCoroutine(WaitBeforeStarting(exercise));
+
+        // Temporary location, Give color to the cube
+        //NormalExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = Color.red;
+    }
+    private IEnumerator WaitBeforeStarting(Exercise exercise) {
+        // Countdown from 5 seconds to 0
+        float countdownTime = 4f;
+        ExerciseTimer.SetActive(true);
+        SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
+        while (countdownTime > 0) {
+            // Update the TimeLeft UI with the remaining time (rounded to an integer)
+            TimeLeft.text = Mathf.Ceil(countdownTime).ToString();
+
+            // Wait for 1 second before updating again
+            yield return new WaitForSeconds(1f);
+
+            // Decrease the countdown
+            countdownTime--;
+        }
+
+        // When the countdown is done, clear the text
+        TimeLeft.text = "Go!";
+        ExerciseTimer.SetActive(false);
+        // After countdown ends, execute the following
         currentExercise = exercise;
         currentExercise.StartExercise();
 
-        if (exercise.Title.ToLower().Contains("balance"))
-        {
-            if (balanceTestRunner != null)
-            {
+        if (exercise.Title.ToLower().Contains("balance")) {
+            if (balanceTestRunner != null) {
                 balanceTestRunner.gameObject.SetActive(true);
                 balanceTestRunner.StartBalanceTestSequence();
             }
         }
 
-
-        // Temporary location, Give color to the cube
-        //GenericExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = Color.red;
+        // Temporary location, give color to the cube
+        // NormalExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = Color.red;
     }
 
     public void ExerciseEnded() {

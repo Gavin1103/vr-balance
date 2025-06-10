@@ -13,7 +13,7 @@ public class FireFlyExercise : Exercise {
     }
 
     public override void ExerciseEnded() {
-        FireFlyWaveManager.FireFlyInstance.StopWaves();
+        FireFlyWaveManager.FireFlyInstance.EndSession();
         //FireFlyWaveManager.FireFlyInstance.Gavin();
         ScoreManager.Instance.ResetScore();
     }
