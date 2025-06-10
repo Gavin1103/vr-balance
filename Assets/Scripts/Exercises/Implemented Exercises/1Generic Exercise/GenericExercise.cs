@@ -57,6 +57,7 @@ public class GenericExercise : Exercise {
     }
 
     public override void StartExercise() {
+
         refs.LeftStickAffordance.SetActive(true);
         refs.RightStickAffordance.SetActive(true);
         refs.HeadsetAffordance.SetActive(true);
@@ -71,25 +72,19 @@ public class GenericExercise : Exercise {
         refs.HardDifficulty = Hard;
 
 
-        if (PosNeeded == true)
-        {
-            string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
+        // Adjust reps based on difficulty
+        string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
+        // if (chosenDifficulty == "Medium") {
+        //     AmountOfReps = Mathf.CeilToInt(AmountOfReps * 1.5f); // 1.5x as hard when medium
+        // } else if (chosenDifficulty == "Hard") {
+        //     AmountOfReps = AmountOfReps * 2; // Twice as hard when hard
+        // }
 
+        if (PosNeeded == true) {
             int Count = chosenDifficulty == "Easy" ? 0 : chosenDifficulty == "Medium" ? 1 : chosenDifficulty == "Hard" ? 2 : 0;
-            if (Count == 0)
-            {
+            if (Count >= 0 && Count < Checkers.Count) {
                 refs.currentPosSO = Checkers[Count];
             }
-            else if (Count == 1)
-            {
-                refs.currentPosSO = Checkers[Count];
-            }
-            else if (Count == 2)
-            {
-                refs.currentPosSO = Checkers[Count];
-            }
-
-            //Debug.Log("Assigned currentPosSO: " + refs.currentPosSO);
         }     
 
         base.StartExercise();
