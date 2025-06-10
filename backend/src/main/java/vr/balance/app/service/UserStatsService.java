@@ -57,7 +57,7 @@ public class UserStatsService {
                 .orElseThrow(() -> new NotFoundException("User not found."));
 
         return userStatsRepository.findStreakStatsByUserId(user.getId())
-                .orElseGet(() -> new UserStreakDTO(0, 0));
+                .orElseGet(() -> new UserStreakDTO(user.getUsername(),0, 0));
     }
 
     public List<HighestStreakRankingDTO> getTop20HighestStreak() {
