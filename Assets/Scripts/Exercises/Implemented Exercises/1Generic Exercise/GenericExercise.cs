@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using DTO.Request.Exercise.@base;
 
 public class GenericExercise : Exercise
 {
@@ -19,6 +20,8 @@ public class GenericExercise : Exercise
     private int currentRepIndex = 0;
     private int currentMovementIndex = 0;
     private Image actionImageComponent;
+    // Services
+    private ExerciseService excerciseSerice = new ExerciseService();
     // Coroutines
     private Coroutine playSetsCoroutine;
     private Coroutine moveImageCoroutine;
@@ -200,7 +203,7 @@ public class GenericExercise : Exercise
             completedAt = System.DateTime.UtcNow
         };
 
-       StartCoroutine(excerciseSerice.SaveExercise(
+       ExerciseManager.Instance.StartCoroutine(excerciseSerice.SaveExercise(
            dto,
            onSuccess: ApiResponse => {
                Debug.Log(ApiResponse.message);
