@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour {
         public Color themeColor;
         public TMP_FontAsset subtitleFont;
         public TMP_FontAsset uiFont;
-
+        public Material skyboxMaterial;
     }
     public List<MapEntry> maps;
     // References and prefabs
@@ -108,6 +108,11 @@ public class MapManager : MonoBehaviour {
             } else {
                 mainCam.clearFlags = CameraClearFlags.Skybox;
             }
+        }
+
+        // Set the skybox for this map
+        if (maps[index].skyboxMaterial != null) {
+            RenderSettings.skybox = maps[index].skyboxMaterial;
         }
 
         SwapFontsGlobally(maps[index].uiFont);
