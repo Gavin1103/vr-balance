@@ -11,8 +11,9 @@ namespace DTO.Request.Exercise.@base
     /// 
     /// Specific exercise DTOs (e.g., BalanceTestExerciseDTO, FireflyExerciseDTO) should inherit from this class.
     /// </summary>
-    public abstract class CompletedExerciseDTO
+    public class CompletedExerciseDTO
     {
+        public string exercise;
         public Difficulty difficulty;
         public int earnedPoints;
         public DateTime completedAt;
