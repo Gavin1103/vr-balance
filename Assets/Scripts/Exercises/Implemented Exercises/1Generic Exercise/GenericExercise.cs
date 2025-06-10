@@ -91,7 +91,7 @@ public class GenericExercise : Exercise {
     }
 
     protected override void PlayExercise() {
-        actionImageComponent.sprite = currentMovement.InstructionImage;
+        
         refs.MovementImageObject.transform.localPosition = new Vector3(300, 0, 0);
         refs.ActionImageLine.sizeDelta = new Vector2(0, refs.ActionImageLine.sizeDelta.y);
 
@@ -105,14 +105,15 @@ public class GenericExercise : Exercise {
                 currentMovementIndex = 0;
 
                 foreach (var movement in Movements) {
-                    currentMovementIndex++;
                     movement.exercise = this;
 
                     // Update UI for current set/rep/movement
                     refs.RepsAndSetsText.text = $"Set {currentSetIndex + 1}/{AmountOfSets}\nRep {currentRepIndex + 1}/{AmountOfReps}";
 
+                    actionImageComponent.sprite = currentMovement.InstructionImage;
                     yield return moveImageCoroutine = ExerciseManager.Instance.StartCoroutine(movement.Play());
                     movement.MovementEnded();
+                    currentMovementIndex++;
                 }
 
                 // Wait between reps, except after the last rep
@@ -151,7 +152,6 @@ public class GenericExercise : Exercise {
 
         refs.RestUI.SetActive(false);
     }
-
 
     public override void ExerciseEnded()
     {
