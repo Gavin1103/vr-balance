@@ -11,7 +11,7 @@ public class DashboardUI : MonoBehaviour {
     public TextMeshProUGUI streakText;
     public TextMeshProUGUI usernameText;
     private UserStatsService userStatsService = new UserStatsService();
-    void Start() {
+    void OnEnable() {
         HandleUsername();
         HandleStreaks();
         HandleLeaderboard();
@@ -38,6 +38,8 @@ public class DashboardUI : MonoBehaviour {
         if (response.data != null) {
             int streak = response.data.currentStreak;
             streakText.text = $"Streak: {streak}";
+            Debug.Log("name: " + response.data.username);
+            usernameText.text = $"Welcome {response.data.username}";
         } else {
             streakText.text = "Streak: 0";
         }
