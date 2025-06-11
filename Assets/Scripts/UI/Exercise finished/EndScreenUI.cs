@@ -10,7 +10,7 @@ public class EndScreenUI : MonoBehaviour {
     public GameObject MainUI;
     public CanvasGroup EndScreenCanvasGroup;
     public TMP_Text TitleText;
-    public TMP_Text ScoreText;
+    public TMP_Text ResultText;
     private float durationBeforeEndUIShows = 0.5f;
     [SerializeField] private GameObject npc;
 
@@ -23,21 +23,10 @@ public class EndScreenUI : MonoBehaviour {
         StartCoroutine(FadeIn());
     }
 
-    public void UpdateEndUI(string exerciseName, string text) {
-        string[] messages = {
-            $"Great job completing the {exerciseName}!",
-            $"You’ve finished the {exerciseName} – well done!",
-            $"That’s it for the {exerciseName}. Nice work!",
-            $"The {exerciseName} is complete – keep it up!",
-            $"Well done! {exerciseName} finished successfully.",
-            $"You just wrapped up the {exerciseName} – awesome!",
-            $"That was the {exerciseName}. Great effort!",
-            $"Nice! {exerciseName} completed and logged."
-        };
-        string selectedMessage = messages[Random.Range(0, messages.Length)];
-        TitleText.text = selectedMessage;
-
-        ScoreText.text = text;
+    public void UpdateEndUI(string mainMessageText = "Good job!", string subText = "Score:", string resultText = "0") {
+        TitleText.text = mainMessageText;
+        SubText.text = subText;
+        ResultText.text = resultText;
     }
 
     private IEnumerator FadeIn() {

@@ -48,7 +48,18 @@ public abstract class Exercise {
     }
     
     public virtual void DisplayEndScreen() {
-        // Called from ExerciseManager
-        EndScreenUI.Instance.UpdateEndUI(Title, Mathf.RoundToInt(ScoreManager.Instance.Score).ToString());
+        // Called from ExerciseManager after ExerciseEnded() is called
+        string[] messages = {
+            $"Great job completing the {Title}!",
+            $"You’ve finished the {Title} – well done!",
+            $"That’s it for the {Title}. Nice work!",
+            $"The {Title} is complete – keep it up!",
+            $"Well done! {Title} finished successfully.",
+            $"You just wrapped up the {Title} – awesome!",
+            $"That was the {Title}. Great effort!",
+            $"Nice! {Title} completed and logged."
+        };
+        string selectedMessage = messages[Random.Range(0, messages.Length)];
+        EndScreenUI.Instance.UpdateEndUI(selectedMessage, "Score:", Mathf.RoundToInt(ScoreManager.Instance.Score).ToString());
     }
 }
