@@ -166,7 +166,7 @@ public class GenericExercise : Exercise
         while (elapsed < duration)
         {
             int secondsLeft = Mathf.CeilToInt(duration - elapsed);
-            refs.ExtraInfoText.text = $"Take a short break!\n{secondsLeft}s";
+            ExerciseManager.Instance.ExtraInfoText.text = $"Take a short break!\n{secondsLeft}s";
             elapsed += Time.deltaTime;
             yield return null;
         }

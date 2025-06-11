@@ -26,11 +26,14 @@ public class ExerciseManager : MonoBehaviour {
     public TMP_Text SelectedExerciseTitle;
     public TMP_Text SelectedExerciseDescription;
     public TMP_Text SelectedExerciseRequirements;
-    public TMP_Text TimeLeft;
     private Button currentSelectedExerciseButton;
     private TMP_Text currentSelectedExerciseText;
     public GameObject VideoPlayer;
     public Button StartExerciseButton;
+    [Header("Extra Info UI")]
+    public GameObject ExtraInfoObject;
+    public TextMeshProUGUI ExtraInfoText;
+  
     [Header("Tracking Targets")]
     public Transform LeftStick;
     public Transform RightStick;
@@ -143,7 +146,7 @@ public class ExerciseManager : MonoBehaviour {
         SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
         while (countdownTime > 0) {
             // Update the TimeLeft UI with the remaining time (rounded to an integer)
-            TimeLeft.text = Mathf.Ceil(countdownTime).ToString();
+            ExtraInfoText.text = Mathf.Ceil(countdownTime).ToString();
 
             // Wait for 1 second before updating again
             yield return new WaitForSeconds(1f);
@@ -153,7 +156,7 @@ public class ExerciseManager : MonoBehaviour {
         }
 
         // When the countdown is done, clear the text
-        TimeLeft.text = "Go!";
+        ExtraInfoText.text = "Go!";
         ExerciseUI.SetActive(true);
         ExitUI.SetActive(true);
         ExerciseTimer.SetActive(false);
