@@ -63,7 +63,7 @@ public class DashboardUI : MonoBehaviour
 private void HandleLeaderboard()
 {
     // Only remove children after the first two objects (Leaderboard text and line)
-    for (int i = leaderboardContainer.childCount - 2; i > 0; i--)
+    for (int i = leaderboardContainer.childCount - 1; i >= 2; i--)
         Destroy(leaderboardContainer.GetChild(i).gameObject);
 
         // Get your best streak first
