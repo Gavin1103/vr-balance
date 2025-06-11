@@ -8,7 +8,7 @@ public class FeedbackManager : MonoBehaviour {
     [Header("UI Feedback")]
     public GameObject FeedbackTextPrefab;
     public Toggle particleToggle;
-    public bool particlesAllowed = true;
+    public bool particlesAllowed;
     [System.Serializable]
     public class FeedbackData {
         public ParticleSystem particlePrefabs;
@@ -38,8 +38,7 @@ public class FeedbackManager : MonoBehaviour {
         foreach (var data in feedbackDataList) {
             feedbackMap[data.type] = data;
         }
-
-        particleToggle.isOn = particlesAllowed;
+        particlesAllowed = true;
         particleToggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
