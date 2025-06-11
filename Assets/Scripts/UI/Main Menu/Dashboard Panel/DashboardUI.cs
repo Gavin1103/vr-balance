@@ -16,13 +16,12 @@ public class DashboardUI : MonoBehaviour
     public Transform leaderboardContainer;
     public GameObject leaderboardEntryPrefab;
     public GameObject linePrefab;
-    void OnEnable()
-    {
-        Debug.Log("DashboardUI OnEnable called");
+    void OnEnable() {
+        streakText.text = "Streak: N/A";
+        usernameText.text = "Welcome Guest";
         HandleStreaks();
         HandleLeaderboard();
     }
-
 
     private void HandleStreaks() {
         StartCoroutine(userStatsService.GetUserStreak(
