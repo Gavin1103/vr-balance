@@ -18,6 +18,7 @@ public class DashboardUI : MonoBehaviour
     public GameObject linePrefab;
     void OnEnable()
     {
+        Debug.Log("DashboardUI OnEnable called");
         HandleStreaks();
         HandleLeaderboard();
     }
