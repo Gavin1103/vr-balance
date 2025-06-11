@@ -62,68 +62,66 @@ public class DashboardUI : MonoBehaviour
     
 private void HandleLeaderboard()
 {
-    // Only remove children after the first (leave the static leaderboard text)
-    for (int i = leaderboardContainer.childCount - 1; i > 0; i--)
+    // Only remove children after the first two objects (Leaderboard text and line)
+    for (int i = leaderboardContainer.childCount - 2; i > 0; i--)
         Destroy(leaderboardContainer.GetChild(i).gameObject);
 
-    // Get your best streak first
-    StartCoroutine(userStatsService.GetUserStreak(
-        onSuccess: userResponse =>
-        {
-            // "Your Best" entry
-            var yourBestObj = Instantiate(leaderboardEntryPrefab, leaderboardContainer);
-            var nameText = yourBestObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
-            var scoreText = yourBestObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
-            nameText.text = "Your Best";
-            nameText.color = Color.cyan;
-            scoreText.text = userResponse.data.highestStreak.ToString();
-            scoreText.color = Color.cyan;
+        // Get your best streak first
+        StartCoroutine(userStatsService.GetUserStreak(
+            onSuccess: userResponse =>
+            {
+                // "Your Best" entry
+                var yourBestObj = Instantiate(leaderboardEntryPrefab, leaderboardContainer);
+                var nameText = yourBestObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+                var scoreText = yourBestObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
+                nameText.text = "Your Best";
+                nameText.color = Color.cyan;
+                scoreText.text = userResponse.data.highestStreak.ToString();
+                scoreText.color = Color.cyan;
 
-            // Line separator
-            Instantiate(linePrefab, leaderboardContainer);
+                // Line separator
+                Instantiate(linePrefab, leaderboardContainer);
 
-            // Now get top 20
-            StartCoroutine(userStatsService.GetTop20HighestStreaks(
-                onSuccess: topResponse =>
-                {
-                    for (int i = 0; i < topResponse.data.Count && i < 20; i++)
+                // Now get top 20
+                StartCoroutine(userStatsService.GetTop20HighestStreaks(
+                    onSuccess: topResponse =>
                     {
-                        var entry = topResponse.data[i];
-                        var entryObj = Instantiate(leaderboardEntryPrefab, leaderboardContainer);
-                        var entryNameText = entryObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
-                        var entryScoreText = entryObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
-                        entryNameText.text = $"{i + 1}. {entry.username}";
-                        entryScoreText.text = entry.highestStreak.ToString();
+                        for (int i = 0; i < topResponse.data.Count && i < 20; i++)
+                        {
+                            var entry = topResponse.data[i];
+                            var entryObj = Instantiate(leaderboardEntryPrefab, leaderboardContainer);
+                            var entryNameText = entryObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+                            var entryScoreText = entryObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
+                            entryNameText.text = $"{i + 1}. {entry.username}";
+                            entryScoreText.text = entry.highestStreak.ToString();
 
-                        // Color coding
-                        if (i == 0)
-                        {
-                            entryNameText.color = Color.red;
-                            entryScoreText.color = Color.red;
+                            // Color coding
+                            if (i == 0)
+                            {
+                                entryNameText.color = Color.red;
+                                entryScoreText.color = Color.red;
+                            }
+                            else if (i == 1)
+                            {
+                                entryNameText.color = new Color(1f, 0.5f, 0f); // Orange
+                                entryScoreText.color = new Color(1f, 0.5f, 0f);
+                            }
+                            else if (i == 2)
+                            {
+                                entryNameText.color = Color.yellow;
+                                entryScoreText.color = Color.yellow;
+                            }
+                            else
+                            {
+                                entryNameText.color = Color.white;
+                                entryScoreText.color = Color.white;
+                            }
                         }
-                        else if (i == 1)
-                        {
-                            entryNameText.color = new Color(1f, 0.5f, 0f); // Orange
-                            entryScoreText.color = new Color(1f, 0.5f, 0f);
-                        }
-                        else if (i == 2)
-                        {
-                            entryNameText.color = Color.yellow;
-                            entryScoreText.color = Color.yellow;
-                        }
-                        else
-                        {
-                            entryNameText.color = Color.white;
-                            entryScoreText.color = Color.white;
-                        }
-                    }
-                },
-                onError: err => { Debug.LogError("Failed to fetch top 20: " + err); }
-            ));
-        },
-        onError: err => { Debug.LogError("Failed to fetch user streak: " + err); }
-    ));
-}
-
-
+                    },
+                    onError: err => { Debug.LogError("Failed to fetch top 20: " + err); }
+                ));
+            },
+            onError: err => { Debug.LogError("Failed to fetch user streak: " + err); }
+        ));
+    }
 }
