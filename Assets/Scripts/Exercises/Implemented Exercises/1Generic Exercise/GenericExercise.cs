@@ -158,20 +158,18 @@ public class GenericExercise : Exercise
         ExerciseManager.Instance.ExerciseEnded();
     }
 
-    private IEnumerator ShowRestUI(float duration)
-    {
-        refs.RestUI.SetActive(true);
+    private IEnumerator ShowRestUI(float duration) {
+        ExerciseManager.Instance.ExtraInfoObject.SetActive(true);
 
         float elapsed = 0f;
-        while (elapsed < duration)
-        {
+        while (elapsed < duration) {
             int secondsLeft = Mathf.CeilToInt(duration - elapsed);
             ExerciseManager.Instance.ExtraInfoText.text = $"Take a short break!\n{secondsLeft}s";
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        refs.RestUI.SetActive(false);
+        ExerciseManager.Instance.ExtraInfoObject.SetActive(false);
     }
 
     public override void ExerciseEnded()
