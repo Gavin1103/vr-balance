@@ -43,7 +43,7 @@ public class BalanceTestExercise : GenericExercise
     }
     
     public override void DisplayEndScreen() {
-        EndScreenUI.Instance.UpdateEndUI("Your headsway has been calculated", "Advised difficulty:" + DifficultyManager.Instance.AdvisedDifficulty);
+        EndScreenUI.Instance.UpdateEndUI("Your headsway has been calculated", "Advised difficulty:", DifficultyManager.Instance.AdvisedDifficulty);
     }
 
     private void SaveHeadSway() {
