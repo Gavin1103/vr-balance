@@ -49,6 +49,6 @@ public abstract class Exercise {
     
     public virtual void DisplayEndScreen() {
         // Called from ExerciseManager
-        EndScreenUI.Instance.UpdateEndUI(currentExercise.Title, Mathf.RoundToInt(ScoreManager.Instance.Score).ToString());
+        EndScreenUI.Instance.UpdateEndUI(Title, Mathf.RoundToInt(ScoreManager.Instance.Score).ToString());
     }
 }

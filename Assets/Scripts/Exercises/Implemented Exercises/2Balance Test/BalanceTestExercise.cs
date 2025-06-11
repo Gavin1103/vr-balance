@@ -43,7 +43,7 @@ public class BalanceTestExercise : GenericExercise
     }
     
     public override void DisplayEndScreen() {
-        EndScreenUI.Instance.UpdateEndUI(currentExercise.Title, "Based on your headsway, we recommend the following difficulty: " + DifficultyManager.Instance.AdvisedDifficulty);
+        EndScreenUI.Instance.UpdateEndUI(Title, "Based on your headsway, we recommend the following difficulty: " + DifficultyManager.Instance.AdvisedDifficulty);
     }
 
     private void SaveHeadSway() {
