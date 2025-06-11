@@ -75,36 +75,35 @@ public class DashboardUI : MonoBehaviour
 
 
     private void HandleLeaderboard()
-{
-    // All-time highest streaks
-    StartCoroutine(userStatsService.GetTop20HighestStreaks(
-        onSuccess: topResponse =>
-        {
-            PopulateLeaderboard(
-                leaderboardAllTimeContainer,
-                topResponse.data,
-                entry => entry.username,
-                entry => entry.highestStreak
-            );
-        },
-        onError: err => { Debug.LogError("Failed to fetch all-time leaderboard: " + err); }
-    ));
+    {
+        // All-time highest streaks
+        StartCoroutine(userStatsService.GetTop20HighestStreaks(
+            onSuccess: topResponse =>
+            {
+                PopulateLeaderboard(
+                    leaderboardAllTimeContainer,
+                    topResponse.data,
+                    entry => entry.username,
+                    entry => entry.highestStreak
+                );
+            },
+            onError: err => { Debug.LogError("Failed to fetch all-time leaderboard: " + err); }
+        ));
 
-    // Current highest streaks
-    StartCoroutine(userStatsService.GetTop20CurrentStreaks(
-        onSuccess: topResponse =>
-        {
-            PopulateLeaderboard(
-                leaderboardCurrentContainer,
-                topResponse.data,
-                entry => entry.username,
-                entry => entry.currentStreak
-            );
-        },
-        onError: err => { Debug.LogError("Failed to fetch current leaderboard: " + err); }
-    ));
-}
-    
+        // Current highest streaks
+        StartCoroutine(userStatsService.GetTop20CurrentStreaks(
+            onSuccess: topResponse =>
+            {
+                PopulateLeaderboard(
+                    leaderboardCurrentContainer,
+                    topResponse.data,
+                    entry => entry.username,
+                    entry => entry.currentStreak
+                );
+            },
+            onError: err => { Debug.LogError("Failed to fetch current leaderboard: " + err); }
+        ));
+    }
 
     private void PopulateLeaderboard<T>(Transform container, List<T> data, System.Func<T, string> getName, System.Func<T, int> getScore)
     {
