@@ -1,12 +1,14 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System.Collections.Generic;
 public class FeedbackManager : MonoBehaviour {
     public static FeedbackManager Instance { get; private set; }
 
     [Header("UI Feedback")]
     public GameObject FeedbackTextPrefab;
-
+    public Toggle particleToggle;
+    public bool particlesAllowed = true;
     [System.Serializable]
     public class FeedbackData {
         public ParticleSystem particlePrefabs;
@@ -36,7 +38,11 @@ public class FeedbackManager : MonoBehaviour {
         foreach (var data in feedbackDataList) {
             feedbackMap[data.type] = data;
         }
+
+        particleToggle.isOn = particlesAllowed;
+        particleToggle.onValueChanged.AddListener(OnToggleChanged);
     }
+
 
     public void CalculateAndDisplayFeedbackText(float score, float maxScore, Vector3 spawnPosition) {
         FeedbackType type = GetFeedbackType(score, maxScore);
@@ -45,6 +51,10 @@ public class FeedbackManager : MonoBehaviour {
 
     public void DisplayMissFeedback(Vector3 spawnPosition) {
         DisplayFeedback(FeedbackType.Miss, spawnPosition);
+    }
+
+    private void OnToggleChanged(bool value) {
+        particlesAllowed = value;
     }
 
     public void DisplayFeedback(FeedbackType type, Vector3 spawnPosition) {
@@ -59,7 +69,7 @@ public class FeedbackManager : MonoBehaviour {
         feedbackText.Setup(data.text, data.color);
 
         // Spawn particles
-        if (data.particlePrefabs != null) {
+        if (data.particlePrefabs != null && particlesAllowed) {
             ParticleSystem ps = Instantiate(data.particlePrefabs, spawnPosition, Quaternion.identity);
             var mainModule = ps.main;
             mainModule.startColor = data.color;
