@@ -6,9 +6,7 @@ using System.Linq;
 
 public class BalanceTestExercise : GenericExercise
 {
-    public float EasyScoreThreshold = 300f;
-    public float MediumScoreThreshold = 700f;
-    public GameObject npc;
+    
     public BalanceTestExercise(
             string title, string description, List<string> requirements,
             List<ExerciseMovement> movements, int amountOfSets, float waitTimeBetweenSets, int amountOfReps, float waitTimeBetweenReps,
@@ -36,10 +34,6 @@ public class BalanceTestExercise : GenericExercise
         base.ExerciseEnded();
 
         SaveHeadSway();
-
-        if (npc != null) {
-            npc.SetActive(false);
-        }
     }
     
     public override void DisplayEndScreen() {
