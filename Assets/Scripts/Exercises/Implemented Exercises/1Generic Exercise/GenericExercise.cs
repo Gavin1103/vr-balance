@@ -125,8 +125,9 @@ public class GenericExercise : Exercise
 
                     // Update UI for current set/rep/movement
                     refs.RepsAndSetsText.text = $"Set {currentSetIndex + 1}/{AmountOfSets}\nRep {currentRepIndex + 1}/{AmountOfReps}";
-
+                    Debug.Log("A");
                     actionImageComponent.sprite = currentMovement.InstructionImage;
+                    Debug.Log("B");
                     yield return moveImageCoroutine = ExerciseManager.Instance.StartCoroutine(movement.Play());
                     movement.MovementEnded();
                     currentMovementIndex++;
@@ -152,8 +153,8 @@ public class GenericExercise : Exercise
             currentSetIndex++;
         }
         // End of exercise
-        ExerciseEnded();
         SoundManager.soundInstance.PlaySFX("Exercise End");
+        currentMovementIndex--;
         ExerciseManager.Instance.ExerciseEnded();
     }
 
@@ -188,7 +189,6 @@ public class GenericExercise : Exercise
             moveImageCoroutine = null;
         }
 
-        currentMovementIndex--;
         currentMovement.MovementEnded();
 
         refs.SequenceUI.SetActive(false);
