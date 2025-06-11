@@ -25,7 +25,6 @@ public class GenericExerciseReferences : MonoBehaviour {
     public GameObject RepsAndSetsObject;
     public TextMeshProUGUI RepsAndSetsText;
     public GameObject RestUI; // Between sets
-    public TextMeshProUGUI TakeABreakText;
     public Image RestPieImage;
     [Header("Behaviour Specific References")]
     public TextMeshProUGUI HoldMovementText;
