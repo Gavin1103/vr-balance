@@ -31,6 +31,12 @@ public class FirefliesSpawner : MonoBehaviour {
             // Instantiate the firefly at the selected spawn point
             GameObject instance = Instantiate(fireFly[type], spawnPoint.position, Quaternion.identity);
             spawnedFireflies.Add(instance);
+
+            // Assign the spawn point as the movement center for this butterfly
+            RandomFlightWithinRadius flightScript = instance.GetComponent<RandomFlightWithinRadius>();
+            if (flightScript != null) {
+                flightScript.SetCenterPoint(spawnPoint);
+            }
         }
     }
     public void SpawnRandomFireFly(int amount) {

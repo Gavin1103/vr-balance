@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2445037574717732515}
   - component: {fileID: 1491628322471568214}
   - component: {fileID: 4380561599265744324}
+  - component: {fileID: -2558082476209496967}
   m_Layer: 0
   m_Name: FireFlyLeft
   m_TagString: Untagged
@@ -78,7 +79,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -104,6 +105,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2558082476209496967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5982125327670994496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750cd3c3f3a2e9446a589ba5a088a8bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  moveSpeed: 2
+  rotationSpeed: 5
+  stoppingDistance: 0.5
+  centerTransform: {fileID: 0}
 --- !u!1001 &1957468452950766664
 PrefabInstance:
   m_ObjectHideFlags: 0
