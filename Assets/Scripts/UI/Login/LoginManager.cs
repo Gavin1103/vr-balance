@@ -53,7 +53,7 @@ public class LoginManager : MonoBehaviour
                 onError: error =>
                 {
                     if (error == null || string.IsNullOrEmpty(error.message)) {
-                        errorMessage.text = "Er is een onbekende fout opgetreden.";
+                        errorMessage.text = "An unknown error occurred.";
                     }
                     else {
                         errorMessage.text = error.message;
