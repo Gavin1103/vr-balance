@@ -23,8 +23,7 @@ public class DashboardUI : MonoBehaviour
     }
 
 
-    private void HandleStreaks()
-    {
+    private void HandleStreaks() {
         StartCoroutine(userStatsService.GetUserStreak(
             // Login completed
             onSuccess: ApiResponse =>
@@ -39,20 +38,14 @@ public class DashboardUI : MonoBehaviour
         ));
     }
 
-    private void OnStreakSuccess(ApiResponse<UserStreakDTO> response)
-    {
-        if (response.data != null)
-        {
+    private void OnStreakSuccess(ApiResponse<UserStreakDTO> response) {
+        if (response.data != null) {
             int streak = response.data.currentStreak;
             streakText.text = $"Streak: {streak}";
-            // Debug.Log("name: " + response.data.username);
             usernameText.text = $"Welcome {response.data.username}";
-        }
-        else
-        {
+        } else {
             streakText.text = "Streak: 0";
         }
-        // Debug.Log("Streak fetched successfully: " + response.message);
     }
 
     private void OnStreakError(ApiErrorResponse<Void> error)
