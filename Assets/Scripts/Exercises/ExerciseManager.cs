@@ -15,7 +15,6 @@ public class ExerciseManager : MonoBehaviour {
     public GameObject ExerciseUI;
     public GameObject ExitUI;
     public GameObject EndUI;
-    public GameObject ExerciseTimer;
     [Header("Spawn Exercise Buttons")]
     public GameObject ButtonPrefab;
     public Transform ButtonContainer;
@@ -142,7 +141,7 @@ public class ExerciseManager : MonoBehaviour {
     private IEnumerator WaitBeforeStarting(Exercise exercise) {
         // Countdown from 5 seconds to 0
         float countdownTime = 4f;
-        ExerciseTimer.SetActive(true);
+        ExtraInfoObject.SetActive(true);
         SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
         while (countdownTime > 0) {
             // Update the TimeLeft UI with the remaining time (rounded to an integer)
@@ -159,7 +158,7 @@ public class ExerciseManager : MonoBehaviour {
         ExtraInfoText.text = "Go!";
         ExerciseUI.SetActive(true);
         ExitUI.SetActive(true);
-        ExerciseTimer.SetActive(false);
+        ExtraInfoObject.SetActive(false);
         // After countdown ends, execute the following
         currentExercise = exercise;
         currentExercise.StartExercise();
