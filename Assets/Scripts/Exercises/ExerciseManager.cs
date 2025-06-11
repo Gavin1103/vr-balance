@@ -143,19 +143,15 @@ public class ExerciseManager : MonoBehaviour {
         float countdownTime = 4f;
         ExtraInfoObject.SetActive(true);
         SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
-        while (countdownTime > 0) {
-            // Update the TimeLeft UI with the remaining time (rounded to an integer)
+        while (countdownTime > 0f) {
             ExtraInfoText.text = Mathf.Ceil(countdownTime).ToString();
 
-            // Wait for 1 second before updating again
-            yield return new WaitForSeconds(1f);
             if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log("Countdown interrupted by user input.");
                 break;
             }
 
-            // Decrease the countdown
-            countdownTime--;
+            countdownTime -= Time.deltaTime;
+            yield return null;
         }
 
         // When the countdown is done, clear the text
