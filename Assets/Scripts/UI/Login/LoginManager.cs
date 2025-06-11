@@ -72,7 +72,7 @@ public class LoginManager : MonoBehaviour
 
     private void LoginSucceeded()
     {
-        errorMessage.text = "Login gelukt!";
+        errorMessage.text = "Login success!";
         StartCoroutine(LoadingMenu());
         StartCoroutine(RemoveErrorText());
     }
@@ -87,7 +87,7 @@ public class LoginManager : MonoBehaviour
     // Waits a few seconds to load main menu
     IEnumerator LoadingMenu()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         loginMenu.SetActive(false);
         mainMenu.SetActive(true);
 
