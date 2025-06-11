@@ -183,9 +183,8 @@ public class ExerciseManager : MonoBehaviour {
         //GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(false);
         //GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(false);
 
-        EndScreenUI.Instance.UpdateEndUI(currentExercise.Title, ScoreManager.Instance.Score);
-
         currentExercise.ExerciseEnded();
+        currentExercise.DisplayEndScreen();
         ScoreManager.Instance.ResetScore();
         currentExercise = null;
     }

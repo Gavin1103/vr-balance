@@ -41,6 +41,10 @@ public class BalanceTestExercise : GenericExercise
             npc.SetActive(false);
         }
     }
+    
+    public override void DisplayEndScreen() {
+        EndScreenUI.Instance.UpdateEndUI(currentExercise.Title, "Based on your headsway, we recommend the following difficulty: " + DifficultyManager.Instance.AdvisedDifficulty);
+    }
 
     private void SaveHeadSway() {
         // This code expects every movement in the balance test to heave a balance behaviour

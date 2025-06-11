@@ -23,7 +23,7 @@ public class EndScreenUI : MonoBehaviour {
         StartCoroutine(FadeIn());
     }
 
-    public void UpdateEndUI(string exerciseName, float score) {
+    public void UpdateEndUI(string exerciseName, string text) {
         string[] messages = {
             $"Great job completing the {exerciseName}!",
             $"You’ve finished the {exerciseName} – well done!",
@@ -37,7 +37,7 @@ public class EndScreenUI : MonoBehaviour {
         string selectedMessage = messages[Random.Range(0, messages.Length)];
         TitleText.text = selectedMessage;
 
-        ScoreText.text = Mathf.RoundToInt(score).ToString();
+        ScoreText.text = text;
     }
 
     private IEnumerator FadeIn() {
