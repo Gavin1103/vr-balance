@@ -10,8 +10,9 @@ public class EndScreenUI : MonoBehaviour {
     public GameObject MainUI;
     public CanvasGroup EndScreenCanvasGroup;
     public TMP_Text TitleText;
+    public TMP_Text SubText;
     public TMP_Text ResultText;
-    private float durationBeforeEndUIShows = 0.5f;
+    private float durationBeforeEndUIShows = 0.75f;
     [SerializeField] private GameObject npc;
 
     void Awake() {
