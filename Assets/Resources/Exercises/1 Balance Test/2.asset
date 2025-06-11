@@ -19,5 +19,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ab4375adfa08bc24e92879c524620033, type: 2}
   - {fileID: 11400000, guid: e9cd059ab52d6bd4cb9295bc992e3274, type: 2}
   Duration: 4
-  Image: {fileID: 21300000, guid: 4ba712e60586b0448aea6a5a9276ed28, type: 3}
+  Image: {fileID: 21300000, guid: 6c3e9abc11f4f4b48b6fcd70c362e7a4, type: 3}
   Score: 1000
