@@ -65,7 +65,7 @@ public class LoginManager : MonoBehaviour
         }
         else
         {
-            errorMessage.text = "Username of pincode is niet ingevuld";
+            errorMessage.text = "Username or pincode not filled in!";
             StartCoroutine(RemoveErrorText());
         }
     }
