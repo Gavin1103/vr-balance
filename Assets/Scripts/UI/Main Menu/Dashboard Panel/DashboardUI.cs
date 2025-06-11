@@ -14,21 +14,25 @@ public class DashboardUI : MonoBehaviour
     private UserStatsService userStatsService = new UserStatsService();
 
     public Button leaderboardAllTimeButton;
-    public Button leaderboardCurrentButton;
+    public Transform leaderboardAllTime;
     public Transform leaderboardAllTimeContainer;
+    public Button leaderboardCurrentButton;
+    public Transform leaderboardCurrent;
     public Transform leaderboardCurrentContainer;
     public GameObject leaderboardEntryPrefab;
     public GameObject linePrefab;
 
-    public void OnCurrentLeaderboardButtonPressed() {
-        leaderboardAllTimeContainer.gameObject.SetActive(false);
-        leaderboardCurrentContainer.gameObject.SetActive(true);
+    public void OnCurrentLeaderboardButtonPressed()
+    {
+        leaderboardAllTime.gameObject.SetActive(false);
+        leaderboardCurrent.gameObject.SetActive(true);
         UIStyler.ApplyStyle(leaderboardCurrentButton, true, true);
         UIStyler.ApplyStyle(leaderboardAllTimeButton, false, true);
     }
-    public void OnAllTimeLeaderboardButtonPressed() {
-        leaderboardCurrentContainer.gameObject.SetActive(false);
-        leaderboardAllTimeContainer.gameObject.SetActive(true);
+    public void OnAllTimeLeaderboardButtonPressed()
+    {
+        leaderboardCurrent.gameObject.SetActive(false);
+        leaderboardAllTime.gameObject.SetActive(true);
         UIStyler.ApplyStyle(leaderboardCurrentButton, false, true);
         UIStyler.ApplyStyle(leaderboardAllTimeButton, true, true);
     }
@@ -76,41 +80,65 @@ public class DashboardUI : MonoBehaviour
 
     private void HandleLeaderboard()
     {
-        // All-time highest streaks
-        StartCoroutine(userStatsService.GetTop20HighestStreaks(
-            onSuccess: topResponse =>
+        // Fetch user streak first
+        StartCoroutine(userStatsService.GetUserStreak(
+            onSuccess: userResponse =>
             {
-                PopulateLeaderboard(
-                    leaderboardAllTimeContainer,
-                    topResponse.data,
-                    entry => entry.username,
-                    entry => entry.highestStreak
-                );
-            },
-            onError: err => { Debug.LogError("Failed to fetch all-time leaderboard: " + err); }
-        ));
+                int highest = userResponse.data.highestStreak;
+                int current = userResponse.data.currentStreak;
 
-        // Current highest streaks
-        StartCoroutine(userStatsService.GetTop20CurrentStreaks(
-            onSuccess: topResponse =>
-            {
-                PopulateLeaderboard(
-                    leaderboardCurrentContainer,
-                    topResponse.data,
-                    entry => entry.username,
-                    entry => entry.currentStreak
-                );
+                // All-time highest streaks
+                StartCoroutine(userStatsService.GetTop20HighestStreaks(
+                    onSuccess: topResponse =>
+                    {
+                        PopulateLeaderboardWithUser(
+                            leaderboardAllTimeContainer,
+                            "Your Highest",
+                            highest,
+                            topResponse.data,
+                            entry => entry.username,
+                            entry => entry.highestStreak
+                        );
+                    },
+                    onError: err => { Debug.LogError("Failed to fetch all-time leaderboard: " + err); }
+                ));
+
+                // Current highest streaks
+                StartCoroutine(userStatsService.GetTop20CurrentStreaks(
+                    onSuccess: topResponse =>
+                    {
+                        PopulateLeaderboardWithUser(
+                            leaderboardCurrentContainer,
+                            "Your Current",
+                            current,
+                            topResponse.data,
+                            entry => entry.username,
+                            entry => entry.currentStreak
+                        );
+                    },
+                    onError: err => { Debug.LogError("Failed to fetch current leaderboard: " + err); }
+                ));
             },
-            onError: err => { Debug.LogError("Failed to fetch current leaderboard: " + err); }
+            onError: err => { Debug.LogError("Failed to fetch user streak: " + err); }
         ));
     }
 
-    private void PopulateLeaderboard<T>(Transform container, List<T> data, System.Func<T, string> getName, System.Func<T, int> getScore)
+    private void PopulateLeaderboardWithUser<T>(
+        Transform container,
+        string userLabel,
+        int userScore,
+        List<T> data,
+        System.Func<T, string> getName,
+        System.Func<T, int> getScore)
     {
         // Keep the first two children (title and line), remove the rest
         for (int i = container.childCount - 1; i >= 2; i--)
             Destroy(container.GetChild(i).gameObject);
 
+        // Insert user entry and line
+        InsertUserEntryAndLine(container, userLabel, userScore);
+
+        // Insert top 20
         for (int i = 0; i < data.Count && i < 20; i++)
         {
             var entry = data[i];
@@ -142,5 +170,20 @@ public class DashboardUI : MonoBehaviour
                 entryScoreText.color = Color.white;
             }
         }
+    }
+    
+    private void InsertUserEntryAndLine(Transform container, string label, int score)
+    {
+        // Insert "Your ..." entry
+        var userObj = Instantiate(leaderboardEntryPrefab, container);
+        var nameText = userObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+        var scoreText = userObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
+        nameText.text = label;
+        nameText.color = Color.cyan;
+        scoreText.text = score.ToString();
+        scoreText.color = Color.cyan;
+
+        // Insert line
+        Instantiate(linePrefab, container);
     }
 }
