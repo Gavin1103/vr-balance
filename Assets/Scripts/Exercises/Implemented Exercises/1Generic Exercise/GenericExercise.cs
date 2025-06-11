@@ -190,7 +190,7 @@ public class GenericExercise : Exercise
         currentMovement.MovementEnded();
 
         refs.SequenceUI.SetActive(false);
-        refs.RestUI.SetActive(false);
+        ExerciseManager.Instance.ExtraInfoObject.SetActive(false);
     }
 
     private void SaveExercise() {
