@@ -149,6 +149,9 @@ public class ExerciseManager : MonoBehaviour {
 
             // Wait for 1 second before updating again
             yield return new WaitForSeconds(1f);
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                break;
+            }
 
             // Decrease the countdown
             countdownTime--;
