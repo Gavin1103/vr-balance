@@ -3,7 +3,6 @@ package vr.balance.app.unit.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.springframework.test.context.ActiveProfiles;
 import vr.balance.app.enums.DifficultyEnum;
 import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.models.User;
@@ -89,7 +88,7 @@ class UserStatsServiceTest {
 
         CompletedFireflyExercise exercise = CompletedFireflyExercise.builder()
                 .user(user)
-                .exercise(ExerciseEnum.FIREFLY_EXERCISE)
+                .exercise(ExerciseEnum.Firefly)
                 .difficulty(DifficultyEnum.EASY)
                 .earnedPoints(100)
                 .completedAt(Instant.now())

@@ -94,7 +94,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         for (User user : users) {
             long existingCount = completedBalanceTestExerciseRepository.countByUserIdAndExercise(
-                    user.getId(), ExerciseEnum.BALANCE_TEST_EXERCISE
+                    user.getId(), ExerciseEnum.Balance
             );
 
             if (existingCount >= 5) {
@@ -113,6 +113,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 Collections.shuffle(shuffledPhases);
 
                 CompletedBalanceTestExerciseDTO test = CompletedBalanceTestExerciseDTO.builder()
+                        .exercise(ExerciseEnum.Balance)
                         .difficulty(DifficultyEnum.NONE)
                         .completedAt(Instant.now().minus(4 - i, ChronoUnit.DAYS))
                         .earnedPoints(0)
@@ -123,10 +124,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                         .build();
 
                 completedExerciseService.saveExercise(
-                        CompletedBalanceTestExercise.class,
                         test,
-                        user.getId(),
-                        ExerciseEnum.BALANCE_TEST_EXERCISE
+                        user.getId()
                 );
             }
         }
@@ -148,6 +147,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private List<CompletedFireflyExerciseDTO> generateRandomFireflyExercises() {
         return List.of(
                 CompletedFireflyExerciseDTO.builder()
+                        .exercise(ExerciseEnum.Firefly)
                         .difficulty(DifficultyEnum.EASY)
                         .earnedPoints(randomInt(100, 300))
                         .completedAt(Instant.now().minus(2, ChronoUnit.DAYS))
@@ -156,6 +156,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                         .build(),
 
                 CompletedFireflyExerciseDTO.builder()
+                        .exercise(ExerciseEnum.Firefly)
                         .difficulty(DifficultyEnum.MEDIUM)
                         .earnedPoints(randomInt(100, 300))
                         .completedAt(Instant.now().minus(1, ChronoUnit.DAYS))
@@ -164,6 +165,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                         .build(),
 
                 CompletedFireflyExerciseDTO.builder()
+                        .exercise(ExerciseEnum.Firefly)
                         .difficulty(DifficultyEnum.HARD)
                         .earnedPoints(randomInt(100, 300))
                         .completedAt(Instant.now())
@@ -190,10 +192,8 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         for (CompletedFireflyExerciseDTO exercise : toSave) {
             completedExerciseService.saveExercise(
-                    CompletedFireflyExercise.class,
                     exercise,
-                    user.getId(),
-                    ExerciseEnum.FIREFLY_EXERCISE
+                    user.getId()
             );
         }
     }
@@ -205,7 +205,8 @@ public class DatabaseSeeder implements CommandLineRunner {
             if (is == null) {
                 throw new FileNotFoundException("Could not find file: " + filename);
             }
-            return mapper.readValue(is, new TypeReference<>() {});
+            return mapper.readValue(is, new TypeReference<>() {
+            });
         } catch (IOException e) {
             throw new RuntimeException("Failed to load JSON", e);
         }
