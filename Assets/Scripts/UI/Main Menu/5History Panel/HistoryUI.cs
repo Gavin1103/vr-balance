@@ -20,9 +20,10 @@ public class HistoryUI : MonoBehaviour {
 
                 foreach (var exercise in response.data) {
                     var entry = Instantiate(historyEntryPrefab, historyContainer);
-                    entry.transform.Find("ExerciseName").GetComponent<TMP_Text>().text = exercise.exerciseName;
-                    entry.transform.Find("Date").GetComponent<TMP_Text>().text = exercise.date; // Adjust property as needed
-                    // Add more fields as needed
+                    entry.transform.Find("ExerciseName").GetComponent<TMP_Text>().text = exercise.exercise;
+                    entry.transform.Find("Difficulty").GetComponent<TMP_Text>().text = exercise.difficulty;
+                    entry.transform.Find("Result").GetComponent<TMP_Text>().text = exercise.earnedPoints.ToString();
+                    entry.transform.Find("Date").GetComponent<TMP_Text>().text = exercise.completedAt.ToString();
                 }
             },
             onError: err => {
