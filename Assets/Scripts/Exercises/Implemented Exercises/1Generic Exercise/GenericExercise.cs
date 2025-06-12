@@ -197,9 +197,7 @@ public class GenericExercise : Exercise
 
     private void SaveExercise() {
         CompletedExerciseDTO dto = new CompletedExerciseDTO {
-            // TODO: Replace this with the exercise enum
-            exercise = this.Title,
-            // -----------------------------------------
+            exercise = Title,
             earnedPoints = (int)ScoreManager.Instance.Score,
             difficulty = DifficultyManager.Instance.SelectedDifficulty,
             completedAt = System.DateTime.UtcNow

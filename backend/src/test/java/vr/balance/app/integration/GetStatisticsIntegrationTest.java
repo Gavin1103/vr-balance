@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import vr.balance.app.enums.ExerciseEnum;
 
 import java.util.Arrays;
 
@@ -31,7 +32,7 @@ public class GetStatisticsIntegrationTest {
     void getStatistics_shouldReturnExerciseCount() throws Exception {
         // Arrange
         String ApiMessage = "Fetched successfully";
-        String exerciseName = "FIREFLY_EXERCISE";
+        String exerciseName = ExerciseEnum.Firefly.name();
 
         // NOTE: Check the `createCompletedFireflyExercises()` method in the database seeder
         // to verify how many Firefly exercises are generated per user. The total is calculated as:

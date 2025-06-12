@@ -46,7 +46,7 @@ public class ExerciseController {
      * - completedAt (DateTime)
      * <p>
      * ⚠️ Do not use this endpoint for exercises that require extra tracking data,
-     * like the balance test or firefly exercise.
+     *    like the balance test or firefly exercise.
      */
     @PostMapping("/store-exercise/standard")
     @PreAuthorize("isAuthenticated()")
@@ -54,10 +54,8 @@ public class ExerciseController {
     @Operation(summary = "Store a completed standard exercise (no extra fields required)")
     public ResponseEntity<ApiStandardResponse<Void>> storeStandardExercise(@RequestBody CompletedExerciseDTO dto) {
         completedExerciseService.saveExercise(
-                CompletedExercise.class,
                 dto,
-                authenticationService.getCurrentUserId(),
-                dto.getExercise()
+                authenticationService.getCurrentUserId()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -70,16 +68,14 @@ public class ExerciseController {
     @PostMapping("/store-exercise/firefly")
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearerAuth")
-    public ResponseEntity<ApiStandardResponse<Void>> storeFirefly(@RequestBody CompletedFireflyExerciseDTO dto) {
+    @Operation(summary = "Store a completed firefly exercise")
+    public ResponseEntity<ApiStandardResponse<Void>> storeFireflyExercise(@RequestBody CompletedFireflyExerciseDTO dto) {
         completedExerciseService.saveExercise(
-                CompletedFireflyExercise.class,
                 dto,
-                authenticationService.getCurrentUserId(),
-                ExerciseEnum.FIREFLY_EXERCISE
+                authenticationService.getCurrentUserId()
         );
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiStandardResponse<>(
                         HttpStatus.CREATED,
                         "Exercise saved successfully"
@@ -89,16 +85,14 @@ public class ExerciseController {
     @PostMapping("/store-exercise/balance-test")
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearerAuth")
-    public ResponseEntity<ApiStandardResponse<Void>> storeBalanceTest(@RequestBody CompletedBalanceTestExerciseDTO dto) {
+    @Operation(summary = "Store a completed balance test exercise")
+    public ResponseEntity<ApiStandardResponse<Void>> storeBalanceTestExercise(@RequestBody CompletedBalanceTestExerciseDTO dto) {
         completedExerciseService.saveExercise(
-                CompletedBalanceTestExercise.class,
                 dto,
-                authenticationService.getCurrentUserId(),
-                ExerciseEnum.BALANCE_TEST_EXERCISE
+                authenticationService.getCurrentUserId()
         );
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiStandardResponse<>(
                         HttpStatus.CREATED,
                         "Exercise saved successfully"

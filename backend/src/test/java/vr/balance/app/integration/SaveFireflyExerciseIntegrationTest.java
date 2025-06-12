@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import vr.balance.app.DTO.request.CompletedFireflyExerciseDTO;
 import vr.balance.app.enums.DifficultyEnum;
+import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.models.User;
 import vr.balance.app.models.exercise.CompletedFireflyExercise;
 import vr.balance.app.repository.UserRepository;
@@ -62,6 +63,7 @@ public class SaveFireflyExerciseIntegrationTest {
         Instant now = Instant.now();
 
         CompletedFireflyExerciseDTO dto = CompletedFireflyExerciseDTO.builder()
+                .exercise(ExerciseEnum.Firefly)
                 .difficulty(DifficultyEnum.EASY)
                 .earnedPoints(300)
                 .completedAt(now)

@@ -1,8 +1,6 @@
 package vr.balance.app.DTO.request.base;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import vr.balance.app.enums.DifficultyEnum;
 import vr.balance.app.enums.ExerciseEnum;
@@ -13,6 +11,8 @@ import java.time.Instant;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class CompletedExerciseDTO {
     ExerciseEnum exercise;
     DifficultyEnum difficulty;

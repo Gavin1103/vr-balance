@@ -143,6 +143,7 @@ public class FireFlyWaveManager : MonoBehaviour {
 
     private void SendFireflyData() {
        CompletedFireflyExerciseDTO dto = new CompletedFireflyExerciseDTO {
+           exercise = "Firefly",
            caughtFirefliesCount = fireFliesCaught,
            caughtWrongFirefliesCount = 100, // Adjust this value as per your needs
            earnedPoints = (int)ScoreManager.Instance.Score,

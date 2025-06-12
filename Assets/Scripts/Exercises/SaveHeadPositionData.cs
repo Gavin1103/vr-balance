@@ -30,6 +30,7 @@ public class SaveHeadPositionData : MonoBehaviour
     {
         CompletedBalanceTestExerciseDTO dto = new CompletedBalanceTestExerciseDTO
         {
+            exercise = "Balance",
             completedAt = DateTime.UtcNow,
             difficulty = Difficulty.None,
             earnedPoints = 0,
