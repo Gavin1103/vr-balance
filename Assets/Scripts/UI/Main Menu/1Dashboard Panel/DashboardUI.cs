@@ -136,40 +136,43 @@ public class DashboardUI : MonoBehaviour
             Destroy(container.GetChild(i).gameObject);
 
         // Insert user entry and line
-        InsertUserEntryAndLine(container, userLabel, userScore);
+        string userToken = PlayerPrefs.GetString("Login-Token");
+        if (userToken != "") {
+            InsertUserEntryAndLine(container, userLabel, userScore);
+        }
 
         // Insert top 20
-        for (int i = 0; i < data.Count && i < 20; i++)
-        {
-            var entry = data[i];
-            var entryObj = Instantiate(leaderboardEntryPrefab, container);
-            var entryNameText = entryObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
-            var entryScoreText = entryObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
-            entryNameText.text = $"{i + 1}. {getName(entry)}";
-            entryScoreText.text = getScore(entry).ToString();
+            for (int i = 0; i < data.Count && i < 20; i++)
+            {
+                var entry = data[i];
+                var entryObj = Instantiate(leaderboardEntryPrefab, container);
+                var entryNameText = entryObj.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+                var entryScoreText = entryObj.transform.Find("Score").GetComponent<TMPro.TextMeshProUGUI>();
+                entryNameText.text = $"{i + 1}. {getName(entry)}";
+                entryScoreText.text = getScore(entry).ToString();
 
-            // Color coding
-            if (i == 0)
-            {
-                entryNameText.color = Color.red;
-                entryScoreText.color = Color.red;
+                // Color coding
+                if (i == 0)
+                {
+                    entryNameText.color = Color.red;
+                    entryScoreText.color = Color.red;
+                }
+                else if (i == 1)
+                {
+                    entryNameText.color = new Color(1f, 0.5f, 0f); // Orange
+                    entryScoreText.color = new Color(1f, 0.5f, 0f);
+                }
+                else if (i == 2)
+                {
+                    entryNameText.color = Color.yellow;
+                    entryScoreText.color = Color.yellow;
+                }
+                else
+                {
+                    entryNameText.color = Color.white;
+                    entryScoreText.color = Color.white;
+                }
             }
-            else if (i == 1)
-            {
-                entryNameText.color = new Color(1f, 0.5f, 0f); // Orange
-                entryScoreText.color = new Color(1f, 0.5f, 0f);
-            }
-            else if (i == 2)
-            {
-                entryNameText.color = Color.yellow;
-                entryScoreText.color = Color.yellow;
-            }
-            else
-            {
-                entryNameText.color = Color.white;
-                entryScoreText.color = Color.white;
-            }
-        }
     }
     
     private void InsertUserEntryAndLine(Transform container, string label, int score)
