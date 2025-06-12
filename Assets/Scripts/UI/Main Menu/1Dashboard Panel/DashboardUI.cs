@@ -81,6 +81,7 @@ public class DashboardUI : MonoBehaviour
     private void HandleLeaderboard()
     {
         // Fetch user streak first
+        Debug.Log("Start couroutine?");
         StartCoroutine(userStatsService.GetUserStreak(
             onSuccess: userResponse =>
             {
@@ -91,6 +92,8 @@ public class DashboardUI : MonoBehaviour
                 StartCoroutine(userStatsService.GetTop20HighestStreaks(
                     onSuccess: topResponse =>
                     {
+                        Debug.Log("Fetched all-time leaderboard successfully");
+                        Debug.Log("User highest streak: " + highest);
                         PopulateLeaderboardWithUser(
                             leaderboardAllTimeContainer,
                             "Your Highest",
@@ -104,9 +107,11 @@ public class DashboardUI : MonoBehaviour
                 ));
 
                 // Current highest streaks
+                Debug.Log("Starting?");
                 StartCoroutine(userStatsService.GetTop20CurrentStreaks(
                     onSuccess: topResponse =>
                     {
+                        Debug.Log("Hello: " + userResponse.data);
                         PopulateLeaderboardWithUser(
                             leaderboardCurrentContainer,
                             "Your Current",
