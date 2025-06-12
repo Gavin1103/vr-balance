@@ -74,3 +74,7 @@ crashlytics-build.properties
 .vscode/extensions.json
 .vscode/launch.json
 .idea/.idea.beenoodaahoo99/.idea/workspace.xml
+
+.DS_Store
+
+.idea/
