@@ -13,6 +13,7 @@ public class ExerciseManager : MonoBehaviour {
     [Header("General UI References")]
     public GameObject MainUI;
     public GameObject ExerciseUI;
+    public GameObject ExitUI;
     public GameObject EndUI;
     public GameObject ExerciseTimer;
     [Header("Spawn Exercise Buttons")]
@@ -40,15 +41,14 @@ public class ExerciseManager : MonoBehaviour {
     public SaveHeadPositionData saveHeadPositionData;
 
     //Balance Test Runner
-    public BalanceTestRunner balanceTestRunner; 
+    public BalanceTestRunner balanceTestRunner;
 
 
     void Awake() {
         Instance = this;
     }
 
-    void Start()
-    {
+    void Start() {
         Exercises = ExerciseFactory.CreateAllExercises();
         BalanceTestExercise = Exercises.Find(e => e.Title.ToLower().Contains("balance")) as BalanceTestExercise;
         GenerateExerciseButtons();
@@ -70,7 +70,7 @@ public class ExerciseManager : MonoBehaviour {
         ExercisesMenu.SetActive(false);
         // VideoPlayer.SetActive(true);
 
-   
+
 
         // Find new button and text
         foreach (Transform child in ButtonContainer) {
@@ -129,7 +129,7 @@ public class ExerciseManager : MonoBehaviour {
         ScoreManager.Instance.ResetScore();
         MainUI.SetActive(false);
         ExerciseUI.SetActive(true);
-
+        ExitUI.SetActive(false);
         // Start the 5 second delay coroutine
         StartCoroutine(WaitBeforeStarting(exercise));
 
@@ -154,6 +154,8 @@ public class ExerciseManager : MonoBehaviour {
 
         // When the countdown is done, clear the text
         TimeLeft.text = "Go!";
+        ExerciseUI.SetActive(true);
+        ExitUI.SetActive(true);
         ExerciseTimer.SetActive(false);
         // After countdown ends, execute the following
         currentExercise = exercise;

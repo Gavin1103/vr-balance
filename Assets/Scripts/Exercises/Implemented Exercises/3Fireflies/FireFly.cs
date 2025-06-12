@@ -28,7 +28,7 @@ public class FireFly : MonoBehaviour, Icatchable {
         randomSeed = UnityEngine.Random.value * 1000f;
     }
     private void Update() {
-        FlyAroundPoint();
+        //FlyAroundPoint();
     }
 
     /// <summary>
