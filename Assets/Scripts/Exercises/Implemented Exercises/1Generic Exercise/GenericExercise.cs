@@ -7,6 +7,8 @@ using DTO.Request.Exercise.@base;
 
 public class GenericExercise : Exercise
 {
+    public string BackendEnum;
+
     public List<ExerciseMovement> Movements;
     public int AmountOfSets = 1;
     public float WaitTimeBetweenSets = 10f;
@@ -44,11 +46,13 @@ public class GenericExercise : Exercise
     [HideInInspector] public GenericExerciseScoreCalculator ScoreCalculator = new GenericExerciseScoreCalculator();
 
     public GenericExercise(
-            string title, string description, List<string> requirements,
+            string backendEnum, string title, string description, List<string> requirements,
             List<ExerciseMovement> movements, int amountOfSets, float waitTimeBetweenSets, int amountOfReps, float waitTimeBetweenReps,
             bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
             : base(title, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers)
     {
+        BackendEnum = backendEnum;
+
         Movements = movements;
         AmountOfSets = amountOfSets;
         WaitTimeBetweenSets = waitTimeBetweenSets;
@@ -193,7 +197,7 @@ public class GenericExercise : Exercise
 
     private void SaveExercise() {
         CompletedExerciseDTO dto = new CompletedExerciseDTO {
-            exercise = Title,
+            exercise = BackendEnum,
             earnedPoints = (int)ScoreManager.Instance.Score,
             difficulty = DifficultyManager.Instance.SelectedDifficulty,
             completedAt = System.DateTime.UtcNow

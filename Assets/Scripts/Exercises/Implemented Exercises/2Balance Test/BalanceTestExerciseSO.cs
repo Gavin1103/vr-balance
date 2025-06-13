@@ -7,6 +7,6 @@ public class BalanceTestExerciseSO : GenericExerciseSO {
         List<ExerciseMovement> movements = GetMovements();
         List<PositionChecker> positionCheckers = GetPositionCheckers();
 
-        return new BalanceTestExercise(Title, Description, Requirements, movements, AmountOfSets, WaitTimeBetweenSets, AmountOfReps, WaitTimeBetweenReps, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
+        return new BalanceTestExercise(BackendEnum, Title, Description, Requirements, movements, AmountOfSets, WaitTimeBetweenSets, AmountOfReps, WaitTimeBetweenReps, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
     }
 }

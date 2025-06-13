@@ -19,6 +19,7 @@ MonoBehaviour:
   EasyDifficulty: 0
   MediumDifficulty: 1
   HardDifficulty: 1
+  BackendEnum: Squat
   Movements:
   - {fileID: 11400000, guid: a609e0252d8683d47a2e33fec4d6d603, type: 2}
   - {fileID: 11400000, guid: 24be260a132fed0479ca1d11b6e92bcc, type: 2}

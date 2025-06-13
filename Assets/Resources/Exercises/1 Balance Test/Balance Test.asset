@@ -22,6 +22,7 @@ MonoBehaviour:
   EasyDifficulty: 0
   MediumDifficulty: 0
   HardDifficulty: 0
+  BackendEnum: Balance
   Movements:
   - {fileID: 11400000, guid: 9ee493c059c88374da2a9395546808eb, type: 2}
   - {fileID: 11400000, guid: 6f57afb8c1ebaf64bbc1470e9ed1c333, type: 2}

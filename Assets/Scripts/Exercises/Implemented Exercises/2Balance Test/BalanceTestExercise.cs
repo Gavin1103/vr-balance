@@ -8,10 +8,21 @@ public class BalanceTestExercise : GenericExercise
 {
     
     public BalanceTestExercise(
-            string title, string description, List<string> requirements,
-            List<ExerciseMovement> movements, int amountOfSets, float waitTimeBetweenSets, int amountOfReps, float waitTimeBetweenReps,
-            bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
-            : base(title, description, requirements, movements, amountOfSets, waitTimeBetweenSets, amountOfReps, waitTimeBetweenReps, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+            string backendEnum,
+            string title,
+            string description,
+            List<string> requirements,
+            List<ExerciseMovement> movements,
+            int amountOfSets,
+            float waitTimeBetweenSets,
+            int amountOfReps,
+            float waitTimeBetweenReps,
+            bool positionNeeded,
+            bool easyDifficulty,
+            bool mediumDifficulty,
+            bool hardDifficulty,
+            List<PositionChecker> positionCheckers)
+            : base(backendEnum, title, description, requirements, movements, amountOfSets, waitTimeBetweenSets, amountOfReps, waitTimeBetweenReps, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
     }
 
     public override void StartExercise() {

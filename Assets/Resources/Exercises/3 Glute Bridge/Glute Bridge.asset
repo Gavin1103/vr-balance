@@ -24,6 +24,7 @@ MonoBehaviour:
   EasyDifficulty: 0
   MediumDifficulty: 0
   HardDifficulty: 0
+  BackendEnum: GluteBridge
   Movements:
   - {fileID: 11400000, guid: aa624352adb72af41916fa423e7b70c9, type: 2}
   - {fileID: 11400000, guid: da4a534a94efc484fa4985e8b00e0630, type: 2}
