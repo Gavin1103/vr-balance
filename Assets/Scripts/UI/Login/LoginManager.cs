@@ -42,7 +42,7 @@ public class LoginManager : MonoBehaviour
                 onSuccess: ApiResponse =>
                 {
                     // Saves token and username
-                    PlayerPrefs.SetString("Login-Token", ApiResponse.data.token);
+                    User.SetLogin(ApiResponse.data.token, "Needs to be implemented");
 
                     // Save user in the json file
                     AddUserToJsonFile();

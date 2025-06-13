@@ -9,7 +9,7 @@ public class Logout : MonoBehaviour
     {
 
         // Delete current token and username, so the game forgets that user is logged in
-        PlayerPrefs.DeleteKey("Login-Token");
+        User.Logout();
    
         mainMenu.SetActive(false);
         startMenu.SetActive(true);

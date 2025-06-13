@@ -36,15 +36,14 @@ namespace Service
             System.Action<ApiResponse<UserStreakDTO>> onSuccess,
             System.Action<ApiErrorResponse<Void>> onError)
         {
-            string userToken = PlayerPrefs.GetString("Login-Token");
 
-            if (userToken != "")
+            if (User.IsLoggedIn())
             {
                 yield return ApiClient.Get<ApiResponse<UserStreakDTO>, ApiErrorResponse<Void>>(
                     "/user-stats/get-streak",
                     response => onSuccess?.Invoke(response),
                     error => onError?.Invoke(error),
-                    userToken
+                    User.GetToken()
                 );
             }
         }

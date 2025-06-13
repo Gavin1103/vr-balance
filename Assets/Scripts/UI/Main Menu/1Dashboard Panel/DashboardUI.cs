@@ -28,7 +28,7 @@ public class DashboardUI : MonoBehaviour
     void OnEnable()
     {
         // Check if user is logged in or guest
-        isGuest = string.IsNullOrEmpty(PlayerPrefs.GetString("Login-Token"));
+        isGuest = User.IsLoggedIn();
         userStreakUI.SetActive(!isGuest);
         streakText.text = "Streak: N/A";
         usernameText.text = isGuest ? "Welcome Guest" : "Welcome";

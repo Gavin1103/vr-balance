@@ -17,9 +17,7 @@ public class ExerciseService
         string ApiEndpoint
     )
     {
-        string userToken = PlayerPrefs.GetString("Login-Token");
-
-        if (userToken != "")
+        if (User.IsLoggedIn())
         {
             string json = JsonConvert.SerializeObject(request);
 
@@ -28,7 +26,7 @@ public class ExerciseService
                 json,
                 response => onSuccess?.Invoke(response),
                 error => onError?.Invoke(error),
-                userToken
+                User.GetToken()
             );
         }
     }
@@ -37,15 +35,13 @@ public class ExerciseService
         System.Action<ApiResponse<List<CompletedExerciseResponse>>> onSuccess,
         System.Action<ApiErrorResponse<Void>> onError)
     {
-        string userToken = PlayerPrefs.GetString("Login-Token");
-
-        if (userToken != "")
+        if (User.IsLoggedIn())
         {
             yield return ApiClient.Get<ApiResponse<List<CompletedExerciseResponse>>, ApiErrorResponse<Void>>(
                 "/exercise/fetch-last-10-exercises",
                 response => onSuccess?.Invoke(response),
                 error => onError?.Invoke(error),
-                userToken
+                User.GetToken()
             );
         }
     }
