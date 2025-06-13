@@ -11,6 +11,11 @@ public class HistoryUI : MonoBehaviour {
     }
 
     private IEnumerator FetchAndDisplayHistory() {
+        // Ensure the history container is empty before populating it
+        for (int i = historyContainer.childCount - 1; i >= 0; i--)
+            Destroy(historyContainer.GetChild(i).gameObject);
+
+
         ExerciseService exerciseService = new ExerciseService();
         // Destroy it first
         yield return exerciseService.FetchLast10Exercises(
