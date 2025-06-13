@@ -99,7 +99,7 @@ public class ExerciseController {
                 ));
     }
 
-    @PostMapping("/fetch-last-10-exercises")
+    @GetMapping("/fetch-last-10-exercises")
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Fetch the last 10 completedExercises of the logged-in user")
