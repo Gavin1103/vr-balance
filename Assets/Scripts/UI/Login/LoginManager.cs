@@ -42,7 +42,7 @@ public class LoginManager : MonoBehaviour
                 onSuccess: ApiResponse =>
                 {
                     // Saves token and username
-                    PlayerPrefs.SetString("Login-Token", ApiResponse.data.token);
+                    User.SetLogin(ApiResponse.data.token, "Needs to be implemented");
 
                     // Save user in the json file
                     AddUserToJsonFile();
@@ -53,7 +53,7 @@ public class LoginManager : MonoBehaviour
                 onError: error =>
                 {
                     if (error == null || string.IsNullOrEmpty(error.message)) {
-                        errorMessage.text = "Er is een onbekende fout opgetreden.";
+                        errorMessage.text = "An unknown error occurred.";
                     }
                     else {
                         errorMessage.text = error.message;
@@ -65,14 +65,14 @@ public class LoginManager : MonoBehaviour
         }
         else
         {
-            errorMessage.text = "Username of pincode is niet ingevuld";
+            errorMessage.text = "Username or pincode not filled in!";
             StartCoroutine(RemoveErrorText());
         }
     }
 
     private void LoginSucceeded()
     {
-        errorMessage.text = "Login gelukt!";
+        errorMessage.text = "Login success!";
         StartCoroutine(LoadingMenu());
         StartCoroutine(RemoveErrorText());
     }
@@ -87,7 +87,7 @@ public class LoginManager : MonoBehaviour
     // Waits a few seconds to load main menu
     IEnumerator LoadingMenu()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         loginMenu.SetActive(false);
         mainMenu.SetActive(true);
 

@@ -6,14 +6,23 @@ using System.Linq;
 
 public class BalanceTestExercise : GenericExercise
 {
-    public float EasyScoreThreshold = 300f;
-    public float MediumScoreThreshold = 700f;
-    public GameObject npc;
+    
     public BalanceTestExercise(
-            string title, string description, List<string> requirements,
-            List<ExerciseMovement> movements, int amountOfSets, float waitTimeBetweenSets, int amountOfReps, float waitTimeBetweenReps,
-            bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
-            : base(title, description, requirements, movements, amountOfSets, waitTimeBetweenSets, amountOfReps, waitTimeBetweenReps, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+            string backendEnum,
+            string title,
+            string description,
+            List<string> requirements,
+            List<ExerciseMovement> movements,
+            int amountOfSets,
+            float waitTimeBetweenSets,
+            int amountOfReps,
+            float waitTimeBetweenReps,
+            bool positionNeeded,
+            bool easyDifficulty,
+            bool mediumDifficulty,
+            bool hardDifficulty,
+            List<PositionChecker> positionCheckers)
+            : base(backendEnum, title, description, requirements, movements, amountOfSets, waitTimeBetweenSets, amountOfReps, waitTimeBetweenReps, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
     }
 
     public override void StartExercise() {
@@ -36,10 +45,10 @@ public class BalanceTestExercise : GenericExercise
         base.ExerciseEnded();
 
         SaveHeadSway();
-
-        if (npc != null) {
-            npc.SetActive(false);
-        }
+    }
+    
+    public override void DisplayEndScreen() {
+        EndScreenUI.Instance.UpdateEndUI("Your headsway has been calculated", "Advised difficulty:", DifficultyManager.Instance.AdvisedDifficulty.ToString());
     }
 
     private void SaveHeadSway() {
@@ -55,5 +64,9 @@ public class BalanceTestExercise : GenericExercise
             var balanceBehaviour = movement.ExerciseBehaviours.OfType<BalanceBehaviour>().FirstOrDefault();
             balanceBehaviour.HeadPositions.Clear();
         }
+    }
+
+    protected override void SaveExercise() {
+        return; // No need to save the balance test exercise as it is already saved in SaveHeadPositionData
     }
 }

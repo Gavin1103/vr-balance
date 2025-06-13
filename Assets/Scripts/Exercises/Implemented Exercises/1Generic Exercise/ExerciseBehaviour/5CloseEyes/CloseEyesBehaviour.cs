@@ -18,6 +18,8 @@ public class CloseEyesBehaviour : IMovementBehaviour {
         if (mono != null) {
             var renderer = sphere.GetComponent<Renderer>();
             if (renderer != null) {
+                SetMaterialTransparent(renderer.material);
+
                 if (fadeCoroutine != null) mono.StopCoroutine(fadeCoroutine);
                 fadeCoroutine = mono.StartCoroutine(FadeMaterialAlpha(renderer.material, 0f, 1f, fadeDuration));
             }
@@ -53,8 +55,20 @@ public class CloseEyesBehaviour : IMovementBehaviour {
         color.a = to;
         mat.color = color;
     }
+    
+    private void SetMaterialTransparent(Material mat) {
+        mat.SetFloat("_Mode", 3); // Transparent
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetInt("_ZWrite", 0); // ZWrite Off
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.EnableKeyword("_ALPHABLEND_ON");
+        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+    }
 
-    private IEnumerator FadeOutAndDisable(GameObject obj, Material mat, float from, float to, float duration) {
+    private IEnumerator FadeOutAndDisable(GameObject obj, Material mat, float from, float to, float duration)
+    {
         yield return FadeMaterialAlpha(mat, from, to, duration);
         obj.SetActive(false);
     }

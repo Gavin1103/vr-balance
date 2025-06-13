@@ -19,6 +19,7 @@ MonoBehaviour:
   EasyDifficulty: 0
   MediumDifficulty: 0
   HardDifficulty: 0
+  BackendEnum: Lunge
   Movements:
   - {fileID: 11400000, guid: eed277d414acd004a888fee76f4de1c2, type: 2}
   - {fileID: 11400000, guid: d7fdf9bc820e41943bd937dc19037697, type: 2}

@@ -15,7 +15,6 @@ public class ExerciseManager : MonoBehaviour {
     public GameObject ExerciseUI;
     public GameObject ExitUI;
     public GameObject EndUI;
-    public GameObject ExerciseTimer;
     [Header("Spawn Exercise Buttons")]
     public GameObject ButtonPrefab;
     public Transform ButtonContainer;
@@ -26,11 +25,14 @@ public class ExerciseManager : MonoBehaviour {
     public TMP_Text SelectedExerciseTitle;
     public TMP_Text SelectedExerciseDescription;
     public TMP_Text SelectedExerciseRequirements;
-    public TMP_Text TimeLeft;
     private Button currentSelectedExerciseButton;
     private TMP_Text currentSelectedExerciseText;
     public GameObject VideoPlayer;
     public Button StartExerciseButton;
+    [Header("Extra Info UI")]
+    public GameObject ExtraInfoObject;
+    public TextMeshProUGUI ExtraInfoText;
+  
     [Header("Tracking Targets")]
     public Transform LeftStick;
     public Transform RightStick;
@@ -139,24 +141,24 @@ public class ExerciseManager : MonoBehaviour {
     private IEnumerator WaitBeforeStarting(Exercise exercise) {
         // Countdown from 5 seconds to 0
         float countdownTime = 4f;
-        ExerciseTimer.SetActive(true);
+        ExtraInfoObject.SetActive(true);
         SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
-        while (countdownTime > 0) {
-            // Update the TimeLeft UI with the remaining time (rounded to an integer)
-            TimeLeft.text = Mathf.Ceil(countdownTime).ToString();
+        while (countdownTime > 0f) {
+            ExtraInfoText.text = Mathf.Ceil(countdownTime).ToString();
 
-            // Wait for 1 second before updating again
-            yield return new WaitForSeconds(1f);
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                break;
+            }
 
-            // Decrease the countdown
-            countdownTime--;
+            countdownTime -= Time.deltaTime;
+            yield return null;
         }
 
         // When the countdown is done, clear the text
-        TimeLeft.text = "Go!";
+        ExtraInfoText.text = "Go!";
         ExerciseUI.SetActive(true);
         ExitUI.SetActive(true);
-        ExerciseTimer.SetActive(false);
+        ExtraInfoObject.SetActive(false);
         // After countdown ends, execute the following
         currentExercise = exercise;
         currentExercise.StartExercise();
@@ -181,9 +183,8 @@ public class ExerciseManager : MonoBehaviour {
         //GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(false);
         //GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(false);
 
-        EndScreenUI.Instance.UpdateEndUI(currentExercise.Title, ScoreManager.Instance.Score);
-
         currentExercise.ExerciseEnded();
+        currentExercise.DisplayEndScreen();
         ScoreManager.Instance.ResetScore();
         currentExercise = null;
     }

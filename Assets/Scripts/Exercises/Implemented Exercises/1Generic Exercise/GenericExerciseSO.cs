@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "NewGenericExercise", menuName = "Exercise/Exercises/Generic")]
 public class GenericExerciseSO : ExerciseSO {
+    public string BackendEnum;
     public List<ExerciseMovementSO> Movements;
     [Min(1)]
     public int AmountOfSets = 1;
@@ -33,6 +34,6 @@ public class GenericExerciseSO : ExerciseSO {
         List<ExerciseMovement> movements = GetMovements();
         List<PositionChecker> positionCheckers = GetPositionCheckers();
 
-        return new GenericExercise(Title, Description, Requirements, movements, AmountOfSets, WaitTimeBetweenSets, AmountOfReps, WaitTimeBetweenReps, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
+        return new GenericExercise(BackendEnum, Title, Description, Requirements, movements, AmountOfSets, WaitTimeBetweenSets, AmountOfReps, WaitTimeBetweenReps, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
     }
 }

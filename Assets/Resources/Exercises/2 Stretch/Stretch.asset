@@ -21,6 +21,7 @@ MonoBehaviour:
   EasyDifficulty: 0
   MediumDifficulty: 0
   HardDifficulty: 0
+  BackendEnum: Stretch
   Movements:
   - {fileID: 11400000, guid: d7d14397a604bc4489f8222cc39a2658, type: 2}
   - {fileID: 11400000, guid: 132a51e5171b2124aa803c6cfda6453f, type: 2}

@@ -7,6 +7,8 @@ using DTO.Request.Exercise.@base;
 
 public class GenericExercise : Exercise
 {
+    public string BackendEnum;
+
     public List<ExerciseMovement> Movements;
     public int AmountOfSets = 1;
     public float WaitTimeBetweenSets = 10f;
@@ -44,11 +46,13 @@ public class GenericExercise : Exercise
     [HideInInspector] public GenericExerciseScoreCalculator ScoreCalculator = new GenericExerciseScoreCalculator();
 
     public GenericExercise(
-            string title, string description, List<string> requirements,
+            string backendEnum, string title, string description, List<string> requirements,
             List<ExerciseMovement> movements, int amountOfSets, float waitTimeBetweenSets, int amountOfReps, float waitTimeBetweenReps,
             bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
             : base(title, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers)
     {
+        BackendEnum = backendEnum;
+
         Movements = movements;
         AmountOfSets = amountOfSets;
         WaitTimeBetweenSets = waitTimeBetweenSets;
@@ -68,9 +72,6 @@ public class GenericExercise : Exercise
     {
         refs.RepsAndSetsObject.SetActive(true);
 
-        refs.LeftStickAffordance.SetActive(true);
-        refs.RightStickAffordance.SetActive(true);
-        refs.HeadsetAffordance.SetActive(true);
         refs.SequenceUI.SetActive(true);
         currentMovementIndex = 0;
         currentRepIndex = 0;
@@ -125,7 +126,6 @@ public class GenericExercise : Exercise
 
                     // Update UI for current set/rep/movement
                     refs.RepsAndSetsText.text = $"Set {currentSetIndex + 1}/{AmountOfSets}\nRep {currentRepIndex + 1}/{AmountOfReps}";
-
                     actionImageComponent.sprite = currentMovement.InstructionImage;
                     yield return moveImageCoroutine = ExerciseManager.Instance.StartCoroutine(movement.Play());
                     movement.MovementEnded();
@@ -152,25 +152,23 @@ public class GenericExercise : Exercise
             currentSetIndex++;
         }
         // End of exercise
-        ExerciseEnded();
         SoundManager.soundInstance.PlaySFX("Exercise End");
+        currentMovementIndex--;
         ExerciseManager.Instance.ExerciseEnded();
     }
 
-    private IEnumerator ShowRestUI(float duration)
-    {
-        refs.RestUI.SetActive(true);
+    private IEnumerator ShowRestUI(float duration) {
+        ExerciseManager.Instance.ExtraInfoObject.SetActive(true);
 
         float elapsed = 0f;
-        while (elapsed < duration)
-        {
+        while (elapsed < duration) {
             int secondsLeft = Mathf.CeilToInt(duration - elapsed);
-            refs.TakeABreakText.text = $"Take a short break!\n{secondsLeft}s";
+            ExerciseManager.Instance.ExtraInfoText.text = $"Take a short break!\n{secondsLeft}s";
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        refs.RestUI.SetActive(false);
+        ExerciseManager.Instance.ExtraInfoObject.SetActive(false);
     }
 
     public override void ExerciseEnded()
@@ -188,16 +186,15 @@ public class GenericExercise : Exercise
             moveImageCoroutine = null;
         }
 
-        currentMovementIndex--;
         currentMovement.MovementEnded();
 
         refs.SequenceUI.SetActive(false);
-        refs.RestUI.SetActive(false);
+        ExerciseManager.Instance.ExtraInfoObject.SetActive(false);
     }
 
-    private void SaveExercise() {
+    protected virtual void SaveExercise() {
         CompletedExerciseDTO dto = new CompletedExerciseDTO {
-            exercise = Title,
+            exercise = BackendEnum,
             earnedPoints = (int)ScoreManager.Instance.Score,
             difficulty = DifficultyManager.Instance.SelectedDifficulty,
             completedAt = System.DateTime.UtcNow
