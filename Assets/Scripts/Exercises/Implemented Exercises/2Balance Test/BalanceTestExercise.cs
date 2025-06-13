@@ -67,6 +67,6 @@ public class BalanceTestExercise : GenericExercise
     }
 
     protected override void SaveExercise() {
-        return null; // No need to save the balance test exercise as it is already saved in SaveHeadPositionData
+        return; // No need to save the balance test exercise as it is already saved in SaveHeadPositionData
     }
 }
