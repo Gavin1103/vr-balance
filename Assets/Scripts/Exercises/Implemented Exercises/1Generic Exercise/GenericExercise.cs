@@ -195,7 +195,7 @@ public class GenericExercise : Exercise
         ExerciseManager.Instance.ExtraInfoObject.SetActive(false);
     }
 
-    private void SaveExercise() {
+    protected virtual void SaveExercise() {
         CompletedExerciseDTO dto = new CompletedExerciseDTO {
             exercise = BackendEnum,
             earnedPoints = (int)ScoreManager.Instance.Score,

@@ -65,4 +65,8 @@ public class BalanceTestExercise : GenericExercise
             balanceBehaviour.HeadPositions.Clear();
         }
     }
+
+    protected override void SaveExercise() {
+        return null; // No need to save the balance test exercise as it is already saved in SaveHeadPositionData
+    }
 }
