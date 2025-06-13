@@ -1,0 +1,25 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Railway CLI
+        run: |
+          curl -fsSL https://railway.app/install.sh | sh
+          echo "$HOME/.railway/bin" >> $GITHUB_PATH
+      - name: Deploy Backend
+        working-directory: backend
+        run: |
+          mkdir -p .railway
+          echo "{\"projectId\":\"${{ secrets.RAILWAY_PROJECT_ID }}\",\"environmentId\":\"production\",\"serviceId\":\"${{ secrets.RAILWAY_SERVICE_ID_BACKEND }}\"}" > .railway/project.json
+          railway up --ci --service=${{ secrets.RAILWAY_SERVICE_ID_BACKEND }}

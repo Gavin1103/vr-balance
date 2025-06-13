@@ -14,10 +14,13 @@ import vr.balance.app.exceptions.NotFoundException;
 import vr.balance.app.models.User;
 import vr.balance.app.models.exercise.CompletedBalanceTestExercise;
 import vr.balance.app.models.exercise.CompletedExercise;
+import vr.balance.app.models.exercise.CompletedFireflyExercise;
 import vr.balance.app.repository.UserRepository;
 import vr.balance.app.repository.exercise.CompletedExerciseRepository;
 
 import java.util.List;
+
+import static vr.balance.app.enums.ExerciseEnum.*;
 
 @Service
 public class CompletedExerciseService {
@@ -39,45 +42,71 @@ public class CompletedExerciseService {
     }
 
     /**
-     * Saves a completed exercise history record for a given user.
+     * Saves a completed exercise to the database for a specific user.
      * <p>
-     * This method uses generics to allow saving any type of {@link CompletedExercise} based on the specific
-     * {@link CompletedExerciseDTO} provided. The mapping is handled using a generic entity class and a DTO,
-     * and the corresponding exercise metadata is resolved via {@link ExerciseEnum}.
+     * This method dynamically maps a given {@link CompletedExerciseDTO} to its corresponding
+     * {@link CompletedExercise} subclass using the exercise type provided in the DTO.
+     * If the exercise is of a special type (e.g., balance test), extra processing is done.
+     * Otherwise, user statistics are updated and the record is saved directly.
      *
-     * @param entityClass  the concrete class type of the exercise history entity (e.g. CompletedFireflyExercise.class)
-     * @param dto          the data transfer object containing the completed exercise data
-     * @param userId       the ID of the user who completed the exercise
-     * @param exerciseEnum the enum representing the exercise type, used to look up the exercise entity
-     * @param <CE>         the type of {@link CompletedExercise} (must extend CompletedExercise)
-     * @param <DTO>        the type of {@link CompletedExerciseDTO} (must extend CompletedExerciseDTO)
-     * @throws UsernameNotFoundException if the user with the provided ID does not exist
+     * @param dto     the data transfer object containing the completed exercise data
+     * @param userId  the ID of the user who completed the exercise
+     * @param <DTO>   the type of {@link CompletedExerciseDTO}
+     * @throws UsernameNotFoundException if the user ID is not found in the repository
      */
-    public <CE extends CompletedExercise, DTO extends CompletedExerciseDTO> void saveExercise(
-            Class<CE> entityClass, DTO dto, Long userId, ExerciseEnum exerciseEnum) {
-
+    public <DTO extends CompletedExerciseDTO> void saveExercise(DTO dto, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-        CE completedExercise = modelMapper.map(dto, entityClass);
+        Class<? extends CompletedExercise> exerciseClass = getExerciseClass(dto.getExercise());
+        CompletedExercise completedExercise = modelMapper.map(dto, exerciseClass);
         completedExercise.setUser(user);
-        completedExercise.setExercise(exerciseEnum);
+        completedExercise.setExercise(dto.getExercise());
 
-        if (completedExercise instanceof CompletedBalanceTestExercise balanceTest) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                balanceTest.setPhase_1(mapper.writeValueAsString(((CompletedBalanceTestExerciseDTO) dto).getPhase_1()));
-                balanceTest.setPhase_2(mapper.writeValueAsString(((CompletedBalanceTestExerciseDTO) dto).getPhase_2()));
-                balanceTest.setPhase_3(mapper.writeValueAsString(((CompletedBalanceTestExerciseDTO) dto).getPhase_3()));
-                balanceTest.setPhase_4(mapper.writeValueAsString(((CompletedBalanceTestExerciseDTO) dto).getPhase_4()));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException("Failed to serialize phase data", e);
-            }
+        if (completedExercise instanceof CompletedBalanceTestExercise balanceTest
+                && dto instanceof CompletedBalanceTestExerciseDTO balanceTestDTO) {
+            mapBalanceTestData(balanceTest, balanceTestDTO);
         } else {
             userStatsService.updateUserStats(completedExercise);
         }
 
         completedExerciseRepository.save(completedExercise);
+    }
+
+    /**
+     * Returns the appropriate {@link CompletedExercise} subclass for the given exercise type.
+     * <p>
+     * This allows dynamic mapping of a DTO to its concrete entity class during persistence.
+     *
+     * @param exercise the exercise type from the {@link ExerciseEnum}
+     * @return the corresponding entity class to use for mapping
+     * @throws IllegalArgumentException if the exercise type is unknown
+     */
+    private Class<? extends CompletedExercise> getExerciseClass(ExerciseEnum exercise) {
+        return switch (exercise) {
+            case Balance -> CompletedBalanceTestExercise.class;
+            case Firefly -> CompletedFireflyExercise.class;
+            case Squat, Lunge -> CompletedExercise.class;
+            default -> throw new IllegalArgumentException("Unknown exercise type: " + exercise);
+        };
+    }
+
+    /**
+     * Maps detailed balance test phase data from the DTO to the entity.
+     *
+     * @param entity the balance test entity to populate
+     * @param dto    the DTO containing the raw data
+     */
+    private void mapBalanceTestData(CompletedBalanceTestExercise entity, CompletedBalanceTestExerciseDTO dto) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            entity.setPhase_1(mapper.writeValueAsString(dto.getPhase_1()));
+            entity.setPhase_2(mapper.writeValueAsString(dto.getPhase_2()));
+            entity.setPhase_3(mapper.writeValueAsString(dto.getPhase_3()));
+            entity.setPhase_4(mapper.writeValueAsString(dto.getPhase_4()));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to serialize balance test phase data", e);
+        }
     }
 
     public List<CompletedExerciseResponse> getLast10CompletedExercises(Long userId) {
@@ -88,7 +117,7 @@ public class CompletedExerciseService {
         List<CompletedExercise> recentExercises = completedExerciseRepository
                 .findByUserIdAndExerciseNotOrderByCompletedAtDesc(
                         user.getId(),
-                        ExerciseEnum.BALANCE_TEST_EXERCISE,
+                        Balance,
                         PageRequest.of(0, 10)
                 );
 
@@ -96,4 +125,6 @@ public class CompletedExerciseService {
                 .map(exercise -> modelMapper.map(exercise, CompletedExerciseResponse.class))
                 .toList();
     }
+
+
 }

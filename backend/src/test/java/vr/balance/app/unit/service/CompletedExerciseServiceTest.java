@@ -53,6 +53,7 @@ public class CompletedExerciseServiceTest {
         user.setId(userId);
 
         CompletedFireflyExerciseDTO dto = CompletedFireflyExerciseDTO.builder()
+                .exercise(ExerciseEnum.Firefly)
                 .earnedPoints(100)
                 .completedAt(Instant.now())
                 .difficulty(DifficultyEnum.MEDIUM)
@@ -66,11 +67,11 @@ public class CompletedExerciseServiceTest {
         when(modelMapper.map(dto, CompletedFireflyExercise.class)).thenReturn(mappedEntity);
 
         // Act
-        completedExerciseService.saveExercise(CompletedFireflyExercise.class, dto, userId, ExerciseEnum.FIREFLY_EXERCISE);
+        completedExerciseService.saveExercise(dto, userId);
 
         // Assert
         assertEquals(user, mappedEntity.getUser());
-        assertEquals(ExerciseEnum.FIREFLY_EXERCISE, mappedEntity.getExercise());
+        assertEquals(ExerciseEnum.Firefly, mappedEntity.getExercise());
 
         verify(userStatsService).updateUserStats(mappedEntity);
         verify(completedExerciseRepository).save(mappedEntity);

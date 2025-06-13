@@ -29,7 +29,7 @@ public interface CompletedExerciseRepository extends JpaRepository<CompletedExer
                     COUNT(ce)
                 )
                 FROM CompletedExercise ce
-                WHERE ce.exercise <> vr.balance.app.enums.ExerciseEnum.BALANCE_TEST_EXERCISE
+                WHERE ce.exercise <> vr.balance.app.enums.ExerciseEnum.Balance
                 GROUP BY ce.exercise
                 ORDER BY COUNT(ce) DESC
             """)
@@ -51,7 +51,7 @@ public interface CompletedExerciseRepository extends JpaRepository<CompletedExer
                 )
                 FROM CompletedExercise ce
                 WHERE ce.completedAt BETWEEN :from AND :to
-                  AND ce.exercise <> vr.balance.app.enums.ExerciseEnum.BALANCE_TEST_EXERCISE
+                  AND ce.exercise <> vr.balance.app.enums.ExerciseEnum.Balance
                 GROUP BY ce.exercise
                 ORDER BY COUNT(ce) DESC
             """)

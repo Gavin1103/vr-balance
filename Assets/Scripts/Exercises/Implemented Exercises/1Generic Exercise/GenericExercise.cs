@@ -193,7 +193,7 @@ public class GenericExercise : Exercise
 
     private void SaveExercise() {
         CompletedExerciseDTO dto = new CompletedExerciseDTO {
-            exercise = this.Title,
+            exercise = Title,
             earnedPoints = (int)ScoreManager.Instance.Score,
             difficulty = DifficultyManager.Instance.SelectedDifficulty,
             completedAt = System.DateTime.UtcNow
@@ -207,7 +207,7 @@ public class GenericExercise : Exercise
            onError: error => {
                Debug.Log(error.message);
            },
-           this.Title.ToLower()
+           "standard"
        ));
     }
 }

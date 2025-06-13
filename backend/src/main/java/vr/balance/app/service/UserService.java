@@ -106,7 +106,7 @@ public class UserService {
         List<CompletedExercise> recentExercises = completedExerciseRepository
                 .findByUserIdAndExerciseNotOrderByCompletedAtDesc(
                         user.getId(),
-                        ExerciseEnum.BALANCE_TEST_EXERCISE,
+                        ExerciseEnum.Balance,
                         PageRequest.of(0, 10)
                 );
 
