@@ -72,9 +72,6 @@ public class GenericExercise : Exercise
     {
         refs.RepsAndSetsObject.SetActive(true);
 
-        refs.LeftStickAffordance.SetActive(true);
-        refs.RightStickAffordance.SetActive(true);
-        refs.HeadsetAffordance.SetActive(true);
         refs.SequenceUI.SetActive(true);
         currentMovementIndex = 0;
         currentRepIndex = 0;
