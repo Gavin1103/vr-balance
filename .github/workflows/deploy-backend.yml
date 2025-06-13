@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy-backend:
-    runs-on: [self-hosted]
+    runs-on: self-hosted
     env:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
