@@ -15,7 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
-                                "http://localhost:5173", // dev website (frontend)
+//                                "http://localhost:5173", // dev website (frontend)
                                 "https://vrbalance.up.railway.app", // website (frontend)
                                 "https://vrbalance-api.up.railway.app" // swagger UI
 
