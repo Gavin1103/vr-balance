@@ -9,8 +9,9 @@ public class LoginMenuUI : MonoBehaviour {
 
     void Start() {
         SoundManager.soundInstance.PlaySFX("Startup");
+        User.Logout();
     }
-
+    
     public void OnLoginButtonPressed() {
         loginMenu.SetActive(false);
         mainMenu.SetActive(true);
