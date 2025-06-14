@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ca0aeae-e54a-4d65-b7a0-10c767d64a39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitlab-ci.build-backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.build-backend.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/Fonts/Passthrough/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Fonts/Passthrough/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/Imported models/NPC Model/NPCOverride.overrideController" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Imported models/NPC Model/NPCOverride.overrideController" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/Models/2Japan/Prefabs/Upgrade prefabs/RopePrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Models/2Japan/Prefabs/Upgrade prefabs/RopePrefab.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +78,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.BackendAppApplication.executor": "Run",
     "Spring Boot.VrBalanceApplication.executor": "Run",
-    "git-widget-placeholder": "UI-Improvements",
+    "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/amine/Desktop/Projects/12Motion Virtual Physiotherapy",
     "node.js.detected.package.eslint": "true",
@@ -200,8 +202,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
       </set>
     </attachedChunks>
   </component>
@@ -232,6 +234,7 @@
       <workItem from="1749203237705" duration="86000" />
       <workItem from="1749329152480" duration="756000" />
       <workItem from="1749548466436" duration="774000" />
+      <workItem from="1749816715908" duration="596000" />
     </task>
     <servers />
   </component>
