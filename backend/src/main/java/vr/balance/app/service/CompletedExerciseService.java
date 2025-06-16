@@ -86,8 +86,7 @@ public class CompletedExerciseService {
         return switch (exercise) {
             case Balance -> CompletedBalanceTestExercise.class;
             case Firefly -> CompletedFireflyExercise.class;
-            case Squat, Lunge -> CompletedExercise.class;
-            default -> throw new IllegalArgumentException("Unknown exercise type: " + exercise);
+            default -> CompletedExercise.class;
         };
     }
 
