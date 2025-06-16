@@ -27,7 +27,7 @@ public interface UserStatsRepository extends JpaRepository<UserStats, Long> {
                 SELECT new vr.balance.app.DTO.response.user_stats.HighestStreakRankingDTO(u.username, us.currentStreak)
                 FROM UserStats us
                 JOIN us.user u
-                ORDER BY us.highestStreak DESC
+                ORDER BY us.highestStreak ASC
             """)
     List<HighestStreakRankingDTO> findTop20ByHighestStreak(Pageable pageable);
 
@@ -35,7 +35,7 @@ public interface UserStatsRepository extends JpaRepository<UserStats, Long> {
     SELECT new vr.balance.app.DTO.response.user_stats.CurrentStreakRankingDTO(u.username, us.highestStreak)
     FROM UserStats us
     JOIN us.user u
-    ORDER BY us.currentStreak DESC
+    ORDER BY us.currentStreak ASC
 """)
     List<CurrentStreakRankingDTO> findTop20ByCurrentStreak(Pageable pageable);
 }
