@@ -48,8 +48,8 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Transactional
     public void run(String... args) {
         this.createUsers();
-        this.createCompletedFireflyExercises();
-        this.createCompletedBalanceTestExercises();
+//        this.createCompletedFireflyExercises();
+//        this.createCompletedBalanceTestExercises();
     }
 
     private void createUsers() {

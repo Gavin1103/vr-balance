@@ -10,6 +10,7 @@ import vr.balance.app.DTO.response.user_stats.CurrentStreakRankingDTO;
 import vr.balance.app.DTO.response.user_stats.HighestStreakRankingDTO;
 import vr.balance.app.DTO.response.user_stats.UserStatsResponse;
 import vr.balance.app.DTO.response.user_stats.UserStreakDTO;
+import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.exceptions.NotFoundException;
 import vr.balance.app.models.User;
 import vr.balance.app.models.UserStats;
@@ -20,10 +21,9 @@ import vr.balance.app.repository.exercise.CompletedExerciseRepository;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserStatsService {
@@ -71,7 +71,12 @@ public class UserStatsService {
     public <CE extends CompletedExercise> void updateUserStats(CE completedExercise) {
         UserStats existingStats = userStatsRepository.findByUser(completedExercise.getUser());
 
-        CompletedExercise lastExercise = completedExerciseRepository.findFirstByUserOrderByCompletedAtDesc(completedExercise.getUser());
+        CompletedExercise lastExercise = completedExerciseRepository
+                .findFirstByUserAndExerciseNotAndCompletedAtBeforeOrderByCompletedAtDesc(
+                        completedExercise.getUser(),
+                        ExerciseEnum.Balance,
+                        completedExercise.getCompletedAt()
+                );
 
         if (existingStats != null) {
             updateExistingStats(existingStats, completedExercise, lastExercise);
@@ -81,15 +86,19 @@ public class UserStatsService {
     }
 
     private <CE extends CompletedExercise> void updateExistingStats(UserStats stats, CE completedExercise, CE lastExercise) {
-        ZoneId zoneId = ZoneId.systemDefault();
-
-        LocalDate lastExerciseDate = toLocalDate(lastExercise.getCompletedAt(), zoneId);
-        LocalDate currentDate = toLocalDate(completedExercise.getCompletedAt(), zoneId);
+        LocalDate lastExerciseDate = toLocalDate(lastExercise.getCompletedAt());
+        LocalDate currentDate = toLocalDate(completedExercise.getCompletedAt());
 
         int newTotalPoints = stats.getTotalPoints() + completedExercise.getEarnedPoints();
         int existingExerciseCount = stats.getTotalExercises();
         int newStreak = calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak());
         int newHighestStreak = Math.max(stats.getHighestStreak(), newStreak);
+
+        System.out.println("lastExercise.getCompletedAt() = " + lastExercise.getCompletedAt());
+        System.out.println("completedExercise.getCompletedAt() = " + completedExercise.getCompletedAt());
+        System.out.println("lastDate = " + lastExerciseDate);
+        System.out.println("currentDate = " + currentDate);
+        System.out.println("daysBetween = " + ChronoUnit.DAYS.between(lastExerciseDate, currentDate));
 
         stats.setTotalPoints(newTotalPoints);
         stats.setCurrentStreak(newStreak);
@@ -97,6 +106,19 @@ public class UserStatsService {
         stats.setTotalExercises(existingExerciseCount + 1);
 
         userStatsRepository.save(stats);
+    }
+
+    private LocalDate toLocalDate(Instant instant) {
+        return instant.atZone(ZoneOffset.UTC).toLocalDate();
+    }
+
+    public int calculateNewStreak(LocalDate lastDate, LocalDate currentDate, int currentStreak) {
+        long daysBetween = ChronoUnit.DAYS.between(lastDate, currentDate);
+        return switch ((int) daysBetween) {
+            case 0 -> currentStreak;       // Same day
+            case 1 -> currentStreak + 1;   // Next day = streak continues
+            default -> 1;                  // Streak broken, reset to 1
+        };
     }
 
     private <CE extends CompletedExercise> void createNewStats(CE completedExercise) {
@@ -111,16 +133,4 @@ public class UserStatsService {
         userStatsRepository.save(newStats);
     }
 
-    private LocalDate toLocalDate(Instant instant, ZoneId zoneId) {
-        return instant.atZone(zoneId).toLocalDate();
-    }
-
-    public int calculateNewStreak(LocalDate lastDate, LocalDate currentDate, int currentStreak) {
-        long daysBetween = ChronoUnit.DAYS.between(lastDate, currentDate);
-        return switch ((int) daysBetween) {
-            case 0 -> currentStreak;       // Same day
-            case 1 -> currentStreak + 1;   // Next day = streak continues
-            default -> 1;                  // Streak broken, reset to 1
-        };
-    }
 }

@@ -63,7 +63,11 @@ class UserStatsServiceTest {
                 .build();
 
         when(userStatsRepository.findByUser(user)).thenReturn(stats);
-        when(completedExerciseRepository.findFirstByUserOrderByCompletedAtDesc(user)).thenReturn(lastExercise);
+        when(completedExerciseRepository.findFirstByUserAndExerciseNotAndCompletedAtBeforeOrderByCompletedAtDesc(
+                user,
+                ExerciseEnum.Balance,
+                newExercise.getCompletedAt()
+                )).thenReturn(lastExercise);
 
         // Act
         userStatsService.updateUserStats(newExercise);
