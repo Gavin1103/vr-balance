@@ -13,8 +13,24 @@ import java.time.Instant;
 import java.util.List;
 
 public interface CompletedExerciseRepository extends JpaRepository<CompletedExercise, Long> {
-
-    CompletedExercise findFirstByUserOrderByCompletedAtDesc(User user);
+    
+    /**
+     * Retrieves the most recent completed exercise for a given user that occurred before a specified time,
+     * excluding a specific exercise type.
+     * <p>
+     * This is useful for streak calculations or progression tracking, where certain exercise types (e.g., BALANCE)
+     * should not influence the user's stats.
+     *
+     * @param user the user whose completed exercise history is being queried
+     * @param excludedExercise the {@link ExerciseEnum} type to exclude from the result (e.g., {@code ExerciseEnum.Balance})
+     * @param completedAt the timestamp before which the exercise must have been completed
+     * @return the most recent {@link CompletedExercise} that matches the criteria, or {@code null} if none found
+     */
+    CompletedExercise findFirstByUserAndExerciseNotAndCompletedAtBeforeOrderByCompletedAtDesc(
+            User user,
+            ExerciseEnum excludedExercise,
+            Instant completedAt
+    );
 
     /**
      * Retrieves aggregated statistics for all completed exercises grouped by exercise type,
