@@ -35,3 +35,5 @@ MonoBehaviour:
   WaitTimeBetweenReps: 0
   CheckPositions:
   - {fileID: 11400000, guid: b3417515432dae8419133b5de1020531, type: 2}
+  - {fileID: 11400000, guid: 438890a9ebffb0544918f0daab5c844c, type: 2}
+  - {fileID: 11400000, guid: 39f64b1034ae76f43a0bd73ffdc39fdc, type: 2}
