@@ -27,4 +27,7 @@ MonoBehaviour:
   WaitTimeBetweenSets: 15
   AmountOfReps: 10
   WaitTimeBetweenReps: 0
-  CheckPositions: []
+  CheckPositions:
+  - {fileID: 11400000, guid: 8e71da07d94eb2347bf223813c7de5be, type: 2}
+  - {fileID: 11400000, guid: 6ffa38dc8ae19234faafa2c5dc5af871, type: 2}
+  - {fileID: 11400000, guid: ac453737cb7305b4695db421134f4488, type: 2}
