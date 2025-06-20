@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
-public class HeadSwayMovement : ExerciseMovement
+public class HeadSwayMovement : IMovementBehaviour
 {
     private List<Vector3> headPositions = new List<Vector3>();
 
@@ -36,15 +36,9 @@ public class HeadSwayMovement : ExerciseMovement
     private bool medium;
     private bool hard;
 
-    public HeadSwayMovement(float duration, Sprite image, float score, float holdTime, float minX, float maxX, float minY, float maxY, float minZ, float maxZ) : base(duration, image, score)
+    public HeadSwayMovement()
     {
-        this.holdTime = holdTime;
-        this.minX = minX;
-        this.maxX = maxX;
-        this.minY = minY;
-        this.maxY = maxY;
-        this.minZ = minZ;
-        this.maxZ = maxZ;
+
     }
 
     private void Reset()
@@ -52,6 +46,11 @@ public class HeadSwayMovement : ExerciseMovement
         // if (exercise is NormalExercise normalExercise) {
         //     normalExercise.RestartCurrentMovement();
         // }
+    }
+
+    public override void OnMovementStart(ExerciseMovement movement)
+    {
+        OnMovementUpdate(movement);
     }
 
     private Vector3 headsetPos;
@@ -64,7 +63,8 @@ public class HeadSwayMovement : ExerciseMovement
     private Vector3 currentHeadsetPos;
     private float minimalPos;
     private float maximalPos;
-    public override IEnumerator Play()
+
+    public override IEnumerator OnMovementUpdate(ExerciseMovement movement)
     {
         // go back here when resetting
 
@@ -83,12 +83,12 @@ public class HeadSwayMovement : ExerciseMovement
 
         restPosition = ExerciseManager.Instance.Headset.transform.position.y + 0.03f;
 
-        NormalExerciseReferences.Instance.LeftStickAffordance.SetActive(false);
-        NormalExerciseReferences.Instance.RightStickAffordance.SetActive(false);
-        NormalExerciseReferences.Instance.HeadsetAffordance.SetActive(false);
+        GenericExerciseReferences.Instance.LeftStickAffordance.SetActive(false);
+        GenericExerciseReferences.Instance.RightStickAffordance.SetActive(false);
+        GenericExerciseReferences.Instance.HeadsetAffordance.SetActive(false);
 
 
-        yield return base.Play();
+        yield return OnMovementUpdate(movement);
 
         // Hold at target & accumulate score
         float elapsedWhileHolding = 0f;
@@ -118,7 +118,7 @@ public class HeadSwayMovement : ExerciseMovement
             string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
             //Debug.Log(chosenDifficulty);
 
-            bool setPosition = NormalExerciseReferences.Instance.NeedsPosition;
+            bool setPosition = GenericExerciseReferences.Instance.NeedsPosition;
 
 
             //Debug.Log(posNeeded);
@@ -126,11 +126,11 @@ public class HeadSwayMovement : ExerciseMovement
             // Checks if the current exercise difficulty needs position checker
             bool setPositionNeeded = setPosition == true ? true : false;
             // Checks currently chosen difficulty to see if the exercise/minigame needs position check
-            bool checkDifficulty = chosenDifficulty == "Easy" ? NormalExerciseReferences.Instance.EasyDifficulty :
-                                   chosenDifficulty == "Medium" ? NormalExerciseReferences.Instance.MediumDifficulty :
-                                   chosenDifficulty == "Hard" ? NormalExerciseReferences.Instance.HardDifficulty : false;
+            bool checkDifficulty = chosenDifficulty == "Easy" ? GenericExerciseReferences.Instance.EasyDifficulty :
+                                   chosenDifficulty == "Medium" ? GenericExerciseReferences.Instance.MediumDifficulty :
+                                   chosenDifficulty == "Hard" ? GenericExerciseReferences.Instance.HardDifficulty : false;
 
-            PositionChecker currentChecker = NormalExerciseReferences.Instance.currentPosSO;
+            PositionChecker currentChecker = GenericExerciseReferences.Instance.currentPosSO;
             Debug.Log("Current Position Checker: " + currentChecker);
 
             Vector3 minBound = new Vector3(currentChecker.MinX, currentChecker.MinY, currentChecker.MinZ);
@@ -145,22 +145,22 @@ public class HeadSwayMovement : ExerciseMovement
 
 
             //Debug.Log("FeedbackCube is turned on: " + turnOnFeedback);
-            NormalExerciseReferences.Instance.FeedbackLine.SetActive(turnOnFeedback);
-            NormalExerciseReferences.Instance.RenderLineMinimal.SetActive(turnOnFeedback);
-            NormalExerciseReferences.Instance.RenderLineMaximal.SetActive(turnOnFeedback);
+            GenericExerciseReferences.Instance.FeedbackLine.SetActive(turnOnFeedback);
+            GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(turnOnFeedback);
+            GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(turnOnFeedback);
 
             Vector3 defaultZ = new Vector3(0, 0, 1);
 
-            NormalExerciseReferences.Instance.RenderLineMinimal.transform.position = (headsetPos + defaultZ) - minBound;
-            NormalExerciseReferences.Instance.RenderLineMaximal.transform.position = (headsetPos + defaultZ) - maxBound;
+            GenericExerciseReferences.Instance.RenderLineMinimal.transform.position = (headsetPos + defaultZ) - minBound;
+            GenericExerciseReferences.Instance.RenderLineMaximal.transform.position = (headsetPos + defaultZ) - maxBound;
             //Add another feedback stuff using the turnOnFeedback
 
             if (InBoundsY())
             {
                 elapsedWhileHolding += Time.deltaTime;
-                NormalExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(true);
-                NormalExerciseReferences.Instance.HoldMovementText.text = (holdTime - elapsedWhileHolding).ToString("0.0") + "s";
-                NormalExerciseReferences.Instance.InformationObject.SetActive(false);
+                GenericExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(true);
+                GenericExerciseReferences.Instance.HoldMovementText.text = (holdTime - elapsedWhileHolding).ToString("0.0") + "s";
+                GenericExerciseReferences.Instance.InformationObject.SetActive(false);
 
                 RenderCube(Color.green);
             }
@@ -170,9 +170,9 @@ public class HeadSwayMovement : ExerciseMovement
 
                 Reset();
                 elapsedWhileHolding = 0;
-                NormalExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(false);
-                NormalExerciseReferences.Instance.InformationObject.SetActive(true);
-                NormalExerciseReferences.Instance.InformationText.text = "Not in bounds!";
+                GenericExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(false);
+                GenericExerciseReferences.Instance.InformationObject.SetActive(true);
+                GenericExerciseReferences.Instance.InformationText.text = "Not in bounds!";
             }
 
             if (elapsedWhileHolding == 0)
@@ -188,7 +188,7 @@ public class HeadSwayMovement : ExerciseMovement
 
 
 
-            NormalExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(Mathf.Lerp(0, 160, elapsedWhileHolding / holdTime), NormalExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
+            GenericExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(Mathf.Lerp(0, 160, elapsedWhileHolding / holdTime), GenericExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
 
             yield return null;
         }
@@ -196,22 +196,23 @@ public class HeadSwayMovement : ExerciseMovement
         { // Need< Or my Scheiße breaks because the next action image will skip aswell
             yield return null;
         }
+        yield return null;
     }
 
-    public override void MovementEnded()
+    public override void OnMovementEnd(ExerciseMovement movement)
     {
-        NormalExerciseReferences.Instance.LeftStickAffordance.SetActive(true);
-        NormalExerciseReferences.Instance.RightStickAffordance.SetActive(true);
-        NormalExerciseReferences.Instance.HeadsetAffordance.SetActive(true);
+        GenericExerciseReferences.Instance.LeftStickAffordance.SetActive(true);
+        GenericExerciseReferences.Instance.RightStickAffordance.SetActive(true);
+        GenericExerciseReferences.Instance.HeadsetAffordance.SetActive(true);
 
         // Lijn uitzetten
-        NormalExerciseReferences.Instance.FeedbackLine.SetActive(false);
-        NormalExerciseReferences.Instance.RenderLineMinimal.SetActive(false);
-        NormalExerciseReferences.Instance.RenderLineMaximal.SetActive(false);
+        GenericExerciseReferences.Instance.FeedbackLine.SetActive(false);
+        GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(false);
+        GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(false);
 
-        NormalExerciseReferences.Instance.InformationObject.SetActive(false);
-        NormalExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(false);
-        NormalExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(0, NormalExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
+        GenericExerciseReferences.Instance.InformationObject.SetActive(false);
+        GenericExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(false);
+        GenericExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(0, GenericExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
     }
 
     private bool InBoundsX()
@@ -271,6 +272,6 @@ public class HeadSwayMovement : ExerciseMovement
 
     private void RenderCube(Color name)
     {
-        NormalExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = name;
+        GenericExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = name;
     }
 }

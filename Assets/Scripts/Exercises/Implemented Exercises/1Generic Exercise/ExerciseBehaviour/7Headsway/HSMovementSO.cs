@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewCloseEyesMovement", menuName = "Exercise/Movement/Head Sway")]
-public class HeadSwayMovementSO : ExerciseMovementSO
+public class HeadSwayMovementSO : BehaviourSO
 {
     public float HoldTime;
     public float MinX;
@@ -10,8 +10,8 @@ public class HeadSwayMovementSO : ExerciseMovementSO
     public float MaxY;
     public float MinZ;
     public float MaxZ;
-    public override ExerciseMovement CreateMovement()
+    public override IMovementBehaviour CreateBehaviour()
     {
-        return new HeadSwayMovement(Duration, Image, Score, HoldTime, MinX, MaxX, MinY, MaxY, MinZ, MaxZ);
+        return new HeadSwayMovement();
     }
 }
