@@ -68,6 +68,19 @@ public class UserStatsService {
         return userStatsRepository.findTop20ByCurrentStreak(PageRequest.of(0, 20));
     }
 
+    /**
+     * Updates the {@link UserStats} for the given completed exercise.
+     *
+     * <p>If the exercise is not a {@code BalanceTest}, this method will:
+     * <ul>
+     *   <li>Retrieve the most recent non-balance exercise before the current one</li>
+     *   <li>Update the user's streak, total points, and exercise count if stats exist</li>
+     *   <li>Create new stats if none exist yet</li>
+     * </ul>
+     *
+     * @param completedExercise the completed exercise instance (excluding BalanceTest)
+     * @param <CE> a subclass of {@link CompletedExercise}
+     */
     public <CE extends CompletedExercise> void updateUserStats(CE completedExercise) {
         UserStats existingStats = userStatsRepository.findByUser(completedExercise.getUser());
 
@@ -85,6 +98,22 @@ public class UserStatsService {
         }
     }
 
+    /**
+     * Updates the existing {@link UserStats} record with the latest exercise data.
+     *
+     * <p>This method calculates:
+     * <ul>
+     *   <li>New total points, based on the earned points from the completed exercise</li>
+     *   <li>New streak, comparing the last and current exercise dates</li>
+     *   <li>Highest streak, if the new streak exceeds the previous max</li>
+     * </ul>
+     * Then it saves the updated stats to the database.
+     *
+     * @param stats the current user stats
+     * @param completedExercise the new completed exercise
+     * @param lastExercise the most recent non-balance exercise prior to the current one
+     * @param <CE> a subclass of {@link CompletedExercise}
+     */
     private <CE extends CompletedExercise> void updateExistingStats(UserStats stats, CE completedExercise, CE lastExercise) {
         LocalDate lastExerciseDate = toLocalDate(lastExercise.getCompletedAt());
         LocalDate currentDate = toLocalDate(completedExercise.getCompletedAt());
@@ -93,12 +122,6 @@ public class UserStatsService {
         int existingExerciseCount = stats.getTotalExercises();
         int newStreak = calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak());
         int newHighestStreak = Math.max(stats.getHighestStreak(), newStreak);
-
-        System.out.println("lastExercise.getCompletedAt() = " + lastExercise.getCompletedAt());
-        System.out.println("completedExercise.getCompletedAt() = " + completedExercise.getCompletedAt());
-        System.out.println("lastDate = " + lastExerciseDate);
-        System.out.println("currentDate = " + currentDate);
-        System.out.println("daysBetween = " + ChronoUnit.DAYS.between(lastExerciseDate, currentDate));
 
         stats.setTotalPoints(newTotalPoints);
         stats.setCurrentStreak(newStreak);
@@ -132,5 +155,4 @@ public class UserStatsService {
 
         userStatsRepository.save(newStats);
     }
-
 }
