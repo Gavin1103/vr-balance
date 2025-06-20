@@ -35,10 +35,21 @@ public class UserController {
     /**
      * Endpoint to retrieve profile information of the logged-in user
      */
+
+    // Defines the endpoint and HTTP method (GET in this case)
     @GetMapping("/me")
+
+    // Informs Swagger that this endpoint is secured and requires a Bearer token
     @SecurityRequirement(name = "bearerAuth")
+
+    // Instructs Spring Security to allow only authenticated users to access this endpoint.
+    // Use @PreAuthorize("hasAnyRole('ADMIN', 'PHYSIOTHERAPIST')") if you want to restrict access to specific roles only.
     @PreAuthorize("isAuthenticated()")
+
+    // Describes the purpose of the endpoint, shown in Swagger UI
     @Operation(summary = "Get the profile of the logged-in user")
+
+    // Lists all possible HTTP responses, including status codes and descriptions
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -218,7 +229,8 @@ public class UserController {
      * Endpoint to retrieve patient detail from logged in user
      */
     @GetMapping("/get-patient-detail/self")
-    @PreAuthorize("isAuthenticated()")    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Retrieve patient detail from logged in user")
     @ApiResponses(value = {
             @ApiResponse(
