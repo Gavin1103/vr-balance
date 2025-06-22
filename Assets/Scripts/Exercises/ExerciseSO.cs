@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class ExerciseSO : ScriptableObject {
+public abstract class ExerciseSO : ScriptableObject
+{
     public string Title;
     public string Description;
     public List<string> Requirements;
