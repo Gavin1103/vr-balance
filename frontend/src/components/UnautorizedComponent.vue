@@ -3,8 +3,8 @@
 
 <template>
   <div class="forbidden">
-    <h1>403 - Geen Toegang</h1>
-    <p>Je hebt geen rechten om deze pagina te bekijken.</p>
+    <h1>403 - Access denied</h1>
+    <p>You do not have the right permissions</p>
   </div>
 </template>
 
