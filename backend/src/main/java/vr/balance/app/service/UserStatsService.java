@@ -110,7 +110,9 @@ public class UserStatsService {
      * </ul>
      *
      * <p>If there is no previous exercise (i.e., {@code lastExercise} is {@code null}),
-     * the streak is initialized to 1.
+     * the streak is initialized to 1. This is considered fallback behavior and only occurs
+     * when no valid earlier non-balance exercise can be found. Under normal conditions,
+     * this situation should not occur if the user has a complete exercise history.</p>
      *
      * @param stats             The current {@link UserStats} of the user
      * @param completedExercise The newly completed exercise
@@ -122,7 +124,6 @@ public class UserStatsService {
         LocalDate lastExerciseDate = lastExercise != null ? toLocalDate(lastExercise.getCompletedAt()) : null;
 
         int newStreak = (lastExerciseDate != null) ? calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak()) : 1;
-
         int newTotalPoints = stats.getTotalPoints() + completedExercise.getEarnedPoints();
         int existingExerciseCount = stats.getTotalExercises();
         int newHighestStreak = Math.max(stats.getHighestStreak(), newStreak);
