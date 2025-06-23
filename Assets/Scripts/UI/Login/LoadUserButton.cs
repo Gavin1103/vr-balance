@@ -29,7 +29,7 @@ public class LoadUserButton : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/UserList.json";
 
-        Debug.unityLogger.Log(path);
+        //Debug.unityLogger.Log(path);
         // Verwijder eerst bestaande knoppen
         foreach (Transform child in ButtonContainer)
         {
