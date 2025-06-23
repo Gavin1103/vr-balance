@@ -10,7 +10,7 @@ public class GenericExerciseSO : ExerciseSO {
     public List<PositionCheckerSO> CheckPositions;
 
     void OnEnable() {
-        RepsAndSetsConfig = new RepsAndSetsSO();
+        RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();
     }
     public override Exercise CreateExercise() {
         List<ExerciseMovement> movements = GetMovements();

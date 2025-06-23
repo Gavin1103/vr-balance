@@ -124,11 +124,9 @@ public class MapManager : MonoBehaviour {
         StartCoroutine(AnimateTextTransition(mapInfoDescription, CleanText(mapInfoDescription.text), maps[index].description, 0.006f, true));
     }
 
-    void SwapFontsGlobally(TMP_FontAsset newFont)
-    {
-        var allText = FindObjectsOfType<TextMeshProUGUI>(true); // 'true' includes inactive objects
-        foreach (var text in allText)
-        {
+    void SwapFontsGlobally(TMP_FontAsset newFont) {
+        var allText = UnityEngine.Object.FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None); // Includes inactive objects
+        foreach (var text in allText) {
             text.font = newFont;
         }
     }

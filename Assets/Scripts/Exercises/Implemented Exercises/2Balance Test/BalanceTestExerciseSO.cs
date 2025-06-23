@@ -10,7 +10,7 @@ public class BalanceTestExerciseSO : GenericExerciseSO {
         BalanceTestExercise exercise = new BalanceTestExercise(BackendEnum, Title, Description, Requirements, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
         exercise.Movements = movements;
 
-        RepsAndSetsSO RepsAndSetsConfig = new RepsAndSetsSO();
+        RepsAndSetsSO RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();
         exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();
         return exercise;
     }

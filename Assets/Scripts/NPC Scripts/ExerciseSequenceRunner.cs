@@ -5,7 +5,7 @@ public class ExerciseSequenceRunner : MonoBehaviour
     public ExerciseSequence sequence;
     public NPCExerciseController npcController;
 
-    private int currentIndex = 0;
+    //private int currentIndex = 0;
 
     void Start()
     {

@@ -5,7 +5,7 @@ public class ButterFlySpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> butterFly;         // List of available FireFly prefabs to spawn
     [SerializeField] private List<Transform> spawnPoints;      // List of spawn points in the scene
-    [SerializeField] private float gizmoRadius = 1f;           // Radius for visualizing spawn areas
+    //[SerializeField] private float gizmoRadius = 1f;           // Radius for visualizing spawn areas
 
     private List<GameObject> spawnedButterflies = new(); 
 

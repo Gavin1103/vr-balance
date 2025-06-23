@@ -24,8 +24,8 @@ public class CreateMuscleRaiseToTPose : MonoBehaviour
         clip.name = "RaiseToTPose_Muscle";
 
         // Create a 1-second clip (60 frames at 60 fps)
-        float startTime = 0f;
-        float endTime = 1f;
+        //float startTime = 0f;
+        //float endTime = 1f;
 
         // Set muscle values: Upper arms start down (Z = -60) and raise to Z = ±90
         AddMuscleCurve(clip, "LeftUpperArm.Stretched", 0f, -60f, 1f, 90f);

@@ -77,7 +77,7 @@ public class Calibrate : MonoBehaviour
         }      
     }
 
-    [SerializeField] private float defaultHeight = 1.8f;
+    //[SerializeField] private float defaultHeight = 1.8f;
     [SerializeField] private Vector3 calibratedHeadsetPosition;
     [SerializeField] private Vector3 calibratedRightArmPosition;
     [SerializeField] private Vector3 calibratedLeftArmPosition;

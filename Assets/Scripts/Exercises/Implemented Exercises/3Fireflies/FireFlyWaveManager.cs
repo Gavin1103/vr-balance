@@ -113,7 +113,7 @@ public class FireFlyWaveManager : MonoBehaviour {
         StartSession();
     }
 
-    public async void EndSession() {
+    public void EndSession() {
         // End the session and show the leaderboard
         Debug.Log("Session complete!");
         DisableNets();
