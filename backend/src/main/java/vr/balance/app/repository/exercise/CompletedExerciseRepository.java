@@ -120,4 +120,7 @@ public interface CompletedExerciseRepository extends JpaRepository<CompletedExer
      * @param pageable pagination information (e.g. page size = 1 to get the latest only)
      * @return a list of {@link CompletedExercise} records
      */
-    List<CompletedExercise> findByUserIdAndExerciseNotOrderByCompletedAtDesc(Long userId, ExerciseEnum exercise, Pageable pageable);}
+    List<CompletedExercise> findByUserIdAndExerciseNotOrderByCompletedAtDesc(Long userId, ExerciseEnum exercise, Pageable pageable);
+
+    CompletedExercise findFirstByUserOrderByCompletedAtDesc(User user);
+}
