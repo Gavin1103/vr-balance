@@ -71,6 +71,10 @@ public class UserStatsService {
     /**
      * Updates the {@link UserStats} for the given completed exercise.
      *
+     * <p>Before updating any statistics, this method verifies that the new exercise's timestamp
+     * is not earlier than the user's most recent exercise. If it is, an exception is thrown to
+     * prevent inconsistent or retroactive streak updates.</p>
+     *
      * <p>If the exercise is not a {@code BalanceTest}, this method will:
      * <ul>
      *   <li>Retrieve the most recent non-balance exercise before the current one</li>
@@ -84,15 +88,22 @@ public class UserStatsService {
     public <CE extends CompletedExercise> void updateUserStats(CE completedExercise) {
         UserStats existingStats = userStatsRepository.findByUser(completedExercise.getUser());
 
-        CompletedExercise lastExercise = completedExerciseRepository
-                .findFirstByUserAndExerciseNotAndCompletedAtBeforeOrderByCompletedAtDesc(
-                        completedExercise.getUser(),
-                        ExerciseEnum.Balance,
-                        completedExercise.getCompletedAt()
-                );
-
         if (existingStats != null) {
-            updateExistingStats(existingStats, completedExercise, lastExercise);
+            // Retrieve the most recent completed exercise regardless of type
+            CompletedExercise latestExercise = completedExerciseRepository.findFirstByUserOrderByCompletedAtDesc(completedExercise.getUser());
+
+            if (latestExercise != null && completedExercise.getCompletedAt().isBefore(latestExercise.getCompletedAt())) {
+                throw new IllegalArgumentException("Cannot submit an exercise with a date earlier than your most recent completed exercise.");
+            }
+
+            CompletedExercise lastNonBalanceExercise = completedExerciseRepository
+                    .findFirstByUserAndExerciseNotAndCompletedAtBeforeOrderByCompletedAtDesc(
+                            completedExercise.getUser(),
+                            ExerciseEnum.Balance,
+                            completedExercise.getCompletedAt()
+                    );
+
+            updateExistingStats(existingStats, completedExercise, lastNonBalanceExercise);
         } else {
             createNewStats(completedExercise);
         }
@@ -109,10 +120,9 @@ public class UserStatsService {
      *     <li>Highest streak achieved so far</li>
      * </ul>
      *
-     * <p>If there is no previous exercise (i.e., {@code lastExercise} is {@code null}),
-     * the streak is initialized to 1. This is considered fallback behavior and only occurs
-     * when no valid earlier non-balance exercise can be found. Under normal conditions,
-     * this situation should not occur if the user has a complete exercise history.</p>
+     * <p>If there is no previous non-balance exercise ({@code lastExercise} is {@code null}),
+     * the streak will be initialized to 1. This is fallback behavior and assumes the user's
+     * history is either empty or contains only balance tests.</p>
      *
      * @param stats             The current {@link UserStats} of the user
      * @param completedExercise The newly completed exercise
@@ -121,17 +131,25 @@ public class UserStatsService {
      */
     private <CE extends CompletedExercise> void updateExistingStats(UserStats stats, CE completedExercise, CE lastExercise) {
         LocalDate currentDate = toLocalDate(completedExercise.getCompletedAt());
-        LocalDate lastExerciseDate = lastExercise != null ? toLocalDate(lastExercise.getCompletedAt()) : null;
 
-        int newStreak = (lastExerciseDate != null) ? calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak()) : 1;
+        int newStreak;
+
+        // Defensive null-check in case future changes skip validation
+        if (lastExercise != null) {
+            LocalDate lastExerciseDate = toLocalDate(lastExercise.getCompletedAt());
+            newStreak = calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak());
+        } else {
+            newStreak = 1;
+        }
+
         int newTotalPoints = stats.getTotalPoints() + completedExercise.getEarnedPoints();
-        int existingExerciseCount = stats.getTotalExercises();
         int newHighestStreak = Math.max(stats.getHighestStreak(), newStreak);
+        int newExerciseCount = stats.getTotalExercises() + 1;
 
         stats.setTotalPoints(newTotalPoints);
         stats.setCurrentStreak(newStreak);
         stats.setHighestStreak(newHighestStreak);
-        stats.setTotalExercises(existingExerciseCount + 1);
+        stats.setTotalExercises(newExerciseCount);
 
         userStatsRepository.save(stats);
     }
