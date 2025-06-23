@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Lunge
   m_EditorClassIdentifier: 
   Title: Lunge
+  Category: 1
   Description: Lunge forward
   Requirements: []
   PositionNeeded: 0

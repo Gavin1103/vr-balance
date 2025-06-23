@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Glute Bridge
   m_EditorClassIdentifier: 
   Title: Glute Bridge
+  Category: 1
   Description: Lie on your back with knees bent and feet flat on the floor. Lift
     your hips by squeezing your glutes until your body forms a straight line from
     shoulders to knees. Hold briefly, then lower back down. Great for strengthening
@@ -25,7 +26,7 @@ MonoBehaviour:
   MediumDifficulty: 0
   HardDifficulty: 0
   BackendEnum: GluteBridge
-  RepsAndSetsConfig: {fileID: 11400000, guid: 25ca41c865f18104cb225d55f2480849, type: 2}
+  RepsAndSetsConfig: {fileID: 0}
   Movements:
   - {fileID: 11400000, guid: aa624352adb72af41916fa423e7b70c9, type: 2}
   - {fileID: 11400000, guid: da4a534a94efc484fa4985e8b00e0630, type: 2}

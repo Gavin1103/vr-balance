@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Firefly
   m_EditorClassIdentifier: 
   Title: Fireflies
+  Category: 3
   Description: "A fun, gamified challenge where you shift your balance to \u201Ccatch\u201D
     glowing fireflies on the screen by leaning in different directions."
   Requirements:
   - 'A stable area with room to move and shift weight side to side.  '
+  PositionNeeded: 0
+  EasyDifficulty: 0
+  MediumDifficulty: 0
+  HardDifficulty: 0

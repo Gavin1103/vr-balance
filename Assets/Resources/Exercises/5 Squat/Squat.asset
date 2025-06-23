@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Squat
   m_EditorClassIdentifier: 
   Title: Squat
+  Category: 1
   Description: Hold a squat!
   Requirements: []
   PositionNeeded: 1
@@ -20,7 +21,7 @@ MonoBehaviour:
   MediumDifficulty: 1
   HardDifficulty: 1
   BackendEnum: Squat
-  RepsAndSetsConfig: {fileID: 11400000, guid: 240427beae9df8c45ba0807a783fe87d, type: 2}
+  RepsAndSetsConfig: {fileID: 0}
   Movements:
   - {fileID: 11400000, guid: a609e0252d8683d47a2e33fec4d6d603, type: 2}
   - {fileID: 11400000, guid: 24be260a132fed0479ca1d11b6e92bcc, type: 2}

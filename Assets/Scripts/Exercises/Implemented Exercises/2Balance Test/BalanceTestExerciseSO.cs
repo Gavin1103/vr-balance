@@ -7,7 +7,7 @@ public class BalanceTestExerciseSO : GenericExerciseSO {
         List<ExerciseMovement> movements = GetMovements();
         List<PositionChecker> positionCheckers = GetPositionCheckers();
         
-        BalanceTestExercise exercise = new BalanceTestExercise(BackendEnum, Title, Description, Requirements, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
+        BalanceTestExercise exercise = new BalanceTestExercise(BackendEnum, Category, Title, Description, Requirements, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
         exercise.Movements = movements;
 
         RepsAndSetsSO RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Balance Test
   m_EditorClassIdentifier: 
   Title: Balance Test
+  Category: 0
   Description: 'Assess your stability by balancing your arms while standing still
     or on one leg to measure your sway. This score will be used to calculate a recommended
     difficulty. '

@@ -59,7 +59,7 @@ public class ExerciseManager : MonoBehaviour {
 
     private void GenerateExerciseButtons() {
         foreach (Exercise exercise in Exercises) {
-            string category = exercise.Category.ToLower(); // assume Exercise has a Category field
+            string category = exercise.Category.ToString().ToLower(); // assume Exercise has a Category field
 
             var row = CategoryRows.Find(r => r.CategoryName.ToLower() == category);
             if (row == null) continue;
@@ -83,7 +83,7 @@ public class ExerciseManager : MonoBehaviour {
 
 
         // Find new button and text
-        foreach (Transform child in ButtonContainer)
+        foreach (Transform child in AllRowsContainer)
         {
             TMP_Text text = child.GetComponentInChildren<TMP_Text>();
             if (text.text == exercise.Title)

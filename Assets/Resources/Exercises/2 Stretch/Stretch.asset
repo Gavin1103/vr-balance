@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stretch
   m_EditorClassIdentifier: 
   Title: Stretch
+  Category: 2
   Description: 'Gently extend your muscles through guided poses to improve flexibility
     and reduce tension. '
   Requirements:
@@ -22,7 +23,7 @@ MonoBehaviour:
   MediumDifficulty: 0
   HardDifficulty: 0
   BackendEnum: Stretch
-  RepsAndSetsConfig: {fileID: 11400000, guid: e688479a5ef2bff428926c161845c39b, type: 2}
+  RepsAndSetsConfig: {fileID: 0}
   Movements:
   - {fileID: 11400000, guid: d7d14397a604bc4489f8222cc39a2658, type: 2}
   - {fileID: 11400000, guid: 132a51e5171b2124aa803c6cfda6453f, type: 2}

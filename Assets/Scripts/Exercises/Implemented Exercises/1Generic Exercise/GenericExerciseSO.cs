@@ -16,6 +16,7 @@ public class GenericExerciseSO : ExerciseSO {
         List<ExerciseMovement> movements = GetMovements();
         var exercise = new GenericExercise(
             backendEnum: BackendEnum,
+            category: Category,
             title: Title,
             description: Description,
             requirements: Requirements,
