@@ -6,7 +6,12 @@ public class BalanceTestExerciseSO : GenericExerciseSO {
     public override Exercise CreateExercise() {
         List<ExerciseMovement> movements = GetMovements();
         List<PositionChecker> positionCheckers = GetPositionCheckers();
+        
+        BalanceTestExercise exercise = new BalanceTestExercise(BackendEnum, Title, Description, Requirements, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
+        exercise.Movements = movements;
 
-        return new BalanceTestExercise(BackendEnum, Title, Description, Requirements, movements, AmountOfSets, WaitTimeBetweenSets, AmountOfReps, WaitTimeBetweenReps, PositionNeeded, EasyDifficulty, MediumDifficulty, HardDifficulty, positionCheckers);
+        RepsAndSetsSO RepsAndSetsConfig = new RepsAndSetsSO();
+        exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();
+        return exercise;
     }
 }

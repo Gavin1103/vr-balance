@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53fb73b4100cd90409a4cfc0b38bdaea, type: 3}
+  m_Name: RepsAndSets
+  m_EditorClassIdentifier: 
+  EasyReps: 1
+  EasySets: 1
+  EasyWaitBetweenReps: 0
+  EasyWaitBetweenSets: 0
+  MediumReps: 1
+  MediumSets: 1
+  MediumWaitBetweenReps: 0
+  MediumWaitBetweenSets: 0
+  HardReps: 1
+  HardSets: 1
+  HardWaitBetweenReps: 0
+  HardWaitBetweenSets: 0

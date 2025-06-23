@@ -6,23 +6,18 @@ using System.Linq;
 
 public class BalanceTestExercise : GenericExercise
 {
-    
-    public BalanceTestExercise(
-            string backendEnum,
-            string title,
-            string description,
-            List<string> requirements,
-            List<ExerciseMovement> movements,
-            int amountOfSets,
-            float waitTimeBetweenSets,
-            int amountOfReps,
-            float waitTimeBetweenReps,
+
+    public BalanceTestExercise(string backendEnum, string title, string description, List<string> requirements,
             bool positionNeeded,
             bool easyDifficulty,
             bool mediumDifficulty,
             bool hardDifficulty,
             List<PositionChecker> positionCheckers)
-            : base(backendEnum, title, description, requirements, movements, amountOfSets, waitTimeBetweenSets, amountOfReps, waitTimeBetweenReps, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+            : base(backendEnum, title, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+        AmountOfSets = 1;
+        AmountOfReps = 1;
+        WaitTimeBetweenSets = 0;
+        WaitTimeBetweenReps = 0;
     }
 
     public override void StartExercise() {

@@ -10,6 +10,7 @@ public class GenericExercise : Exercise
     public string BackendEnum;
 
     public List<ExerciseMovement> Movements;
+    public RepsAndSetsConfig RepsAndSetsConfig;
     public int AmountOfSets = 1;
     public float WaitTimeBetweenSets = 10f;
     public int AmountOfReps = 1;
@@ -47,17 +48,10 @@ public class GenericExercise : Exercise
 
     public GenericExercise(
             string backendEnum, string title, string description, List<string> requirements,
-            List<ExerciseMovement> movements, int amountOfSets, float waitTimeBetweenSets, int amountOfReps, float waitTimeBetweenReps,
             bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
             : base(title, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers)
     {
         BackendEnum = backendEnum;
-
-        Movements = movements;
-        AmountOfSets = amountOfSets;
-        WaitTimeBetweenSets = waitTimeBetweenSets;
-        AmountOfReps = amountOfReps;
-        WaitTimeBetweenReps = waitTimeBetweenReps;
 
         PosNeeded = positionNeeded;
         Easy = easyDifficulty;
@@ -70,6 +64,7 @@ public class GenericExercise : Exercise
 
     public override void StartExercise()
     {
+        RepsAndSetsConfig.ApplyTo(this);
         refs.RepsAndSetsObject.SetActive(true);
 
         refs.SequenceUI.SetActive(true);

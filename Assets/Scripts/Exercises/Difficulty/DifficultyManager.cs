@@ -28,11 +28,9 @@ public class DifficultyManager : MonoBehaviour {
         UpdateDropdownOptions();
     }
 
-    public void OnDropdownChanged()
-    {
+    public void OnDropdownChanged() {
         int index = dropdownText.value;
-        switch (index)
-        {
+        switch (index) {
             case 0:
                 SelectedDifficulty = Difficulty.Easy;
                 break;
@@ -76,10 +74,7 @@ public class DifficultyManager : MonoBehaviour {
         dropdownText.RefreshShownValue();
     }
 
-
-    // Helper to compare difficulties
-    private bool IsHarderThanAdvised(Difficulty selected, Difficulty advised)
-    {
+    private bool IsHarderThanAdvised(Difficulty selected, Difficulty advised) {
         return (int)selected > (int)advised && advised != Difficulty.None;
     }
 }

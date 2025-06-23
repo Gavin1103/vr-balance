@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCloseEyesMovement", menuName = "Exercise/Movement/Head Sway")]
+[CreateAssetMenu(fileName = "NewCloseEyesMovement", menuName = "Exercise/Behaviour/Head Sway")]
 public class HeadSwayMovementSO : BehaviourSO
 {
     public float HoldTime;
