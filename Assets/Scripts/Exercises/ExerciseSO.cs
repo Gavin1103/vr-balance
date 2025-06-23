@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public abstract class ExerciseSO : ScriptableObject
 {
     public string Title;
+    public string Category;
     public string Description;
     public List<string> Requirements;
 

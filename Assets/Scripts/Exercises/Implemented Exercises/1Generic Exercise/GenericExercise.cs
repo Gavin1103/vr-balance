@@ -47,9 +47,9 @@ public class GenericExercise : Exercise
     [HideInInspector] public GenericExerciseScoreCalculator ScoreCalculator = new GenericExerciseScoreCalculator();
 
     public GenericExercise(
-            string backendEnum, string title, string description, List<string> requirements,
+            string backendEnum, ExerciseCategory category, string title, string description, List<string> requirements,
             bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
-            : base(title, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers)
+            : base(title, category, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers)
     {
         BackendEnum = backendEnum;
 

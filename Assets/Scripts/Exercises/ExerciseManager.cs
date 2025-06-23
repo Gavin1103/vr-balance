@@ -17,7 +17,8 @@ public class ExerciseManager : MonoBehaviour {
     public GameObject EndUI;
     [Header("Spawn Exercise Buttons")]
     public GameObject ButtonPrefab;
-    public Transform ButtonContainer;
+    public Transform AllRowsContainer;
+    public List<CategoryRow> CategoryRows;
     [Header("Exercise Info UI")]
     public GameObject SelectedExerciseInfo;
     public GameObject ExercisesMenu;
@@ -58,7 +59,12 @@ public class ExerciseManager : MonoBehaviour {
 
     private void GenerateExerciseButtons() {
         foreach (Exercise exercise in Exercises) {
-            GameObject buttonObj = Instantiate(ButtonPrefab, ButtonContainer);
+            string category = exercise.Category.ToLower(); // assume Exercise has a Category field
+
+            var row = CategoryRows.Find(r => r.CategoryName.ToLower() == category);
+            if (row == null) continue;
+
+            GameObject buttonObj = Instantiate(ButtonPrefab, row.ButtonContainer);
             Button button = buttonObj.GetComponent<Button>();
             TMP_Text buttonText = buttonObj.GetComponentInChildren<TMP_Text>();
 
@@ -67,7 +73,9 @@ public class ExerciseManager : MonoBehaviour {
         }
     }
 
-    private void SelectExercise(Exercise exercise) {
+
+    private void SelectExercise(Exercise exercise)
+    {
         SelectedExerciseInfo.SetActive(true);
         ExercisesMenu.SetActive(false);
         // VideoPlayer.SetActive(true);
@@ -75,9 +83,11 @@ public class ExerciseManager : MonoBehaviour {
 
 
         // Find new button and text
-        foreach (Transform child in ButtonContainer) {
+        foreach (Transform child in ButtonContainer)
+        {
             TMP_Text text = child.GetComponentInChildren<TMP_Text>();
-            if (text.text == exercise.Title) {
+            if (text.text == exercise.Title)
+            {
                 currentSelectedExerciseButton = child.GetComponent<Button>();
                 currentSelectedExerciseText = text;
                 break;
@@ -90,7 +100,8 @@ public class ExerciseManager : MonoBehaviour {
         SelectedExerciseTitle.text = exercise.Title;
         SelectedExerciseDescription.text = exercise.Description;
         string requirementText = "";
-        foreach (string req in exercise.Requirements) {
+        foreach (string req in exercise.Requirements)
+        {
             requirementText += $"• {req}\n";
         }
         SelectedExerciseRequirements.text = requirementText;
@@ -99,18 +110,24 @@ public class ExerciseManager : MonoBehaviour {
 
         // Check balance test
         bool isBalanceTest = exercise.Title.ToLower().Contains("balance");
-        if (DifficultyManager.Instance.AdvisedDifficulty == Difficulty.None && !isBalanceTest) {
+        if (DifficultyManager.Instance.AdvisedDifficulty == Difficulty.None && !isBalanceTest)
+        {
             StartExerciseButton.interactable = false;
             BalanceTestWarning.SetActive(true);
-        } else {
+        }
+        else
+        {
             StartExerciseButton.interactable = true;
             BalanceTestWarning.SetActive(false);
         }
 
-        if (isBalanceTest) {
+        if (isBalanceTest)
+        {
             DifficultyManager.Instance.ShowDropdown(false);
             Leaderboard.SetActive(false);
-        } else {
+        }
+        else
+        {
             DifficultyManager.Instance.ShowDropdown(true);
             Leaderboard.SetActive(true);
         }

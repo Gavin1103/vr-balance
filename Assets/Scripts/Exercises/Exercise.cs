@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public abstract class Exercise {
     public string Title;
+    public ExerciseCategory Category;
     public string Description;
     public List<string> Requirements;
 
@@ -20,9 +21,10 @@ public abstract class Exercise {
             return DifficultyManager.Instance.SelectedDifficulty;
         }
     }
-    protected Exercise(string title, string description, List<string> requirements, bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionChecker)
+    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements, bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionChecker)
     {
         Title = title;
+        Category = category;
         Description = description;
         Requirements = requirements;
 
