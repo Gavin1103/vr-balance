@@ -57,7 +57,7 @@ public class UserStatsService {
                 .orElseThrow(() -> new NotFoundException("User not found."));
 
         return userStatsRepository.findStreakStatsByUserId(user.getId())
-                .orElseGet(() -> new UserStreakDTO(user.getUsername(),0, 0));
+                .orElseGet(() -> new UserStreakDTO(user.getUsername(), 0, 0));
     }
 
     public List<HighestStreakRankingDTO> getTop20HighestStreak() {
@@ -79,7 +79,7 @@ public class UserStatsService {
      * </ul>
      *
      * @param completedExercise the completed exercise instance (excluding BalanceTest)
-     * @param <CE> a subclass of {@link CompletedExercise}
+     * @param <CE>              a subclass of {@link CompletedExercise}
      */
     public <CE extends CompletedExercise> void updateUserStats(CE completedExercise) {
         UserStats existingStats = userStatsRepository.findByUser(completedExercise.getUser());
@@ -99,28 +99,32 @@ public class UserStatsService {
     }
 
     /**
-     * Updates the existing {@link UserStats} record with the latest exercise data.
+     * Updates the existing {@link UserStats} of a user based on a newly completed exercise.
      *
-     * <p>This method calculates:
+     * <p>This method calculates and updates:
      * <ul>
-     *   <li>New total points, based on the earned points from the completed exercise</li>
-     *   <li>New streak, comparing the last and current exercise dates</li>
-     *   <li>Highest streak, if the new streak exceeds the previous max</li>
+     *     <li>Total points earned</li>
+     *     <li>Total number of completed exercises</li>
+     *     <li>Current streak based on the last non-balance exercise date</li>
+     *     <li>Highest streak achieved so far</li>
      * </ul>
-     * Then it saves the updated stats to the database.
      *
-     * @param stats the current user stats
-     * @param completedExercise the new completed exercise
-     * @param lastExercise the most recent non-balance exercise prior to the current one
-     * @param <CE> a subclass of {@link CompletedExercise}
+     * <p>If there is no previous exercise (i.e., {@code lastExercise} is {@code null}),
+     * the streak is initialized to 1.
+     *
+     * @param stats             The current {@link UserStats} of the user
+     * @param completedExercise The newly completed exercise
+     * @param lastExercise      The most recent non-balance exercise before the current one, or {@code null} if none exist
+     * @param <CE>              A subclass of {@link CompletedExercise}
      */
     private <CE extends CompletedExercise> void updateExistingStats(UserStats stats, CE completedExercise, CE lastExercise) {
-        LocalDate lastExerciseDate = toLocalDate(lastExercise.getCompletedAt());
         LocalDate currentDate = toLocalDate(completedExercise.getCompletedAt());
+        LocalDate lastExerciseDate = lastExercise != null ? toLocalDate(lastExercise.getCompletedAt()) : null;
+
+        int newStreak = (lastExerciseDate != null) ? calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak()) : 1;
 
         int newTotalPoints = stats.getTotalPoints() + completedExercise.getEarnedPoints();
         int existingExerciseCount = stats.getTotalExercises();
-        int newStreak = calculateNewStreak(lastExerciseDate, currentDate, stats.getCurrentStreak());
         int newHighestStreak = Math.max(stats.getHighestStreak(), newStreak);
 
         stats.setTotalPoints(newTotalPoints);
