@@ -16,7 +16,7 @@ MonoBehaviour:
   RightStickTarget: {x: 1, y: 1.5, z: 0}
   HeadTarget: {x: 0, y: 1.75, z: 0}
   Behaviours:
-  - {fileID: 11400000, guid: 208c110a89c4225489935fc3fa180654, type: 2}
+  - {fileID: 11400000, guid: ff1ddacec1eca4f4d90beb5635fdd068, type: 2}
   Duration: 4
   Image: {fileID: 21300000, guid: 09e598b6fd1addf43abccbb69f95284f, type: 3}
   Score: 2000
