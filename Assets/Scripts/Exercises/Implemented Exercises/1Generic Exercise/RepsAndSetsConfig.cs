@@ -46,21 +46,18 @@ public class RepsAndSetsConfig {
                 exercise.AmountOfSets = EasySets;
                 exercise.WaitTimeBetweenReps = EasyWaitBetweenReps;
                 exercise.WaitTimeBetweenSets = EasyWaitBetweenSets;
-                Debug.Log("Set easy " + exercise.AmountOfReps);
                 break;
             case Difficulty.Medium:
                 exercise.AmountOfReps = MediumReps;
                 exercise.AmountOfSets = MediumSets;
                 exercise.WaitTimeBetweenReps = MediumWaitBetweenReps;
                 exercise.WaitTimeBetweenSets = MediumWaitBetweenSets;
-                Debug.Log("Set mid " + exercise.AmountOfReps);
                 break;
             case Difficulty.Hard:
                 exercise.AmountOfReps = HardReps;
                 exercise.AmountOfSets = HardSets;
                 exercise.WaitTimeBetweenReps = HardWaitBetweenReps;
                 exercise.WaitTimeBetweenSets = HardWaitBetweenSets;
-                Debug.Log("Set epenisasy " + exercise.AmountOfReps);
                 break;
         }
     }

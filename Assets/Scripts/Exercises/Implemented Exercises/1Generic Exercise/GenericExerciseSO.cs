@@ -14,7 +14,6 @@ public class GenericExerciseSO : ExerciseSO {
     }
     public override Exercise CreateExercise() {
         List<ExerciseMovement> movements = GetMovements();
-        Debug.Log("Creating exercise with " + movements.Count);
         var exercise = new GenericExercise(
             backendEnum: BackendEnum,
             title: Title,

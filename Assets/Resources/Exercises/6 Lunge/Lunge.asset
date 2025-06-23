@@ -20,13 +20,10 @@ MonoBehaviour:
   MediumDifficulty: 0
   HardDifficulty: 0
   BackendEnum: Lunge
+  RepsAndSetsConfig: {fileID: 0}
   Movements:
   - {fileID: 11400000, guid: eed277d414acd004a888fee76f4de1c2, type: 2}
   - {fileID: 11400000, guid: d7fdf9bc820e41943bd937dc19037697, type: 2}
-  AmountOfSets: 3
-  WaitTimeBetweenSets: 15
-  AmountOfReps: 10
-  WaitTimeBetweenReps: 0
   CheckPositions:
   - {fileID: 11400000, guid: 8e71da07d94eb2347bf223813c7de5be, type: 2}
   - {fileID: 11400000, guid: 6ffa38dc8ae19234faafa2c5dc5af871, type: 2}

@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
-public class HeadSwayMovement : IMovementBehaviour
+public class HeightThresholdBehavior : IMovementBehaviour
 {
     private List<Vector3> headPositions = new List<Vector3>();
 
@@ -36,7 +36,7 @@ public class HeadSwayMovement : IMovementBehaviour
     private bool medium;
     private bool hard;
 
-    public HeadSwayMovement()
+    public HeightThresholdBehavior()
     {
 
     }
@@ -193,7 +193,7 @@ public class HeadSwayMovement : IMovementBehaviour
             yield return null;
         }
         while (Input.GetKey(KeyCode.Space))
-        { // Need< Or my Scheiße breaks because the next action image will skip aswell
+        { // Need< Or my Scheiï¿½e breaks because the next action image will skip aswell
             yield return null;
         }
         yield return null;

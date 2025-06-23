@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCloseEyesMovement", menuName = "Exercise/Behaviour/Head Sway")]
-public class HeadSwayMovementSO : BehaviourSO
+[CreateAssetMenu(fileName = "HeightThresholdBehavior", menuName = "Exercise/Behaviour/Height Threshold")]
+public class HeightThresholdBehaviorSO : BehaviourSO
 {
     public float HoldTime;
     public float MinX;
@@ -12,6 +12,6 @@ public class HeadSwayMovementSO : BehaviourSO
     public float MaxZ;
     public override IMovementBehaviour CreateBehaviour()
     {
-        return new HeadSwayMovement();
+        return new HeightThresholdBehavior();
     }
 }
