@@ -32,14 +32,13 @@ public interface UserStatsRepository extends JpaRepository<UserStats, Long> {
     /**
      * Retrieves the top users ranked by their highest ever streaks.
      *
-     * <p>Note: This method returns users ordered by their {@code highestStreak} in ascending order.
-     * Consider reversing the order if you want descending (highest first).
+     * <p>Note: This method returns users ordered by their {@code highestStreak} in descending order.
      *
      * @param pageable a Pageable object with size set to 20 to limit the result
      * @return a list of {@link HighestStreakRankingDTO} objects
      */
     @Query("""
-             SELECT new vr.balance.app.DTO.response.user_stats.HighestStreakRankingDTO(u.username, us.currentStreak)
+             SELECT new vr.balance.app.DTO.response.user_stats.HighestStreakRankingDTO(u.username, us.highestStreak)
              FROM UserStats us
              JOIN us.user u
              ORDER BY us.highestStreak DESC
@@ -49,14 +48,13 @@ public interface UserStatsRepository extends JpaRepository<UserStats, Long> {
     /**
      * Retrieves the top users ranked by their current streaks.
      *
-     * <p>Note: This method orders by {@code currentStreak} in ascending order.
-     * For leaderboard purposes, descending might be more suitable.
+     * <p>Note: This method orders by {@code currentStreak} in descending order.
      *
      * @param pageable a Pageable object with size set to 20 to limit the result
      * @return a list of {@link CurrentStreakRankingDTO} objects
      */
     @Query("""
-             SELECT new vr.balance.app.DTO.response.user_stats.CurrentStreakRankingDTO(u.username, us.highestStreak)
+             SELECT new vr.balance.app.DTO.response.user_stats.CurrentStreakRankingDTO(u.username, us.currentStreak)
              FROM UserStats us
              JOIN us.user u
              ORDER BY us.currentStreak DESC
