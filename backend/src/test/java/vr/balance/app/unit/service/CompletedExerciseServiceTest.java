@@ -9,6 +9,7 @@ import vr.balance.app.enums.ExerciseEnum;
 import vr.balance.app.models.User;
 import vr.balance.app.models.exercise.CompletedFireflyExercise;
 import vr.balance.app.repository.UserRepository;
+import vr.balance.app.repository.exercise.CompletedBalanceTestExerciseRepository;
 import vr.balance.app.repository.exercise.CompletedExerciseRepository;
 import vr.balance.app.service.CompletedExerciseService;
 import vr.balance.app.service.UserStatsService;
@@ -25,6 +26,7 @@ public class CompletedExerciseServiceTest {
     private UserRepository userRepository;
     private CompletedExerciseRepository completedExerciseRepository;
     private CompletedExerciseService completedExerciseService;
+    private CompletedBalanceTestExerciseRepository completedBalanceTestExerciseRepository;
     private ModelMapper modelMapper;
     private UserStatsService userStatsService;
 
@@ -34,6 +36,7 @@ public class CompletedExerciseServiceTest {
     void setUp() {
         userRepository = mock(UserRepository.class);
         completedExerciseRepository = mock(CompletedExerciseRepository.class);
+        completedBalanceTestExerciseRepository = mock(CompletedBalanceTestExerciseRepository.class);
         modelMapper = mock(ModelMapper.class);
         userStatsService = mock(UserStatsService.class);
 
@@ -41,7 +44,8 @@ public class CompletedExerciseServiceTest {
                 completedExerciseRepository,
                 userRepository,
                 userStatsService,
-                modelMapper
+                modelMapper,
+                completedBalanceTestExerciseRepository
         );
     }
 
