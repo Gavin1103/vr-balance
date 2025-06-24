@@ -131,6 +131,25 @@ public class CompletedExerciseService {
                 .toList();
     }
 
+    /**
+     * Generates a ZIP archive containing all four phase results of a balance test.
+     *
+     * <p>Each phase (phase_1 through phase_4) is written as a separate JSON file into the ZIP archive
+     * under the folder {@code Results/}.
+     *
+     * <p>The filenames in the archive will be:
+     * <ul>
+     *     <li>Results/phase_1.json</li>
+     *     <li>Results/phase_2.json</li>
+     *     <li>Results/phase_3.json</li>
+     *     <li>Results/phase_4.json</li>
+     * </ul>
+     *
+     * @param id the ID of the {@link CompletedBalanceTestExercise} to download
+     * @return a byte array representing the ZIP file containing all phase results
+     * @throws NotFoundException if no balance test is found for the given ID
+     * @throws IOException if an I/O error occurs while creating the ZIP file
+     */
     public byte[] generateZipWithPhases(Long id) throws IOException {
         CompletedBalanceTestExercise test = completedBalanceTestExerciseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Balance test not found"));
