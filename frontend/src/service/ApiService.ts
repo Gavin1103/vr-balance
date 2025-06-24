@@ -109,4 +109,27 @@ export class ApiService {
       },
     }
   }
+
+  /**
+   * Sends a GET request to download a file (e.g., ZIP, PDF).
+   *
+   * @param endpoint - the relative endpoint to download from
+   * @returns {Promise<Blob>} the file as a Blob
+   * @throws will log and rethrow any HTTP or network errors
+   */
+  async downloadFile(endpoint: string): Promise<Blob> {
+    try {
+      const response = await axios.get(`${this.baseUrl}/${endpoint}`, {
+        responseType: 'blob',
+        headers: {
+          Authorization: this.token ? `Bearer ${this.token}` : '',
+        },
+      })
+      return response.data
+    } catch (error) {
+      console.error('Error in file download:', error)
+      throw error
+    }
+  }
 }
+

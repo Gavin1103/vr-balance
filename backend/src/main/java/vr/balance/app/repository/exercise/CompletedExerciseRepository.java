@@ -122,5 +122,17 @@ public interface CompletedExerciseRepository extends JpaRepository<CompletedExer
      */
     List<CompletedExercise> findByUserIdAndExerciseNotOrderByCompletedAtDesc(Long userId, ExerciseEnum exercise, Pageable pageable);
 
+    /**
+     * Retrieves the 10 most recent balance test exercises for a given user,
+     * ordered by completion date descending.
+     *
+     * <p>This is useful for showing a user's recent balance test history,
+     * for example in charts or statistics views.
+     *
+     * @param userId the ID of the user
+     * @return a list of the last 10 {@link CompletedExercise} records for balance tests
+     */
+    List<CompletedExercise> findTop10ByUserIdAndExerciseOrderByCompletedAtDesc(Long userId, ExerciseEnum exercise);
+
     CompletedExercise findFirstByUserOrderByCompletedAtDesc(User user);
 }

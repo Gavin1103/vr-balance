@@ -226,7 +226,7 @@ public class UserController {
     }
 
     /**
-     * Endpoint to retrieve patient detail from logged in user
+     * Endpoint to retrieve patient detail from logged-in user
      */
     @GetMapping("/get-patient-detail/self")
     @PreAuthorize("isAuthenticated()")

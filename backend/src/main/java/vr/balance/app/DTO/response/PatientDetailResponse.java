@@ -12,5 +12,6 @@ import java.util.List;
 public class PatientDetailResponse {
     UserProfileResponse user;
     List<CompletedExerciseResponse> recentExercises;
+    List<CompletedExerciseResponse> downloadLast10Exercises;
     List<BalanceTestResponse> recentBalanceTests;
 }

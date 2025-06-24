@@ -8,6 +8,7 @@ import java.time.Instant;
 
 @Data
 public class CompletedExerciseResponse {
+    Long id;
     ExerciseEnum exercise;
     int earnedPoints;
     Instant completedAt;

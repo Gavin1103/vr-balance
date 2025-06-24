@@ -89,7 +89,8 @@ public class UserService {
      * Fetches detailed information about a specific patient, including:
      * - Basic user profile information
      * - The 10 most recent completed exercises excluding balance tests
-     * - The 5 most recent balance test sessions (only phase data + timestamp)
+     * - The 5 most recent balance test sessions (only phase data + timestamp. This is for the graph)
+     * - The 10 most recent balance test sessions (Without phases,this is for the option to download a balance test result)
      *
      * @param userId ID of the user (patient) to fetch
      * @return A response object containing all relevant patient details
@@ -110,8 +111,15 @@ public class UserService {
                         PageRequest.of(0, 10)
                 );
 
+        // Fetch the latest 10 balance test sessions for this user (without phases)
+        List<CompletedExercise> last10BalanceTests = completedExerciseRepository.
+                findTop10ByUserIdAndExerciseOrderByCompletedAtDesc(user.getId(), ExerciseEnum.Balance);
+
         // Convert the exercises to DTOs
         List<CompletedExerciseResponse> exerciseDtos = recentExercises.stream()
+                .map(ex -> modelMapper.map(ex, CompletedExerciseResponse.class))
+                .toList();
+        List<CompletedExerciseResponse> last10BalanceTestsDTO = last10BalanceTests.stream()
                 .map(ex -> modelMapper.map(ex, CompletedExerciseResponse.class))
                 .toList();
 
@@ -120,6 +128,6 @@ public class UserService {
                 .findTop5LatestByUser(user.getId(), PageRequest.of(0, 5));
 
         // Return a response object containing all the mapped data
-        return new PatientDetailResponse(userDto, exerciseDtos, recentBalanceTests);
+        return new PatientDetailResponse(userDto, exerciseDtos, last10BalanceTestsDTO, recentBalanceTests);
     }
 }

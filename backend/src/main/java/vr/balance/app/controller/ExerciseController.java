@@ -2,15 +2,16 @@ package vr.balance.app.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vr.balance.app.DTO.request.CompletedBalanceTestExerciseDTO;
 import vr.balance.app.DTO.request.CompletedFireflyExerciseDTO;
 import vr.balance.app.DTO.request.base.CompletedExerciseDTO;
+import vr.balance.app.DTO.response.BalanceTestResponse;
 import vr.balance.app.DTO.response.CompletedExerciseResponse;
 import vr.balance.app.enums.ExerciseEnum;
+import vr.balance.app.exceptions.NotFoundException;
 import vr.balance.app.models.exercise.CompletedBalanceTestExercise;
 import vr.balance.app.models.exercise.CompletedExercise;
 import vr.balance.app.models.exercise.CompletedFireflyExercise;
@@ -18,7 +19,14 @@ import vr.balance.app.response.ApiStandardResponse;
 import vr.balance.app.service.AuthenticationService;
 import vr.balance.app.service.CompletedExerciseService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("/api/exercise")
@@ -113,5 +121,19 @@ public class ExerciseController {
                         "Successfully fetched last 10 exercises",
                         exercises
                 ));
+    }
+
+    @GetMapping("/download-balance-test/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Download the results (all phases) of a balance test as a zip")
+    public ResponseEntity<byte[]> downloadBalanceTestResults(@PathVariable("id") Long id) throws IOException {
+        byte[] zipBytes = completedExerciseService.generateZipWithPhases(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment().filename("balance-test-results.zip").build());
+
+        return new ResponseEntity<>(zipBytes, headers, HttpStatus.OK);
     }
 }
