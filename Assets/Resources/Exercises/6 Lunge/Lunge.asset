@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Lunge
   Category: 1
-  Description: Lunge forward
+  Description: 'A lower-body exercise where you step forward with one leg, bend both
+    knees, and lower your body until the back knee nearly touches the ground, then
+    return to standing. Each movement alternates between your legs. Strengthens quads,
+    glutes, and hamstrings.         '
   Requirements: []
   PositionNeeded: 0
   EasyDifficulty: 0
