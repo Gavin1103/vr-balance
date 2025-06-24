@@ -12,6 +12,7 @@ import { useApiFeedback } from '@/composables/useApiFeedback.ts'
 import RecentExercisesComponent from '@/components/patientDetailview/RecentExercisesComponent.vue'
 import RecentBalanceTestsComponent
   from '@/components/patientDetailview/RecentBalanceTestsComponent.vue'
+import BalanceTestChartComponent from '@/components/patientDetailview/BalanceTestChartComponent.vue'
 
 const { onSuccess, onError } = useApiFeedback()
 const route = useRoute()
@@ -34,6 +35,7 @@ async function fetchPatientDetailData() {
   try {
     isLoading.value = true
     patientDetail.value = await userService.fetchPatientDetail(userId)
+    console.log(patientDetail.value.data.downloadLast10Exercises)
   } catch (error) {
     console.error(error)
   } finally {
@@ -109,14 +111,21 @@ function confirmDeleteUser(user: UserProfileResponse) {
       </tbody>
     </table>
 
-    <RecentBalanceTestsComponent
+    <BalanceTestChartComponent
       v-if="patientDetail?.data?.recentBalanceTests"
       :recentBalanceTests="patientDetail.data.recentBalanceTests"
     />
+
+    <RecentBalanceTestsComponent
+      v-if="patientDetail?.data?.downloadLast10Exercises"
+      :recentBalanceTests="patientDetail.data.downloadLast10Exercises"
+    />
+
     <RecentExercisesComponent
       v-if="patientDetail?.data?.recentExercises"
       :recentExercises="patientDetail.data.recentExercises"
     />
+
     <!--    Confirmation message-->
     <div v-if="showConfirmation" class="confirm-overlay">
       <div class="confirm-box">

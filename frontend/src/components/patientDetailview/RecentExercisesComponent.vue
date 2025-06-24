@@ -18,7 +18,7 @@ const props = defineProps<{
         <h3>{{ exercise.exercise.replace('_', ' ') }}</h3>
         <p><strong>Points:</strong> {{ exercise.earnedPoints }}</p>
         <p><strong>Difficulty:</strong> {{ exercise.difficulty }}</p>
-        <p><strong>Completed:</strong> {{ new Date(exercise.completedAt).toLocaleDateString() }}</p>
+        <p><strong>Completed:</strong> {{ new Date(exercise.completedAt).toLocaleString() }}</p>
       </div>
     </div>
   </div>
@@ -57,11 +57,5 @@ const props = defineProps<{
       }
     }
   }
-
 }
-
-
-
-
-
 </style>

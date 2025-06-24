@@ -16,9 +16,13 @@ import vr.balance.app.models.exercise.CompletedBalanceTestExercise;
 import vr.balance.app.models.exercise.CompletedExercise;
 import vr.balance.app.models.exercise.CompletedFireflyExercise;
 import vr.balance.app.repository.UserRepository;
+import vr.balance.app.repository.exercise.CompletedBalanceTestExerciseRepository;
 import vr.balance.app.repository.exercise.CompletedExerciseRepository;
+import vr.balance.app.util.Zip;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static vr.balance.app.enums.ExerciseEnum.*;
 
@@ -29,16 +33,18 @@ public class CompletedExerciseService {
     private final UserRepository userRepository;
     private final UserStatsService userStatsService;
     private final ModelMapper modelMapper;
+    private final CompletedBalanceTestExerciseRepository completedBalanceTestExerciseRepository;
 
     public CompletedExerciseService(
             CompletedExerciseRepository completedExerciseRepository,
             UserRepository userRepository,
             UserStatsService userStatsService,
-            ModelMapper modelMapper) {
+            ModelMapper modelMapper, CompletedBalanceTestExerciseRepository completedBalanceTestExerciseRepository) {
         this.completedExerciseRepository = completedExerciseRepository;
         this.userRepository = userRepository;
         this.userStatsService = userStatsService;
         this.modelMapper = modelMapper;
+        this.completedBalanceTestExerciseRepository = completedBalanceTestExerciseRepository;
     }
 
     /**
@@ -125,5 +131,17 @@ public class CompletedExerciseService {
                 .toList();
     }
 
+    public byte[] generateZipWithPhases(Long id) throws IOException {
+        CompletedBalanceTestExercise test = completedBalanceTestExerciseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Balance test not found"));
 
+        Map<String, String> files = Map.of(
+                "phase_1.json", test.getPhase_1(),
+                "phase_2.json", test.getPhase_2(),
+                "phase_3.json", test.getPhase_3(),
+                "phase_4.json", test.getPhase_4()
+        );
+
+        return Zip.createZipFromMap("Results/", files);
+    }
 }

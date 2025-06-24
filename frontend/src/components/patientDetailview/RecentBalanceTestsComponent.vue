@@ -1,132 +1,78 @@
-<!-- TODO: This chart currently displays the data from the balance test phases, but the visualization does not reflect what the client wants. Please consult with the client or product owner to clarify the desired data representation before making any modifications. -->
-
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { Line } from 'vue-chartjs'
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-} from 'chart.js'
+import type { CompletedExerciseResponse } from '@/DTO/response/CompletedExerciseResponse.ts'
+import { Download } from 'lucide-vue-next'
+import { ExerciseService } from '@/service/ExerciseService.ts'
 
-// Types
-import type { BalanceTestResponse } from '@/DTO/response/BalanceTestResponse.ts'
-import type { Vector3DTO } from '@/DTO/Vector3DTO.ts'
-
-// Register required chart.js components
-ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement)
-
-// Props: receives the 5 most recent balance test results
 const props = defineProps<{
-  recentBalanceTests: BalanceTestResponse[]
+  recentBalanceTests: CompletedExerciseResponse[]
 }>()
 
-// Currently selected test phase (1–4)
-const selectedPhase = ref<'phase_1' | 'phase_2' | 'phase_3' | 'phase_4'>('phase_1')
+const exerciseService = new ExerciseService();
 
-// Reactive chart data that updates when selectedPhase changes
-const chartData = computed(() => {
-  const datasets = props.recentBalanceTests.map((test, index) => {
-    const raw = test[selectedPhase.value]
-    const label = new Date(test.completedAt).toLocaleDateString()
-
-    let phaseData: Vector3DTO[] = []
-
-    // If phase data is a JSON string, parse it
-    if (typeof raw === 'string') {
-      try {
-        phaseData = JSON.parse(raw)
-      } catch (e) {
-        console.warn(`Invalid JSON in ${selectedPhase.value}`, e)
-      }
-    } else if (Array.isArray(raw)) {
-      phaseData = raw
-    }
-
-    return {
-      label, // label = test date
-      data: phaseData.map((v: Vector3DTO) => v.y), // use only Y-axis values
-      fill: false,
-      borderColor: `hsl(${index * 60}, 70%, 50%)`, // unique color per line
-      tension: 0.3,
-    }
-  })
-
-  // Determine the longest test to generate x-axis labels like "Step 1", "Step 2", ...
-  const maxLength = Math.max(...datasets.map((d) => d.data.length))
-  const labels = Array.from({ length: maxLength }, (_, i) => `Step ${i + 1}`)
-
-  return {
-    labels,
-    datasets,
-  }
-})
+async function downloadBalanceTest(balanceTestId: number) {
+  console.log(balanceTestId);
+  await exerciseService.downloadBalanceTestsResult(balanceTestId)
+}
 </script>
 
 <template>
-  <div class="balance-chart-container">
-    <div class="controls">
-      <h2>Last 5 balance tests</h2>
-
-      <!-- Dropdown to select the phase to display -->
-      <select id="phase" v-model="selectedPhase">
-        <option value="phase_1">Phase 1</option>
-        <option value="phase_2">Phase 2</option>
-        <option value="phase_3">Phase 3</option>
-        <option value="phase_4">Phase 4</option>
-      </select>
+  <div class="recent-exercises-container">
+    <h2>Last 10 balance tests</h2>
+    <div class="recent-exercises">
+      <div
+        v-for="exercise in props.recentBalanceTests"
+        :key="exercise.completedAt"
+        class="exercise-card"
+      >
+        <h3>{{ exercise.exercise }} tests</h3>
+        <p><strong>Completed:</strong> {{ new Date(exercise.completedAt).toLocaleString() }}</p>
+        <Download class="download-icon" @click="downloadBalanceTest(exercise.id)" />
+      </div>
     </div>
-
-    <!-- Line chart showing Y-axis values for the selected phase -->
-    <Line
-      :data="chartData"
-      :options="{
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Balance Test - ' + selectedPhase,
-          },
-        },
-      }"
-    />
   </div>
 </template>
 
 <style scoped>
-.balance-chart-container {
+.recent-exercises-container {
   width: 100%;
-  margin: 50px 0;
-}
-
-.controls {
-  margin-bottom: 20px;
+  overflow-x: auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+  flex-direction: column;
 
-select {
-  margin: 10px 0;
-  background-color: #7393b3;
-  padding: 16px;
-  color: white;
-  font-weight: bolder;
-  border: none;
-  border-radius: 5px;
-  min-width: 125px;
-}
+  .recent-exercises {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    margin: 10px 0;
 
-select:hover {
-  cursor: pointer;
-  background-color: #5d7a9e;
+    .download-icon {
+      transition: transform 0.4s ease, color 0.4s ease;
+      margin: 10px 0 0 0;
+
+      &:hover{
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+    }
+
+    .exercise-card {
+      min-width: 250px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+
+      h3 {
+        margin-top: 0;
+        color: #2b6cb0;
+      }
+
+      p {
+        margin: 5px 0;
+      }
+    }
+  }
 }
 </style>

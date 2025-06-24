@@ -5,5 +5,6 @@ import type { BalanceTestResponse } from '@/DTO/response/BalanceTestResponse.ts'
 export type PatientDetailResponse = {
   user: UserProfileResponse
   recentExercises: CompletedExerciseResponse[],
+  downloadLast10Exercises: CompletedExerciseResponse[],
   recentBalanceTests: BalanceTestResponse[],
 }
