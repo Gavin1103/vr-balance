@@ -35,7 +35,6 @@ async function fetchPatientDetailData() {
   try {
     isLoading.value = true
     patientDetail.value = await userService.fetchPatientDetail(userId)
-    console.log(patientDetail.value.data.downloadLast10Exercises)
   } catch (error) {
     console.error(error)
   } finally {
@@ -112,13 +111,13 @@ function confirmDeleteUser(user: UserProfileResponse) {
     </table>
 
     <BalanceTestChartComponent
-      v-if="patientDetail?.data?.recentBalanceTests"
-      :recentBalanceTests="patientDetail.data.recentBalanceTests"
+      v-if="patientDetail?.data?.recentBalanceTestResults"
+      :recentBalanceTestResults="patientDetail.data.recentBalanceTestResults"
     />
 
     <RecentBalanceTestsComponent
-      v-if="patientDetail?.data?.downloadLast10Exercises"
-      :recentBalanceTests="patientDetail.data.downloadLast10Exercises"
+      v-if="patientDetail?.data?.recentBalanceTests"
+      :recentBalanceTests="patientDetail.data.recentBalanceTests"
     />
 
     <RecentExercisesComponent

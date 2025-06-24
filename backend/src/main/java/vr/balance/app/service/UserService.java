@@ -89,8 +89,8 @@ public class UserService {
      * Fetches detailed information about a specific patient, including:
      * - Basic user profile information
      * - The 10 most recent completed exercises excluding balance tests
-     * - The 5 most recent balance test sessions (only phase data + timestamp. This is for the graph)
-     * - The 10 most recent balance test sessions (Without phases,this is for the option to download a balance test result)
+     * - The 5 most recent balance test sessions (only phase data + timestamp. This is for the chart in the website)
+     * - The 10 most recent balance test sessions (Without phases,this is for the option to download a balance test result via the site)
      *
      * @param userId ID of the user (patient) to fetch
      * @return A response object containing all relevant patient details
@@ -119,15 +119,15 @@ public class UserService {
         List<CompletedExerciseResponse> exerciseDtos = recentExercises.stream()
                 .map(ex -> modelMapper.map(ex, CompletedExerciseResponse.class))
                 .toList();
-        List<CompletedExerciseResponse> last10BalanceTestsDTO = last10BalanceTests.stream()
+        List<CompletedExerciseResponse> recentBalanceTests = last10BalanceTests.stream()
                 .map(ex -> modelMapper.map(ex, CompletedExerciseResponse.class))
                 .toList();
 
-        // Fetch the latest 5 balance test sessions for this user (only completedAt and phase data)
-        List<BalanceTestResponse> recentBalanceTests = completedBalanceTestExerciseRepository
+        // Fetch the latest 5 balance test sessions for this user (only completedAt and phase data, for the chart in the website)
+        List<BalanceTestResponse> recentBalanceTestsResults = completedBalanceTestExerciseRepository
                 .findTop5LatestByUser(user.getId(), PageRequest.of(0, 5));
 
         // Return a response object containing all the mapped data
-        return new PatientDetailResponse(userDto, exerciseDtos, last10BalanceTestsDTO, recentBalanceTests);
+        return new PatientDetailResponse(userDto, exerciseDtos, recentBalanceTests, recentBalanceTestsResults);
     }
 }

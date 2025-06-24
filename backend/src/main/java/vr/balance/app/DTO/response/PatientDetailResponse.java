@@ -12,6 +12,6 @@ import java.util.List;
 public class PatientDetailResponse {
     UserProfileResponse user;
     List<CompletedExerciseResponse> recentExercises;
-    List<CompletedExerciseResponse> downloadLast10Exercises;
-    List<BalanceTestResponse> recentBalanceTests;
+    List<CompletedExerciseResponse> recentBalanceTests;
+    List<BalanceTestResponse> recentBalanceTestResults; // For the chart in the website
 }

@@ -23,7 +23,7 @@ ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale
 
 // Props: receives the 5 most recent balance test results
 const props = defineProps<{
-  recentBalanceTests: BalanceTestResponse[]
+  recentBalanceTestResults: BalanceTestResponse[]
 }>()
 
 // Currently selected test phase (1–4)
@@ -31,7 +31,7 @@ const selectedPhase = ref<'phase_1' | 'phase_2' | 'phase_3' | 'phase_4'>('phase_
 
 // Reactive chart data that updates when selectedPhase changes
 const chartData = computed(() => {
-  const datasets = props.recentBalanceTests.map((test, index) => {
+  const datasets = props.recentBalanceTestResults.map((test, index) => {
     const raw = test[selectedPhase.value]
     const label = new Date(test.completedAt).toLocaleDateString()
 

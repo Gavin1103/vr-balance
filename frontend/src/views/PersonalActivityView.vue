@@ -6,6 +6,7 @@ import { onMounted, ref } from 'vue'
 import { UserService } from '@/service/UserService.ts'
 import RecentExercisesComponent from '@/components/patientDetailview/RecentExercisesComponent.vue'
 import RecentBalanceTestsComponent from '@/components/patientDetailview/RecentBalanceTestsComponent.vue'
+import BalanceTestChartComponent from '@/components/patientDetailview/BalanceTestChartComponent.vue'
 
 const patientDetail = ref<ApiResponse<PatientDetailResponse>>()
 const isLoading = ref(false)
@@ -38,6 +39,10 @@ onMounted(() => {
   <div v-else class="patient-detail-container">
     <h1>Activity</h1>
     <hr>
+    <BalanceTestChartComponent
+      v-if="patientDetail?.data?.recentBalanceTests"
+      :recentBalanceTestResults="patientDetail.data.recentBalanceTestResults"
+    />
     <RecentBalanceTestsComponent
       v-if="patientDetail?.data?.recentBalanceTests"
       :recentBalanceTests="patientDetail.data.recentBalanceTests"
