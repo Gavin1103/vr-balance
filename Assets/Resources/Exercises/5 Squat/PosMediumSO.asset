@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96011b0bacea9cb499e6df57d154af1f, type: 3}
   m_Name: PosMediumSO
   m_EditorClassIdentifier: 
-  HoldTime: 0
+  HoldTime: 3
   MinX: 0
   MaxX: 0
   MinY: 0.3

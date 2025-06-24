@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
-public class HeightThresholdBehavior : IMovementBehaviour
+public class ThresholdBehaviour : IMovementBehaviour
 {
     private List<Vector3> headPositions = new List<Vector3>();
 
@@ -36,9 +36,15 @@ public class HeightThresholdBehavior : IMovementBehaviour
     private bool medium;
     private bool hard;
 
-    public HeightThresholdBehavior()
+    public ThresholdBehaviour(float holdTime, float minX, float maxX, float minY, float maxY, float minZ, float maxZ)
     {
-
+        this.holdTime = holdTime;
+        this.minX = minX;
+        this.maxX = maxX;
+        this.minY = minY;
+        this.maxY = maxY;
+        this.minZ = minZ;
+        this.maxZ = maxZ;
     }
 
     private void Reset()
@@ -67,7 +73,6 @@ public class HeightThresholdBehavior : IMovementBehaviour
     public override IEnumerator OnMovementUpdate(ExerciseMovement movement)
     {
         // go back here when resetting
-
         positiveZ_Minimum = ExerciseManager.Instance.Headset.transform.position.z + minZ;
         positiveZ_Maximum = ExerciseManager.Instance.Headset.transform.position.z + maxZ;
         negativeZ_Minimum = ExerciseManager.Instance.Headset.transform.position.z - minZ;
@@ -87,11 +92,9 @@ public class HeightThresholdBehavior : IMovementBehaviour
         GenericExerciseReferences.Instance.RightStickAffordance.SetActive(false);
         GenericExerciseReferences.Instance.HeadsetAffordance.SetActive(false);
 
-
-        yield return OnMovementUpdate(movement);
-
         // Hold at target & accumulate score
         float elapsedWhileHolding = 0f;
+        // Debug.Log(ExerciseManager.Instance.Headset.position);
         while (elapsedWhileHolding < holdTime)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -101,7 +104,6 @@ public class HeightThresholdBehavior : IMovementBehaviour
             }
 
             Vector3[] amountPositions = LoadHeight.loadData.ToArray();
-
             if (amountPositions.Length >= 0)
             {
                 headsetPos = amountPositions[0];
@@ -110,18 +112,14 @@ public class HeightThresholdBehavior : IMovementBehaviour
             }
 
 
-
             currentHeadsetPos = ExerciseManager.Instance.Headset.transform.position;
 
             // get string from chosen difficulty from the difficulty manager
             // DifficultyManager.Instance.SelectedDifficulty = DifficultyManager.Instance.AdvisedDifficulty;
             string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
-            //Debug.Log(chosenDifficulty);
 
             bool setPosition = GenericExerciseReferences.Instance.NeedsPosition;
 
-
-            //Debug.Log(posNeeded);
 
             // Checks if the current exercise difficulty needs position checker
             bool setPositionNeeded = setPosition == true ? true : false;
@@ -131,7 +129,6 @@ public class HeightThresholdBehavior : IMovementBehaviour
                                    chosenDifficulty == "Hard" ? GenericExerciseReferences.Instance.HardDifficulty : false;
 
             PositionChecker currentChecker = GenericExerciseReferences.Instance.currentPosSO;
-            Debug.Log("Current Position Checker: " + currentChecker);
 
             Vector3 minBound = new Vector3(currentChecker.MinX, currentChecker.MinY, currentChecker.MinZ);
             Vector3 maxBound = new Vector3(currentChecker.MaxX, currentChecker.MaxY, currentChecker.MaxZ);
@@ -142,9 +139,6 @@ public class HeightThresholdBehavior : IMovementBehaviour
             // Checks to see if the feedback for position check needs to be turned on.
             bool turnOnFeedback = setPositionNeeded == true ? checkDifficulty == true ? true : false : false;
 
-
-
-            //Debug.Log("FeedbackCube is turned on: " + turnOnFeedback);
             GenericExerciseReferences.Instance.FeedbackLine.SetActive(turnOnFeedback);
             GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(turnOnFeedback);
             GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(turnOnFeedback);
@@ -185,8 +179,6 @@ public class HeightThresholdBehavior : IMovementBehaviour
                 RenderCube(Color.green);
             }
             // Het moet helemaal resetten, dus de image moet weer naar links
-
-
 
             GenericExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(Mathf.Lerp(0, 160, elapsedWhileHolding / holdTime), GenericExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
 
@@ -230,10 +222,10 @@ public class HeightThresholdBehavior : IMovementBehaviour
     }
     private bool InBoundsY()
     {
-        Debug.Log(headsetPos.y);
-        Debug.Log(currentHeadsetPos.y + " BHEHIFBEHBSEHGBSHGSHEGHSBGHSBEGBSGEJ");
-        Debug.Log(minimalPos);
-        Debug.Log(maximalPos);
+        // Debug.Log(headsetPos.y);
+        // Debug.Log(currentHeadsetPos.y + " BHEHIFBEHBSEHGBSHGSHEGHSBGHSBEGBSGEJ");
+        // Debug.Log(minimalPos);
+        // Debug.Log(maximalPos);
         if (currentHeadsetPos.y < minimalPos && currentHeadsetPos.y > maximalPos)
         {
             return true;

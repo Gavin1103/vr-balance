@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737baed2575436d478ea7b94e0510c0c, type: 3}
   m_Name: PosEasySO
   m_EditorClassIdentifier: 
-  HoldTime: 0
-  MinX: 5
+  HoldTime: 1
+  MinX: 0
   MaxX: 0
-  MinY: 5
-  MaxY: 0
-  MinZ: 5
+  MinY: 0.3
+  MaxY: 0.6
+  MinZ: 0
   MaxZ: 0

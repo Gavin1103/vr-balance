@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HeightThresholdBehavior", menuName = "Exercise/Behaviour/Height Threshold")]
-public class HeightThresholdBehaviorSO : BehaviourSO
+[CreateAssetMenu(fileName = "ThresholdBehavior", menuName = "Exercise/Behaviour/Threshold")]
+public class ThresholdBehaviorSO : BehaviourSO
 {
     public float HoldTime;
     public float MinX;
@@ -12,6 +12,6 @@ public class HeightThresholdBehaviorSO : BehaviourSO
     public float MaxZ;
     public override IMovementBehaviour CreateBehaviour()
     {
-        return new HeightThresholdBehavior();
+        return new ThresholdBehaviour(HoldTime, MinX, MaxY, MinY, MaxY, MinZ, MaxZ);
     }
 }
