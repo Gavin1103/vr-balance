@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
-  moveSpeed: 2
+  moveSpeed: 0.25
   rotationSpeed: 5
   stoppingDistance: 0.5
   centerTransform: {fileID: 0}
