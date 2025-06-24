@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 810c4b57b0078ac4785b611d020c615d, type: 3}
-  m_Name: PosHardSO
+  m_Script: {fileID: 11500000, guid: 0dfc52a26d0ea9a49bb279e823793a6f, type: 3}
+  m_Name: ThresholdBehavior
   m_EditorClassIdentifier: 
-  HoldTime: 3
+  HoldTime: 0
   MinX: 0
   MaxX: 0
-  MinY: 0.3
-  MaxY: 1
+  MinY: 0
+  MaxY: 0
   MinZ: 0
   MaxZ: 0

@@ -21,7 +21,7 @@ MonoBehaviour:
   MediumDifficulty: 0
   HardDifficulty: 0
   BackendEnum: Lunge
-  RepsAndSetsConfig: {fileID: 0}
+  RepsAndSetsConfig: {fileID: 11400000, guid: c6ee023237f51bd40b436b3f0d31f1c4, type: 2}
   Movements:
   - {fileID: 11400000, guid: eed277d414acd004a888fee76f4de1c2, type: 2}
   - {fileID: 11400000, guid: d7fdf9bc820e41943bd937dc19037697, type: 2}
