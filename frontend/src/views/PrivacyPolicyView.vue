@@ -6,7 +6,7 @@
     <a href="/">Back to login</a>
     <br />
     <br />
-    <h1 class="title">Privacy Policy View</h1>
+    <h1 class="title">Privacy policy</h1>
     <br />
     <p>
       We collect exercise data from logged-in users like streak, head sway and played exercise
