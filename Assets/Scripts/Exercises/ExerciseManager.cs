@@ -164,8 +164,8 @@ public class ExerciseManager : MonoBehaviour {
         //NormalExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = Color.red;
     }
     private IEnumerator WaitBeforeStarting(Exercise exercise) {
-        // Countdown from 5 seconds to 0
-        float countdownTime = 4f;
+        // Countdown from 3 seconds to 0
+        float countdownTime = 3f;
         ExtraInfoObject.SetActive(true);
         SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
         while (countdownTime > 0f) {
