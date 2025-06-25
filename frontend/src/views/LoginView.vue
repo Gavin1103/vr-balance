@@ -71,6 +71,8 @@ function onError(error: unknown) {
     <input type="password" id="password" v-model="password" required data-cy="loginPassword" />
 
     <button type="submit" data-cy="loginSubmit">Login</button>
+
+    <a style="text-decoration: none" href="/policy">Privacy policy</a>
   </form>
 </template>
 
