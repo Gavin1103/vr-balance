@@ -43,7 +43,7 @@ public class DashboardUI : MonoBehaviour
     }
     public void OnFireflyExerciseButtonPressed() {
         mainMenuUI.SwitchToPanel(exercisePanel, exerciseTabButton);
-        ExerciseManager.Instance.SelectExerciseByTitle("Firefly");
+        ExerciseManager.Instance.SelectExerciseByTitle("Fireflies");
     }
 
     void OnEnable()
