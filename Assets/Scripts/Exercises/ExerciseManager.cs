@@ -73,7 +73,6 @@ public class ExerciseManager : MonoBehaviour {
         }
     }
 
-
     private void SelectExercise(Exercise exercise)
     {
         SelectedExerciseInfo.SetActive(true);
@@ -136,8 +135,17 @@ public class ExerciseManager : MonoBehaviour {
         StartExerciseButton.onClick.RemoveAllListeners();
         StartExerciseButton.onClick.AddListener(() => StartExercise(exercise));
     }
+    
+    public void SelectExerciseByTitle(string title) { // Used by dashboard's advised exercises row
+        Exercise exercise = Exercises.Find(e => e.Title == title);
+        if (exercise != null)
+            SelectExercise(exercise);
+        else
+            Debug.LogWarning("Exercise not found: " + title);
+    }
 
-    public void SelectBalanceTestExercise() {
+
+    public void SelectBalanceTestExercise() { // Used by the balance test requisite button
         if (BalanceTestExercise != null) {
             SelectExercise(BalanceTestExercise);
         }

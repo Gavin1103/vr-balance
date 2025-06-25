@@ -10,23 +10,46 @@ public class DashboardUI : MonoBehaviour
 {
     public TextMeshProUGUI streakText;
     public TextMeshProUGUI usernameText;
-    public GameObject userStreakUI;
 
+    // Leaderboard stuff
+    public GameObject userStreakUI;
     public Button leaderboardAllTimeButton;
     public Transform leaderboardAllTime;
     public Transform leaderboardAllTimeContainer;
     public Button leaderboardCurrentButton;
     public Transform leaderboardCurrent;
     public Transform leaderboardCurrentContainer;
-
     public GameObject leaderboardEntryPrefab;
     public GameObject linePrefab;
-
     private UserStatsService userStatsService = new UserStatsService();
     private bool isGuest;
 
+    // Advised exercises
+    [SerializeField] private MainMenuUI mainMenuUI;
+    [SerializeField] private GameObject advisedExerciseButtonPrefab;
+    [SerializeField] private Transform advisedContainer;
+    [SerializeField] private GameObject exercisePanel;
+    [SerializeField] private Button exerciseTabButton;
+    // Force firefly
+    private void AddFireflyButton()
+    {
+        foreach (Transform child in advisedContainer)
+        {
+            Destroy(child.gameObject);
+        }
+        GameObject buttonObj = Instantiate(advisedExerciseButtonPrefab, advisedContainer);
+        buttonObj.GetComponentInChildren<TMP_Text>().text = "Firefly Exercise";
+        buttonObj.GetComponent<Button>().onClick.AddListener(OnFireflyExerciseButtonPressed);
+    }
+    public void OnFireflyExerciseButtonPressed() {
+        mainMenuUI.SwitchToPanel(exercisePanel, exerciseTabButton);
+        ExerciseManager.Instance.SelectExerciseByTitle("Firefly");
+    }
+
     void OnEnable()
     {
+        AddFireflyButton();
+
         // Check if user is logged in or guest
         isGuest = !User.IsLoggedIn();
         userStreakUI.SetActive(!isGuest);
