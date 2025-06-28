@@ -8,9 +8,6 @@ public class GenericExerciseSO : ExerciseSO {
     public RepsAndSetsSO RepsAndSetsConfig;
     public List<ExerciseMovementSO> Movements;
 
-    void OnEnable() {
-        RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();
-    }
     public override Exercise CreateExercise() {
         List<ExerciseMovement> movements = GetMovements();
         var exercise = new GenericExercise(

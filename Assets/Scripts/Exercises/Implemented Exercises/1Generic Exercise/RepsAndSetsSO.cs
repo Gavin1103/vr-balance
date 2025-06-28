@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RepsAndSets", menuName = "Exercise/Generic/Reps And Sets")]
-public class RepsAndSetsSO : ScriptableObject
-{
+public class RepsAndSetsSO : ScriptableObject {
     [Header("Easy")]
     public int EasyReps = 5;
     public int EasySets = 1;
