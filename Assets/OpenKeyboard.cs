@@ -21,8 +21,11 @@ public class OpenKeyboard : MonoBehaviour
 
     public void ShowKeyboard()
     {
-        NonNativeKeyboard keyboard = UnityEngine.Object.FindFirstObjectByType<NonNativeKeyboard>();
-        keyboard.gameObject.SetActive(true);
+        NonNativeKeyboard[] keyboards = FindObjectsByType<NonNativeKeyboard>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var keyboard in keyboards)
+        {
+            keyboard.gameObject.SetActive(true);
+        }
 
         NonNativeKeyboard.Instance.InputField = inputField;
         NonNativeKeyboard.Instance.PresentKeyboard(inputField.text);
