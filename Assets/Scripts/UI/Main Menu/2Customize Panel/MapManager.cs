@@ -12,15 +12,10 @@ public class MapManager : MonoBehaviour {
 
     [System.Serializable]
     public class MapEntry {
-        [FormerlySerializedAs("mapName")]
         public string name;
-        [FormerlySerializedAs("mapDescription")]
         public string description;
-        [FormerlySerializedAs("mapObject")]
         public GameObject mapObject;
-        [FormerlySerializedAs("mapImage")]
         public Sprite icon;
-        [FormerlySerializedAs("mapColor")]
         public Color themeColor;
         public TMP_FontAsset subtitleFont;
         public TMP_FontAsset uiFont;
