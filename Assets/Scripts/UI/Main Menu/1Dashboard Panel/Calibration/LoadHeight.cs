@@ -19,21 +19,24 @@ public class LoadHeight : MonoBehaviour
 
         loadData.Clear();
 
-        //Debug.Log(addCalibration);
+        if (addCalibration == null || addCalibration.Count == 0)
+        {
+            // Assume default height if nothing is loaded
+            Vector3 defaultHeight = new Vector3(0, 1.7f, 0); // (ASsume 1.7m)
+            loadData.Add(defaultHeight);
+            return;
+        }
 
         foreach (string height in addCalibration)
         {
-            //Debug.Log("String height: " + height);
-
-            string clean = height.Replace("(", "").Replace(")", ""); // Clean string from parentheses
-            string[] split = clean.Split(',').Select(p => p.Trim()).ToArray(); // split the string
-            float[] part = split.Select(s => float.Parse(s, CultureInfo.InvariantCulture)).ToArray(); //parse it into float
+            string clean = height.Replace("(", "").Replace(")", "");
+            string[] split = clean.Split(',').Select(p => p.Trim()).ToArray();
+            float[] part = split.Select(s => float.Parse(s, CultureInfo.InvariantCulture)).ToArray();
 
             Vector3 JsonVector3 = new Vector3(part[0], part[1], part[2]);
             loadData.Add(JsonVector3);
-            //Debug.Log(JsonVector3);
         }
     }
 
-    public List<Vector3> LoadData {  get { return loadData; } set { loadData = value; } }
+    public List<Vector3> LoadData { get { return loadData; } set { loadData = value; } }
 }
