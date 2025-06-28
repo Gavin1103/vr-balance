@@ -6,10 +6,6 @@ using System.Linq;
 
 public class BalanceTestExercise : GenericExercise {
     public BalanceTestExercise(string backendEnum, ExerciseCategory category, string title, string description, List<string> requirements) : base(backendEnum, title, category, description, requirements) {
-        AmountOfSets = 1;
-        AmountOfReps = 1;
-        WaitTimeBetweenSets = 0;
-        WaitTimeBetweenReps = 0;
     }
 
     public override void StartExercise() {

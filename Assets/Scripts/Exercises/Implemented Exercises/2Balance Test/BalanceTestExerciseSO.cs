@@ -5,12 +5,16 @@ using System.Collections.Generic;
 public class BalanceTestExerciseSO : GenericExerciseSO {
     public override Exercise CreateExercise() {
         List<ExerciseMovement> movements = GetMovements();
-        
-        BalanceTestExercise exercise = new BalanceTestExercise(BackendEnum, Category, Title, Description, Requirements);
+        var exercise = new BalanceTestExercise(
+            backendEnum: BackendEnum,
+            category: Category,
+            title: Title,
+            description: Description,
+            requirements: Requirements
+        );
         exercise.Movements = movements;
-
-        RepsAndSetsSO RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();
         exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();
+        
         return exercise;
     }
 }
