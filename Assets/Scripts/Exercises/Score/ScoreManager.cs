@@ -9,8 +9,10 @@ public class ScoreManager : MonoBehaviour {
         Instance = this;
     }
 
-    public void AddScore(float amount) {
+    public void AddScore(float amount)
+    {
         Score += amount;
+        Debug.Log(Score);
     }
 
     public void ResetScore() {
