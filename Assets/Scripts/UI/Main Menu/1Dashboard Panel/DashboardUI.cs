@@ -38,7 +38,7 @@ public class DashboardUI : MonoBehaviour
             Destroy(child.gameObject);
         }
         GameObject buttonObj = Instantiate(advisedExerciseButtonPrefab, advisedContainer);
-        buttonObj.GetComponentInChildren<TMP_Text>().text = "Firefly Exercise";
+        buttonObj.GetComponentInChildren<TMP_Text>().text = "Fireflies";
         buttonObj.GetComponent<Button>().onClick.AddListener(OnFireflyExerciseButtonPressed);
     }
     public void OnFireflyExerciseButtonPressed() {
