@@ -4,8 +4,7 @@ using UnityEngine;
 public class MustBehaviourSO : BehaviourSO {
     public float HoldTime = 3f;
 
-    public override IMovementBehaviour CreateBehaviour()
-    {
+    public override IMovementBehaviour CreateBehaviour() {
         return new MustBehaviour(HoldTime);
     }
 }

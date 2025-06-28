@@ -1,15 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ThresholdBehaviour", menuName = "Exercise/Behaviour/Threshold")]
-public class ThresholdBehaviourSO : BehaviourSO
-{
-    public float HoldTime;
-    public float MinX;
-    public float MaxX;
-    public float MinY;
-    public float MaxY;
-    public float MinZ;
-    public float MaxZ;
+public class ThresholdBehaviourSO : BehaviourSO {
 
     [Header("Easy")]
     public float EasyHoldTime;
