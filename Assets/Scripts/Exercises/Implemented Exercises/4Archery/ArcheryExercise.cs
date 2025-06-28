@@ -59,7 +59,7 @@ public class ArcheryExercise : Exercise
             currentArrow.transform.parent = null;
             Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.linearVelocity = arrowSpawnPoint.forward * 25f; // force
+            rb.linearVelocity = arrowSpawnPoint.forward * 25f;
             currentArrow = null;
             isPulling = false;
         }

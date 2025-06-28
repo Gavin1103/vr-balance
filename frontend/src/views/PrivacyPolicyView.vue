@@ -20,7 +20,7 @@
       No personally identifiable information (PII) is collected.
       <br />
       <br />
-      If you have questions or want your data removed, contact us at: amine.el.hammdaoui@hva.nl
+      If you have questions or want your data removed, contact our lead dev at: amine.el.hammdaoui@hva.nl
     </p>
   </div>
 </template>
