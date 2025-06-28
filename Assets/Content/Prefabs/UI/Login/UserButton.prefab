@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6146239199245819509}
   - component: {fileID: 7465564091082036941}
   m_Layer: 5
-  m_Name: ExerciseButton
+  m_Name: UserButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
