@@ -75,6 +75,7 @@ public class GenericExercise : Exercise {
                 currentMovementIndex = 0;
 
                 foreach (var movement in Movements) {
+                    refs.MovementImageObject.SetActive(true);
                     movement.exercise = this;
 
                     // Update UI for current set/rep/movement
@@ -82,6 +83,7 @@ public class GenericExercise : Exercise {
                     actionImageComponent.sprite = currentMovement.InstructionImage;
                     yield return moveImageCoroutine = ExerciseManager.Instance.StartCoroutine(movement.Play());
                     movement.MovementEnded();
+                    refs.MovementImageObject.SetActive(false);
                     currentMovementIndex++;
                 }
 
