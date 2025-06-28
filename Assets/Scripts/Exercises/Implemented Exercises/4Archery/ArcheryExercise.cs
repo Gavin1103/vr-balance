@@ -19,7 +19,7 @@ public class ArcheryExercise : Exercise
     private Transform bowSpawnPoint => ArcheryExerciseReferences.Instance.BowSpawnPoint;
     private Transform targetArea => ArcheryExerciseReferences.Instance.TargetArea;
 
-    public ArcheryExercise(string title, ExerciseCategory category, string description, List<string> Image)
+    public ArcheryExercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image)
         : base(title, category, description, requirements, image)
     {
     }

@@ -62,6 +62,8 @@ public class ExerciseManager : MonoBehaviour {
             GameObject buttonObj = Instantiate(ButtonPrefab, row.ButtonContainer);
             Button button = buttonObj.GetComponent<Button>();
             TMP_Text buttonText = buttonObj.GetComponentInChildren<TMP_Text>();
+            Image image = buttonObj.transform.Find("Image").GetComponent<Image>();
+            image.sprite = exercise.Image;
 
             buttonText.text = exercise.Title;
             button.onClick.AddListener(() => SelectExercise(exercise));
