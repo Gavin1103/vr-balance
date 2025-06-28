@@ -88,8 +88,6 @@ public class ExerciseManager : MonoBehaviour {
     [Header("Balance Test")]
     public GameObject BalanceTestWarning;
     public BalanceTestExercise BalanceTestExercise;
-    public SaveHeadPositionData saveHeadPositionData;
-    public BalanceTestRunner balanceTestRunner;
 
     void Awake() {
         Instance = this;
@@ -176,11 +174,6 @@ public class ExerciseManager : MonoBehaviour {
 
         currentExercise = exercise;
         currentExercise.StartExercise();
-
-        if (exercise.Title.ToLower().Contains("balance") && balanceTestRunner != null) {
-            balanceTestRunner.gameObject.SetActive(true);
-            balanceTestRunner.StartBalanceTestSequence();
-        }
     }
 
     public void ExerciseEnded() {

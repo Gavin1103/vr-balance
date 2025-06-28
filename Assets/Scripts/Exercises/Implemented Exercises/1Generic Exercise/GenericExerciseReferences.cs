@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
-public class GenericExerciseReferences : MonoBehaviour {
+public class GenericExerciseReferences : MonoBehaviour
+{
     public static GenericExerciseReferences Instance { get; private set; }
 
     [Header("Affordances")]
@@ -36,7 +37,8 @@ public class GenericExerciseReferences : MonoBehaviour {
     public GameObject RenderLineMinimal;
     public GameObject RenderLineMaximal;
 
-    void Awake() {
+    void Awake()
+    {
         Instance = this;
     }
 }

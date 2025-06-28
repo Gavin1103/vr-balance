@@ -40,12 +40,7 @@ public class ExerciseManager : MonoBehaviour {
     public Transform Headset;
     [Header("Balance Test")]
     public GameObject BalanceTestWarning;
-    public BalanceTestExercise BalanceTestExercise;
-    public SaveHeadPositionData saveHeadPositionData;
-
-    //Balance Test Runner
-    public BalanceTestRunner balanceTestRunner;
-
+    private BalanceTestExercise BalanceTestExercise;
 
     void Awake() {
         Instance = this;
@@ -187,13 +182,6 @@ public class ExerciseManager : MonoBehaviour {
         // After countdown ends, execute the following
         currentExercise = exercise;
         currentExercise.StartExercise();
-
-        if (exercise.Title.ToLower().Contains("balance")) {
-            if (balanceTestRunner != null) {
-                balanceTestRunner.gameObject.SetActive(true);
-                balanceTestRunner.StartBalanceTestSequence();
-            }
-        }
 
         // Temporary location, give color to the cube
         // NormalExerciseReferences.Instance.FeedbackLine.GetComponent<Renderer>().material.color = Color.red;

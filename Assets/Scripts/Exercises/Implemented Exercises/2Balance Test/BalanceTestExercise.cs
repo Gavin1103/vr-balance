@@ -16,6 +16,12 @@ public class BalanceTestExercise : GenericExercise {
         base.StartExercise();
         refs.RepsAndSetsObject.SetActive(false);
         HeightCalibration();
+
+        balanceTestRunner = BalanceTestExerciseReferences.Instance.BalanceTestRunner;
+        if (balanceTestRunner != null) {
+            balanceTestRunner.gameObject.SetActive(true);
+            balanceTestRunner.StartBalanceTestSequence();
+        }
     }
 
     public void HeightCalibration() {
