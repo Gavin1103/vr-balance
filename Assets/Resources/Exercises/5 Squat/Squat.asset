@@ -16,16 +16,8 @@ MonoBehaviour:
   Category: 1
   Description: Hold a squat!
   Requirements: []
-  PositionNeeded: 1
-  EasyDifficulty: 0
-  MediumDifficulty: 1
-  HardDifficulty: 1
   BackendEnum: Squat
-  RepsAndSetsConfig: {fileID: 0}
+  RepsAndSetsConfig: {fileID: 11400000, guid: 240427beae9df8c45ba0807a783fe87d, type: 2}
   Movements:
   - {fileID: 11400000, guid: a609e0252d8683d47a2e33fec4d6d603, type: 2}
   - {fileID: 11400000, guid: 24be260a132fed0479ca1d11b6e92bcc, type: 2}
-  CheckPositions:
-  - {fileID: 11400000, guid: feeb3551c5c417b40a7cf889ade19c5d, type: 2}
-  - {fileID: 11400000, guid: abb75239222dcd949b8e8bd89bd65845, type: 2}
-  - {fileID: 11400000, guid: 25d99a36812ae3a46a1888f1bcc57566, type: 2}
