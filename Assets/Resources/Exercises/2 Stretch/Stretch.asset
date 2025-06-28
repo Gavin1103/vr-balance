@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Stretch
   Category: 2
-  Description: 'Gently extend your muscles through guided poses to improve flexibility
-    and reduce tension. '
+  Description: Gently extend your muscles through guided poses to improve flexibility
+    and reduce tension. Prepares your body greatly before performing strength exercises.
   Requirements:
   - 'Enough space to stand still without external support nearby.  '
   BackendEnum: Stretch

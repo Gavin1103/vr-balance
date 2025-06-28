@@ -14,21 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Lunge
   Category: 1
-  Description: 'A lower-body exercise where you step forward with one leg, bend both
-    knees, and lower your body until the back knee nearly touches the ground, then
-    return to standing. Each movement alternates between your legs. Strengthens quads,
-    glutes, and hamstrings.         '
+  Description: Step forward and lower into a controlled lunge alternating between
+    your right and left. Improves strength, stability, and coordination.
   Requirements: []
-  PositionNeeded: 0
-  EasyDifficulty: 0
-  MediumDifficulty: 0
-  HardDifficulty: 0
   BackendEnum: Lunge
   RepsAndSetsConfig: {fileID: 11400000, guid: c6ee023237f51bd40b436b3f0d31f1c4, type: 2}
   Movements:
   - {fileID: 11400000, guid: eed277d414acd004a888fee76f4de1c2, type: 2}
   - {fileID: 11400000, guid: d7fdf9bc820e41943bd937dc19037697, type: 2}
-  CheckPositions:
-  - {fileID: 11400000, guid: 8e71da07d94eb2347bf223813c7de5be, type: 2}
-  - {fileID: 11400000, guid: 6ffa38dc8ae19234faafa2c5dc5af871, type: 2}
-  - {fileID: 11400000, guid: ac453737cb7305b4695db421134f4488, type: 2}

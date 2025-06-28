@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Glute Bridge
   Category: 1
-  Description: Lie on your back with knees bent and feet flat on the floor. Lift
-    your hips by squeezing your glutes until your body forms a straight line from
-    shoulders to knees. Hold briefly, then lower back down. Great for strengthening
-    glutes, hamstrings, and core.
+  Description: Lie on your back with knees bent and feet flat on the floor. Proceed
+    to lift your leg, alternating between your left and right. Hold briefly, then
+    lower back down.
   Requirements:
   - 'A mat or flat surface to lie down comfortably.  '
   - 'Optional: small cushion for neck support.  '
