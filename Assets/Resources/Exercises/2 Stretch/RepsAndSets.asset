@@ -16,11 +16,11 @@ MonoBehaviour:
   EasySets: 1
   EasyWaitBetweenReps: 0.5
   EasyWaitBetweenSets: 10
-  MediumReps: 8
+  MediumReps: 6
   MediumSets: 2
   MediumWaitBetweenReps: 0.4
   MediumWaitBetweenSets: 8
-  HardReps: 12
+  HardReps: 7
   HardSets: 3
   HardWaitBetweenReps: 0.3
   HardWaitBetweenSets: 6
