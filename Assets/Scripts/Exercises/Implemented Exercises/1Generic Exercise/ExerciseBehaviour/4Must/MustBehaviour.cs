@@ -2,15 +2,14 @@ using System.Collections;
 using UnityEngine;
 
 public class MustBehaviour : IMovementBehaviour {
-    private float holdTime;
+    private float holdTime = 3f;
     private float elapsedWhileHolding = 0f;
-    public MustBehaviour() {
-        GenericExerciseReferences.Instance.InformationText.text = holdTime.ToString("0.0") + "s";
-        GenericExerciseReferences.Instance.InformationObject.SetActive(true);
+    public MustBehaviour(float HoldTime) {
+        holdTime = HoldTime;
     }
     
     public override void OnMovementStart(ExerciseMovement movement) {
-        GenericExerciseReferences.Instance.InformationText.text = "Must Complete";
+        GenericExerciseReferences.Instance.InformationText.text = "Must Be Accurate To Proceed";
         GenericExerciseReferences.Instance.InformationObject.SetActive(true);
     }
     
