@@ -21,8 +21,6 @@ public class Calibrate : MonoBehaviour
     public GameObject rightArm;
     public GameObject leftArm;
 
-    public LoadHeight loadingData;
-
     void Start()
     {
         calibrateTime = calibrateTimer;
@@ -72,7 +70,7 @@ public class Calibrate : MonoBehaviour
             addCalibration.Clear();
             SaveLocalCalibration(calibratedHeadsetPosition, calibratedRightArmPosition, calibratedLeftArmPosition);
             CalculateHeadArmDistance(calibratedHeadsetPosition, calibratedRightArmPosition, calibratedLeftArmPosition);
-            loadingData.LoadHeightData();
+            LoadHeight.LoadHeightData();
             checker = 0;
         }      
     }

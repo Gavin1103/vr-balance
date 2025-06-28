@@ -146,7 +146,8 @@ public class ThresholdBehaviour : IMovementBehaviour
                 break;
             }
 
-            Vector3[] amountPositions = LoadHeight.loadData.ToArray();
+            LoadHeight.LoadHeightData();
+            Vector3[] amountPositions = LoadHeight.LoadData.ToArray();
             if (amountPositions.Length >= 0)
             {
                 headsetPos = amountPositions[0];
