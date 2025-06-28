@@ -17,7 +17,7 @@ public class BalanceTestExercise : GenericExercise {
         refs.RepsAndSetsObject.SetActive(false);
         HeightCalibration();
 
-        balanceTestRunner = BalanceTestExerciseReferences.Instance.BalanceTestRunner;
+        BalanceTestRunner balanceTestRunner = BalanceTestExerciseReferences.Instance.balanceTestRunner;
         if (balanceTestRunner != null) {
             balanceTestRunner.gameObject.SetActive(true);
             balanceTestRunner.StartBalanceTestSequence();
@@ -48,10 +48,10 @@ public class BalanceTestExercise : GenericExercise {
         // This code expects every movement in the balance test to heave a balance behaviour
         foreach (var movement in Movements) {
             var balanceBehaviour = movement.ExerciseBehaviours.OfType<BalanceBehaviour>().FirstOrDefault();
-            ExerciseManager.Instance.saveHeadPositionData.SaveHeadPositionsList(balanceBehaviour.HeadPositions);
+            BalanceTestExerciseReferences.Instance.saveHeadPositionData.SaveHeadPositionsList(balanceBehaviour.HeadPositions);
         }
 
-        ExerciseManager.Instance.saveHeadPositionData.EndDataCollection();
+        BalanceTestExerciseReferences.Instance.saveHeadPositionData.EndDataCollection();
 
         foreach (var movement in Movements) {
             var balanceBehaviour = movement.ExerciseBehaviours.OfType<BalanceBehaviour>().FirstOrDefault();
