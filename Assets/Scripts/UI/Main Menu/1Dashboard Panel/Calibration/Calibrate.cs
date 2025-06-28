@@ -21,6 +21,11 @@ public class Calibrate : MonoBehaviour
     public GameObject rightArm;
     public GameObject leftArm;
 
+    public TMP_Text lengthTextField;
+    public TMP_Text leftArmTextField;
+    public TMP_Text rightArmTextField;
+
+
     void Start()
     {
         calibrateTime = calibrateTimer;
@@ -110,6 +115,10 @@ public class Calibrate : MonoBehaviour
     {
         rightArmLength = Vector3.Distance(headset, rightArm);
         leftArmLength = Vector3.Distance(headset, leftArm);
+
+        text.text = headset.y.ToString("F2") + "m";
+        text.text = leftArmLength.ToString("F2") + "m";
+        text.text = rightArmLength.ToString("F2") + "m";
     }
 
     public List<string> addCalibration = new List<string>();

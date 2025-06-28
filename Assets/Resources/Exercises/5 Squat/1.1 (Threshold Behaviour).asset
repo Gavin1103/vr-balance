@@ -12,31 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dfc52a26d0ea9a49bb279e823793a6f, type: 3}
   m_Name: 1.1 (Threshold Behaviour)
   m_EditorClassIdentifier: 
-  HoldTime: 1
-  MinX: 0
-  MaxX: 0
-  MinY: 0.3
-  MaxY: 0.6
-  MinZ: 0
-  MaxZ: 0
   EasyHoldTime: 1
   EasyMinX: 0
-  EasyMaxX: 0.6
-  EasyMinY: 0.3
-  EasyMaxY: 0
+  EasyMaxX: 0
+  EasyMinY: 0.35
+  EasyMaxY: 0.65
   EasyMinZ: 0
   EasyMaxZ: 0
   MediumHoldTime: 2
   MediumMinX: 0
-  MediumMaxX: 0.6
-  MediumMinY: 0.3
-  MediumMaxY: 0
+  MediumMaxX: 0
+  MediumMinY: 0.35
+  MediumMaxY: 0.65
   MediumMinZ: 0
   MediumMaxZ: 0
   HardHoldTime: 3
   HardMinX: 0
-  HardMaxX: 0.6
-  HardMinY: 0.3
-  HardMaxY: 0
+  HardMaxX: 0
+  HardMinY: 0.35
+  HardMaxY: 0.65
   HardMinZ: 0
   HardMaxZ: 0
