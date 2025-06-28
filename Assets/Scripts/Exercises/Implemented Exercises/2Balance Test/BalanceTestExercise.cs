@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 
 public class BalanceTestExercise : GenericExercise {
-    public BalanceTestExercise(string backendEnum, ExerciseCategory category, string title, string description, List<string> requirements) : base(backendEnum, title, category, description, requirements) {
+    public BalanceTestExercise(string backendEnum, ExerciseCategory category, string title, string description, List<string> requirements, Sprite image) : base(backendEnum, title, category, description, requirements, image) {
     }
 
     public override void StartExercise() {

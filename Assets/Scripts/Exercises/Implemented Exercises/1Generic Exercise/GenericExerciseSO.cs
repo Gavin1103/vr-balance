@@ -15,7 +15,8 @@ public class GenericExerciseSO : ExerciseSO {
             category: Category,
             title: Title,
             description: Description,
-            requirements: Requirements
+            requirements: Requirements,
+            image: Image
         );
         exercise.Movements = movements;
         exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();

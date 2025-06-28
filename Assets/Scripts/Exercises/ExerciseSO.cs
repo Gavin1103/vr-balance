@@ -7,6 +7,7 @@ public abstract class ExerciseSO : ScriptableObject
     public ExerciseCategory Category;
     public string Description;
     public List<string> Requirements;
-
+    public Sprite Image;
+    
     public abstract Exercise CreateExercise();
 }

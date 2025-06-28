@@ -8,17 +8,19 @@ public abstract class Exercise {
     public ExerciseCategory Category;
     public string Description;
     public List<string> Requirements;
+    public Sprite Image;
 
     protected Difficulty dif {
         get {
             return DifficultyManager.Instance.SelectedDifficulty;
         }
     }
-    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements) {
+    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image) {
         Title = title;
         Category = category;
         Description = description;
         Requirements = requirements;
+        Image = image;
     }
 
     public virtual void StartExercise() {

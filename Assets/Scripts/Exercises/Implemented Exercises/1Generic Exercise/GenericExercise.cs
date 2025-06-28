@@ -43,7 +43,7 @@ public class GenericExercise : Exercise {
 
     [HideInInspector] public GenericExerciseScoreCalculator ScoreCalculator = new GenericExerciseScoreCalculator();
 
-    public GenericExercise(string backendEnum, string title, ExerciseCategory category, string description, List<string> requirements) : base(title, category, description, requirements) {
+    public GenericExercise(string backendEnum, string title, ExerciseCategory category, string description, List<string> requirements, Sprite image) : base(title, category, description, requirements, image) {
         BackendEnum = backendEnum;
 
         actionImageComponent = refs.MovementImageObject.GetComponent<Image>();
