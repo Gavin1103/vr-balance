@@ -21,17 +21,9 @@ MonoBehaviour:
   Requirements:
   - 'A mat or flat surface to lie down comfortably.  '
   - 'Optional: small cushion for neck support.  '
-  PositionNeeded: 1
-  EasyDifficulty: 0
-  MediumDifficulty: 0
-  HardDifficulty: 0
   BackendEnum: GluteBridge
-  RepsAndSetsConfig: {fileID: 0}
+  RepsAndSetsConfig: {fileID: 11400000, guid: 25ca41c865f18104cb225d55f2480849, type: 2}
   Movements:
   - {fileID: 11400000, guid: aa624352adb72af41916fa423e7b70c9, type: 2}
   - {fileID: 11400000, guid: da4a534a94efc484fa4985e8b00e0630, type: 2}
   - {fileID: 11400000, guid: 333be40c0e130fa4f8575235033601b6, type: 2}
-  CheckPositions:
-  - {fileID: 11400000, guid: b3417515432dae8419133b5de1020531, type: 2}
-  - {fileID: 11400000, guid: 438890a9ebffb0544918f0daab5c844c, type: 2}
-  - {fileID: 11400000, guid: 39f64b1034ae76f43a0bd73ffdc39fdc, type: 2}

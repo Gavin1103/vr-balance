@@ -19,10 +19,6 @@ MonoBehaviour:
     difficulty. '
   Requirements:
   - 'Enough space to stand still without external support nearby.  '
-  PositionNeeded: 0
-  EasyDifficulty: 0
-  MediumDifficulty: 0
-  HardDifficulty: 0
   BackendEnum: Balance
   RepsAndSetsConfig: {fileID: 11400000, guid: 0154f4791c1c9434f81ed18ae0677b5d, type: 2}
   Movements:
@@ -30,4 +26,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f57afb8c1ebaf64bbc1470e9ed1c333, type: 2}
   - {fileID: 11400000, guid: 3d0f440baf171e546908d36843e283f9, type: 2}
   - {fileID: 11400000, guid: 2eb5b3b4ea2cf78408e2d39116a849cc, type: 2}
-  CheckPositions: []

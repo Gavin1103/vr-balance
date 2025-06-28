@@ -18,15 +18,10 @@ MonoBehaviour:
     and reduce tension. '
   Requirements:
   - 'Enough space to stand still without external support nearby.  '
-  PositionNeeded: 0
-  EasyDifficulty: 0
-  MediumDifficulty: 0
-  HardDifficulty: 0
   BackendEnum: Stretch
-  RepsAndSetsConfig: {fileID: 0}
+  RepsAndSetsConfig: {fileID: 11400000, guid: e688479a5ef2bff428926c161845c39b, type: 2}
   Movements:
   - {fileID: 11400000, guid: d7d14397a604bc4489f8222cc39a2658, type: 2}
   - {fileID: 11400000, guid: 132a51e5171b2124aa803c6cfda6453f, type: 2}
   - {fileID: 11400000, guid: 64488163adba5724297a5a910c03f9b2, type: 2}
   - {fileID: 11400000, guid: 8719cba3731f07e4fa2ee4df0f006851, type: 2}
-  CheckPositions: []

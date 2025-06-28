@@ -19,3 +19,24 @@ MonoBehaviour:
   MaxY: 0.6
   MinZ: 0
   MaxZ: 0
+  EasyHoldTime: 1
+  EasyMinX: 0
+  EasyMaxX: 0.6
+  EasyMinY: 0.3
+  EasyMaxY: 0
+  EasyMinZ: 0
+  EasyMaxZ: 0
+  MediumHoldTime: 2
+  MediumMinX: 0
+  MediumMaxX: 0.6
+  MediumMinY: 0.3
+  MediumMaxY: 0
+  MediumMinZ: 0
+  MediumMaxZ: 0
+  HardHoldTime: 3
+  HardMinX: 0
+  HardMaxX: 0.6
+  HardMinY: 0.3
+  HardMaxY: 0
+  HardMinZ: 0
+  HardMaxZ: 0
