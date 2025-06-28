@@ -24,7 +24,7 @@ public class BalanceTestRunner : MonoBehaviour
             npc.SetActive(true);
         }
         currentIndex = 0;
-        StartCoroutine(RunSequence());
+        // StartCoroutine(RunSequence());
     }
 
     private IEnumerator RunSequence()
