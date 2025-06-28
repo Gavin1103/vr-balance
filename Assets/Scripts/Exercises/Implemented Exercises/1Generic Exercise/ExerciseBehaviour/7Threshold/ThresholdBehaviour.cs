@@ -89,13 +89,6 @@ public class ThresholdBehaviour : IMovementBehaviour
         this.HardMaxZ = hardMaxZ;
     }
 
-    private void Reset()
-    {
-        // if (exercise is NormalExercise normalExercise) {
-        //     normalExercise.RestartCurrentMovement();
-        // }
-    }
-
     public override void OnMovementStart(ExerciseMovement movement) {
         Difficulty diff = DifficultyManager.Instance.SelectedDifficulty;
         if (diff == Difficulty.Easy) {
@@ -127,7 +120,6 @@ public class ThresholdBehaviour : IMovementBehaviour
 
     public override IEnumerator OnMovementUpdate(ExerciseMovement movement)
     {
-        // go back here when resetting
         positiveZ_Minimum = ExerciseManager.Instance.Headset.transform.position.z + minZ;
         positiveZ_Maximum = ExerciseManager.Instance.Headset.transform.position.z + maxZ;
         negativeZ_Minimum = ExerciseManager.Instance.Headset.transform.position.z - minZ;
@@ -173,11 +165,7 @@ public class ThresholdBehaviour : IMovementBehaviour
             // DifficultyManager.Instance.SelectedDifficulty = DifficultyManager.Instance.AdvisedDifficulty;
             string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
 
-
-
-            // Checks if the current exercise difficulty needs position checker
-            // Checks currently chosen difficulty to see if the exercise/minigame needs position check
-
+            // Checks currently chosen difficulty to see if the exercise needs position check
             Vector3 minBound = new Vector3(minX, minY, minZ);
             Vector3 maxBound = new Vector3(maxX, maxY, maxZ);
 
@@ -207,7 +195,6 @@ public class ThresholdBehaviour : IMovementBehaviour
             {
                 // if exercise has been finished, player cannot be out of bounds
 
-                Reset();
                 elapsedWhileHolding = 0;
                 GenericExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(false);
                 GenericExerciseReferences.Instance.InformationObject.SetActive(true);
@@ -223,7 +210,6 @@ public class ThresholdBehaviour : IMovementBehaviour
             {
                 RenderCube(Color.green);
             }
-            // Het moet helemaal resetten, dus de image moet weer naar links
 
             GenericExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(Mathf.Lerp(0, 160, elapsedWhileHolding / holdTime), GenericExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
 
