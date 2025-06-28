@@ -11,7 +11,7 @@ public class OpenKeyboard : MonoBehaviour
     public float verticalOffset = -0.5f;
 
     public Transform positionSource;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         inputField = GetComponent<TMP_InputField>();
@@ -21,6 +21,9 @@ public class OpenKeyboard : MonoBehaviour
 
     public void ShowKeyboard()
     {
+        Object.FindFirstObjectByType<NonNativeKeyboard>(includeInactive: true);
+        keyboard.gameObject.SetActive(true);
+
         NonNativeKeyboard.Instance.InputField = inputField;
         NonNativeKeyboard.Instance.PresentKeyboard(inputField.text);
 
