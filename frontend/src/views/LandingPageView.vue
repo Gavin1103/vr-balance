@@ -1,36 +1,35 @@
 <script setup lang="ts">
-// No script logic needed unless you want interactivity
 </script>
 
 <template>
   <div class="landing-page">
     <section class="hero">
-      <h1>Welcome to VRBalance</h1>
+      <h1>Welcome to</h1>
+      <h1 style="font-size: 50px; margin-top: -30px;">Motion: Virtual Physiotherapy</h1>
       <p>
-        VRBalance is a virtual reality physiotherapy application that helps track your balance and posture during exercises like squats, lunges, and glute bridges.
+        Motion: Virtual Physiotherapy is a VR application designed to assist users with lower back pain by improving their balance, core strength and flexibility.      
       </p>
-      <a href="/login" class="cta-button">Go to App</a>
+      <a href="/login" class="cta-button">Login and see how well you're doing</a>
     </section>
 
     <section class="features">
       <h2>Key Features</h2>
       <ul>
-        <li>🧍‍♂️ Real-time balance & headsway tracking</li>
-        <li>📈 Detailed analytics after each session</li>
-        <li>🧠 Personalized feedback for better posture</li>
-        <li>💻 Secure online dashboard to review progress</li>
+        <li>Real-time balance & headsway tracking</li>
+        <li>Detailed analytics after each session</li>
+        <li>Personalized feedback and reviews from a licensed physiotherapist</li>
+        <li>Fun minigames</li>
       </ul>
     </section>
 
     <section class="media">
       <h2>Preview</h2>
-      <!-- Replace with your screenshot or video -->
-      <img src="/preview.png" alt="VRBalance Screenshot" class="preview" />
+      <img src="/preview.png" alt="Motion Screenshot" class="preview" />
     </section>
 
     <section class="info">
       <p>Available for Meta Quest headsets</p>
-      <a href="/policy">Privacy Policy</a> | <a href="mailto:contact@vrbalance.com">Contact Us</a>
+      <a href="/policy">Privacy Policy</a> | <a href="mailto:amine.el.hammdaoui@hva.nl">Contact Lead Dev</a>
     </section>
   </div>
 </template>

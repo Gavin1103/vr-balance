@@ -3,7 +3,7 @@
 
 <template>
   <div class="container">
-    <a href="/">Back to login</a>
+    <a href="/">Return</a>
     <br />
     <br />
     <h1 class="title">Privacy policy</h1>
