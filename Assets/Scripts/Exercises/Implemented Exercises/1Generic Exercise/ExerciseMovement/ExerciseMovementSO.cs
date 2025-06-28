@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "NewExerciseMovement", menuName = "Exercise/Exercise Movement")]
+[CreateAssetMenu(fileName = "NewExerciseMovement", menuName = "Exercise/Generic/Exercise Movement")]
 public class ExerciseMovementSO : ScriptableObject
 {
     public Vector3 LeftStickTarget;

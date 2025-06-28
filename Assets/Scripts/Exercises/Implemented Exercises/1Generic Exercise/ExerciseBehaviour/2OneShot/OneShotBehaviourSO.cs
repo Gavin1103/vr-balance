@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewHoldBehaviour", menuName = "Exercise/Behaviour/OneShot")]
+[CreateAssetMenu(fileName = "NewHoldBehaviour", menuName = "Exercise/Generic/Behaviour/OneShot")]
 public class OneShotBehaviourSO : BehaviourSO {
     public float Score;
 

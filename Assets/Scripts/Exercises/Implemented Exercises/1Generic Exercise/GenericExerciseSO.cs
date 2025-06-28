@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "NewGenericExercise", menuName = "Exercise/Exercises/Generic")]
+[CreateAssetMenu(fileName = "NewGenericExercise", menuName = "Exercise/Generic/Generic")]
 public class GenericExerciseSO : ExerciseSO {
     public string BackendEnum;
 

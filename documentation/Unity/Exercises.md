@@ -419,7 +419,7 @@ public class GenericExercise : Exercise {
 ScriptableObject that holds the configuration and data for a `GenericExercise`.
 
 ```csharp
-[CreateAssetMenu(fileName = "NewGenericExercise", menuName = "Exercise/Exercises/Generic")]
+[CreateAssetMenu(fileName = "NewGenericExercise", menuName = "Exercise/Generic")]
 public class GenericExerciseSO : ExerciseSO {
     public string BackendEnum;
     public RepsAndSetsSO RepsAndSetsConfig;

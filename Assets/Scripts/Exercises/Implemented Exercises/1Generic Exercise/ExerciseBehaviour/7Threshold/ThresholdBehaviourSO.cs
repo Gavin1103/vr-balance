@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ThresholdBehaviour", menuName = "Exercise/Behaviour/Threshold")]
+[CreateAssetMenu(fileName = "ThresholdBehaviour", menuName = "Exercise/Generic/Behaviour/Threshold")]
 public class ThresholdBehaviourSO : BehaviourSO {
 
     [Header("Easy")]

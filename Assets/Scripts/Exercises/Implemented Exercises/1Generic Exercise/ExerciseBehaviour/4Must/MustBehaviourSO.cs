@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewMustBehaviour", menuName = "Exercise/Behaviour/Must")]
+[CreateAssetMenu(fileName = "NewMustBehaviour", menuName = "Exercise/Generic/Behaviour/Must")]
 public class MustBehaviourSO : BehaviourSO {
     public float HoldTime = 3f;
 
