@@ -75,8 +75,7 @@ public class ExerciseManager : MonoBehaviour {
         SelectedExerciseInfo.SetActive(true);
         ExercisesMenu.SetActive(false);
         // VideoPlayer.SetActive(true);
-
-
+        // the video player should change video here 
 
         // Find new button and text
         foreach (Transform child in AllRowsContainer)
@@ -89,8 +88,6 @@ public class ExerciseManager : MonoBehaviour {
                 break;
             }
         }
-
-
 
         // Update title and description
         SelectedExerciseTitle.text = exercise.Title;
@@ -134,13 +131,22 @@ public class ExerciseManager : MonoBehaviour {
     }
     
     public void SelectExerciseByTitle(string title) { // Used by dashboard's advised exercises row
-        Exercise exercise = Exercises.Find(e => e.Title == title);
+        Exercise exercise = FindExerciseByTitle(title);
         if (exercise != null)
             SelectExercise(exercise);
         else
-            Debug.LogWarning("Exercise not found: " + title);
+            Debug.LogWarning("Can't select null chat: " + title);
     }
 
+    public Exercise FindExerciseByTitle(string title) {
+        Exercise exercise = Exercises.Find(e => e.Title == title);
+        if (exercise != null) {
+            return exercise;
+        } else {
+            Debug.LogWarning("Exercise not found: " + title);
+            return null;
+        }
+    }
 
     public void SelectBalanceTestExercise() { // Used by the balance test requisite button
         if (BalanceTestExercise != null) {

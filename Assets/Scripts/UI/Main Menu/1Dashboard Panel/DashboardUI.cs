@@ -37,8 +37,13 @@ public class DashboardUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        // forcing. the code here should def be replaced in ze future
         GameObject buttonObj = Instantiate(advisedExerciseButtonPrefab, advisedContainer);
         buttonObj.GetComponentInChildren<TMP_Text>().text = "Fireflies";
+        Exercise exercise = ExerciseManager.Instance.FindExerciseByTitle("Fireflies");
+        Image image = buttonObj.transform.Find("Image").GetComponent<Image>();
+        image.sprite = exercise.Image;
         buttonObj.GetComponent<Button>().onClick.AddListener(OnFireflyExerciseButtonPressed);
     }
     public void OnFireflyExerciseButtonPressed() {
