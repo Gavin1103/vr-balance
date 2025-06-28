@@ -15,8 +15,8 @@ MonoBehaviour:
   Title: Balance Test
   Category: 0
   Description: 'Assess your stability by balancing your arms while standing still
-    or on one leg to measure your sway. This score will be used to calculate a recommended
-    difficulty. '
+    or on one leg to measure your headsway. This score will be used to calculate
+    a recommended difficulty. '
   Requirements:
   - 'Enough space to stand still without external support nearby.  '
   BackendEnum: Balance
