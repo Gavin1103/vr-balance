@@ -15,29 +15,13 @@ public abstract class Exercise {
     public string Description;
     public List<string> Requirements;
 
-    public bool PosNeeded;
-    public bool Easy;
-    public bool Medium;
-    public bool Hard;
-
-    public List<PositionChecker> PositionCheckers;
-
     protected Difficulty dif => DifficultyManager.Instance.SelectedDifficulty;
 
-    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements,
-                       bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, 
-                       List<PositionChecker> positionChecker) {
+    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements) {
         Title = title;
         Category = category;
         Description = description;
         Requirements = requirements;
-
-        PosNeeded = positionNeeded;
-        Easy = easyDifficulty;
-        Medium = mediumDifficulty;
-        Hard = hardDifficulty;
-
-        PositionCheckers = positionChecker;
     }
 
     public virtual void StartExercise() {
@@ -256,13 +240,6 @@ public abstract class ExerciseSO : ScriptableObject {
     public string Description;
     public List<string> Requirements;
 
-    public bool PositionNeeded;
-    public bool EasyDifficulty;
-    public bool MediumDifficulty;
-    public bool HardDifficulty;
-
-    public List<PositionChecker> PositionChecker;
-
     public abstract Exercise CreateExercise();
 }
 ```
@@ -314,8 +291,6 @@ public class GenericExercise : Exercise {
     public int AmountOfReps = 1;
     public float WaitTimeBetweenReps = 0.5f;
 
-    public List<PositionChecker> Checkers;
-
     private int currentSetIndex = 0;
     private int currentRepIndex = 0;
     private int currentMovementIndex = 0;
@@ -333,10 +308,8 @@ public class GenericExercise : Exercise {
 
     public GenericExercise(
         string backendEnum, string title, ExerciseCategory category, string description, List<string> requirements,
-        bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers
-    ) : base(title, category, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+    ) : base(title, category, description, requirements) {
         BackendEnum = backendEnum;
-        Checkers = positionCheckers;
         actionImageComponent = refs.MovementImageObject.GetComponent<Image>();
     }
 
@@ -348,24 +321,6 @@ public class GenericExercise : Exercise {
         currentMovementIndex = 0;
         currentRepIndex = 0;
         currentSetIndex = 0;
-
-        refs.NeedsPosition = PosNeeded;
-        refs.EasyDifficulty = Easy;
-        refs.MediumDifficulty = Medium;
-        refs.HardDifficulty = Hard;
-
-        if (PosNeeded) {
-            int index = dif switch {
-                Difficulty.Easy => 0,
-                Difficulty.Medium => 1,
-                Difficulty.Hard => 2,
-                _ => 0
-            };
-
-            if (index < Checkers.Count) {
-                refs.currentPosSO = Checkers[index];
-            }
-        }
 
         base.StartExercise();
     }
@@ -469,7 +424,6 @@ public class GenericExerciseSO : ExerciseSO {
     public string BackendEnum;
     public RepsAndSetsSO RepsAndSetsConfig;
     public List<ExerciseMovementSO> Movements;
-    public List<PositionCheckerSO> CheckPositions;
 
     void OnEnable() {
         RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();
@@ -482,12 +436,7 @@ public class GenericExerciseSO : ExerciseSO {
             category: Category,
             title: Title,
             description: Description,
-            requirements: Requirements,
-            positionNeeded: PositionNeeded,
-            easyDifficulty: EasyDifficulty,
-            mediumDifficulty: MediumDifficulty,
-            hardDifficulty: HardDifficulty,
-            positionCheckers: GetPositionCheckers()
+            requirements: Requirements
         );
 
         exercise.Movements = movements;
@@ -498,9 +447,6 @@ public class GenericExerciseSO : ExerciseSO {
 
     private List<ExerciseMovement> GetMovements() =>
         Movements.ConvertAll(moveSO => moveSO.CreateMovement());
-
-    private List<PositionChecker> GetPositionCheckers() =>
-        CheckPositions.ConvertAll(so => so.SetPosition());
 }
 ```
 

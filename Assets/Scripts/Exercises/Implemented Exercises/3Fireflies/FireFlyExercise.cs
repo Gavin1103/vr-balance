@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Service;
 
 public class FireFlyExercise : Exercise {
-    public FireFlyExercise(string title, ExerciseCategory category, string description, List<string> requirements, bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers) : base(title, category, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+    public FireFlyExercise(string title, ExerciseCategory category, string description, List<string> requirements) : base(title, category, description, requirements) {
     }
 
     protected override void PlayExercise() {

@@ -7,7 +7,6 @@ public class GenericExerciseSO : ExerciseSO {
 
     public RepsAndSetsSO RepsAndSetsConfig;
     public List<ExerciseMovementSO> Movements;
-    public List<PositionCheckerSO> CheckPositions;
 
     void OnEnable() {
         RepsAndSetsConfig = ScriptableObject.CreateInstance<RepsAndSetsSO>();
@@ -19,12 +18,7 @@ public class GenericExerciseSO : ExerciseSO {
             category: Category,
             title: Title,
             description: Description,
-            requirements: Requirements,
-            positionNeeded: PositionNeeded,
-            easyDifficulty: EasyDifficulty,
-            mediumDifficulty: MediumDifficulty,
-            hardDifficulty: HardDifficulty,
-            positionCheckers: GetPositionCheckers()
+            requirements: Requirements
         );
         exercise.Movements = movements;
         exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();
@@ -39,13 +33,5 @@ public class GenericExerciseSO : ExerciseSO {
             movements.Add(movement);
         }
         return movements;
-    }
-
-    protected List<PositionChecker> GetPositionCheckers() {
-        var list = new List<PositionChecker>();
-        foreach (var so in CheckPositions) {
-            list.Add(so.SetPosition());
-        }
-        return list;
     }
 }

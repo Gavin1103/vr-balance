@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DTO.Request.Exercise.@base;
 
-public class GenericExercise : Exercise
-{
+public class GenericExercise : Exercise {
     public string BackendEnum;
 
     public List<ExerciseMovement> Movements;
@@ -15,8 +14,6 @@ public class GenericExercise : Exercise
     public float WaitTimeBetweenSets = 10f;
     public int AmountOfReps = 1;
     public float WaitTimeBetweenReps = 0.5f;
-
-    public List<PositionChecker> Checkers;
 
     // Action images
     private int currentSetIndex = 0;
@@ -46,24 +43,13 @@ public class GenericExercise : Exercise
 
     [HideInInspector] public GenericExerciseScoreCalculator ScoreCalculator = new GenericExerciseScoreCalculator();
 
-    public GenericExercise(
-            string backendEnum, string title, ExerciseCategory category, string description, List<string> requirements,
-            bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionCheckers)
-            : base(title, category, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers)
-    {
+    public GenericExercise(string backendEnum, string title, ExerciseCategory category, string description, List<string> requirements) : base(title, category, description, requirements) {
         BackendEnum = backendEnum;
-
-        PosNeeded = positionNeeded;
-        Easy = easyDifficulty;
-        Medium = hardDifficulty;
-        Hard = hardDifficulty;
-        Checkers = positionCheckers;
 
         actionImageComponent = refs.MovementImageObject.GetComponent<Image>();
     }
 
-    public override void StartExercise()
-    {
+    public override void StartExercise() {
         RepsAndSetsConfig.ApplyTo(this);
         refs.RepsAndSetsObject.SetActive(true);
 
@@ -72,51 +58,23 @@ public class GenericExercise : Exercise
         currentRepIndex = 0;
         currentSetIndex = 0;
 
-        refs.NeedsPosition = PosNeeded;
-        refs.EasyDifficulty = Easy;
-        refs.MediumDifficulty = Medium;
-        refs.HardDifficulty = Hard;
-
-        // Adjust reps based on difficulty
-        string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
-        // if (chosenDifficulty == "Medium") {
-        //     AmountOfReps = Mathf.CeilToInt(AmountOfReps * 1.5f); // 1.5x as hard when medium
-        // } else if (chosenDifficulty == "Hard") {
-        //     AmountOfReps = AmountOfReps * 2; // Twice as hard when hard
-        // }
-
-        if (PosNeeded == true)
-        {
-            int Count = chosenDifficulty == "Easy" ? 0 : chosenDifficulty == "Medium" ? 1 : chosenDifficulty == "Hard" ? 2 : 0;
-            if (Count >= 0 && Count < Checkers.Count)
-            {
-                refs.currentPosSO = Checkers[Count];
-            }
-        }
-
         base.StartExercise();
     }
 
-    protected override void PlayExercise()
-    {
-
+    protected override void PlayExercise() {
         refs.MovementImageObject.transform.localPosition = new Vector3(300, 0, 0);
         refs.ActionImageLine.sizeDelta = new Vector2(0, refs.ActionImageLine.sizeDelta.y);
 
         playSetsCoroutine = ExerciseManager.Instance.StartCoroutine(PlaySets());
     }
 
-    private IEnumerator PlaySets()
-    {
-        for (int i = 0; i < AmountOfSets; i++)
-        {
+    private IEnumerator PlaySets() {
+        for (int i = 0; i < AmountOfSets; i++) {
             currentRepIndex = 0;
-            for (int j = 0; j < AmountOfReps; j++)
-            {
+            for (int j = 0; j < AmountOfReps; j++) {
                 currentMovementIndex = 0;
 
-                foreach (var movement in Movements)
-                {
+                foreach (var movement in Movements) {
                     movement.exercise = this;
 
                     // Update UI for current set/rep/movement
@@ -128,8 +86,7 @@ public class GenericExercise : Exercise
                 }
 
                 // Wait between reps, except after the last rep
-                if (currentRepIndex < AmountOfReps - 1 && WaitTimeBetweenReps > 0)
-                {
+                if (currentRepIndex < AmountOfReps - 1 && WaitTimeBetweenReps > 0) {
                     yield return new WaitForSeconds(WaitTimeBetweenReps);
                 }
 
@@ -137,8 +94,7 @@ public class GenericExercise : Exercise
             }
 
             // Wait between sets, except after the last set
-            if (currentSetIndex < AmountOfSets - 1 && WaitTimeBetweenSets > 0)
-            {
+            if (currentSetIndex < AmountOfSets - 1 && WaitTimeBetweenSets > 0) {
                 actionImageComponent.enabled = false;
                 yield return ExerciseManager.Instance.StartCoroutine(ShowRestUI(WaitTimeBetweenSets));
                 actionImageComponent.enabled = true;
@@ -166,17 +122,14 @@ public class GenericExercise : Exercise
         ExerciseManager.Instance.ExtraInfoObject.SetActive(false);
     }
 
-    public override void ExerciseEnded()
-    {
+    public override void ExerciseEnded() {
         SaveExercise();
 
-        if (playSetsCoroutine != null)
-        {
+        if (playSetsCoroutine != null) {
             ExerciseManager.Instance.StopCoroutine(playSetsCoroutine);
             playSetsCoroutine = null;
         }
-        if (moveImageCoroutine != null)
-        {
+        if (moveImageCoroutine != null) {
             ExerciseManager.Instance.StopCoroutine(moveImageCoroutine);
             moveImageCoroutine = null;
         }

@@ -9,31 +9,16 @@ public abstract class Exercise {
     public string Description;
     public List<string> Requirements;
 
-    public bool PosNeeded;
-    public bool Easy;
-    public bool Medium;
-    public bool Hard;
-
-    public List<PositionChecker> PositionCheckers;
-
     protected Difficulty dif {
         get {
             return DifficultyManager.Instance.SelectedDifficulty;
         }
     }
-    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements, bool positionNeeded, bool easyDifficulty, bool mediumDifficulty, bool hardDifficulty, List<PositionChecker> positionChecker)
-    {
+    protected Exercise(string title, ExerciseCategory category, string description, List<string> requirements) {
         Title = title;
         Category = category;
         Description = description;
         Requirements = requirements;
-
-        PosNeeded = positionNeeded;
-        Easy = easyDifficulty;
-        Medium = hardDifficulty;
-        Hard = hardDifficulty;
-
-        PositionCheckers = positionChecker;
     }
 
     public virtual void StartExercise() {

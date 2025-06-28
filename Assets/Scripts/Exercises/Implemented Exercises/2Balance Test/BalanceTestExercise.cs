@@ -4,16 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 
-public class BalanceTestExercise : GenericExercise
-{
-
-    public BalanceTestExercise(string backendEnum, ExerciseCategory category, string title, string description, List<string> requirements,
-            bool positionNeeded,
-            bool easyDifficulty,
-            bool mediumDifficulty,
-            bool hardDifficulty,
-            List<PositionChecker> positionCheckers)
-            : base(backendEnum, title, category, description, requirements, positionNeeded, easyDifficulty, mediumDifficulty, hardDifficulty, positionCheckers) {
+public class BalanceTestExercise : GenericExercise {
+    public BalanceTestExercise(string backendEnum, ExerciseCategory category, string title, string description, List<string> requirements) : base(backendEnum, title, category, description, requirements) {
         AmountOfSets = 1;
         AmountOfReps = 1;
         WaitTimeBetweenSets = 0;

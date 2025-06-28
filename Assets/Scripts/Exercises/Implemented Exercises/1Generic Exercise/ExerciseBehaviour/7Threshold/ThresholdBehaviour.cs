@@ -31,20 +31,62 @@ public class ThresholdBehaviour : IMovementBehaviour
     private float positiveY_Maximum;
     private float restPosition;
 
-    private bool posNeeded;
-    private bool easy;
-    private bool medium;
-    private bool hard;
+    private float EasyHoldTime;
+    private float EasyMinX;
+    private float EasyMaxX;
+    private float EasyMinY;
+    private float EasyMaxY;
+    private float EasyMinZ;
+    private float EasyMaxZ;
 
-    public ThresholdBehaviour(float holdTime, float minX, float maxX, float minY, float maxY, float minZ, float maxZ)
+    private float MediumHoldTime;
+    private float MediumMinX;
+    private float MediumMaxX;
+    private float MediumMinY;
+    private float MediumMaxY;
+    private float MediumMinZ;
+    private float MediumMaxZ;
+
+    private float HardHoldTime;
+    private float HardMinX;
+    private float HardMaxX;
+    private float HardMinY;
+    private float HardMaxY;
+    private float HardMinZ;
+    private float HardMaxZ;
+
+    public ThresholdBehaviour() {
+
+    }
+
+    public void SetDifficultyVariables(
+        float easyHold, float easyMinX, float easyMaxX, float easyMinY, float easyMaxY, float easyMinZ, float easyMaxZ,
+        float medHold, float medMinX, float medMaxX, float medMinY, float medMaxY, float medMinZ, float medMaxZ,
+        float hardHold, float hardMinX, float hardMaxX, float hardMinY, float hardMaxY, float hardMinZ, float hardMaxZ)
     {
-        this.holdTime = holdTime;
-        this.minX = minX;
-        this.maxX = maxX;
-        this.minY = minY;
-        this.maxY = maxY;
-        this.minZ = minZ;
-        this.maxZ = maxZ;
+        this.EasyHoldTime = easyHold;
+        this.EasyMinX = easyMinX;
+        this.EasyMaxX = easyMaxX;
+        this.EasyMinY = easyMinY;
+        this.EasyMaxY = easyMaxY;
+        this.EasyMinZ = easyMinZ;
+        this.EasyMaxZ = easyMaxZ;
+
+        this.MediumHoldTime = medHold;
+        this.MediumMinX = medMinX;
+        this.MediumMaxX = medMaxX;
+        this.MediumMinY = medMinY;
+        this.MediumMaxY = medMaxY;
+        this.MediumMinZ = medMinZ;
+        this.MediumMaxZ = medMaxZ;
+
+        this.HardHoldTime = hardHold;
+        this.HardMinX = hardMinX;
+        this.HardMaxX = hardMaxX;
+        this.HardMinY = hardMinY;
+        this.HardMaxY = hardMaxY;
+        this.HardMinZ = hardMinZ;
+        this.HardMaxZ = hardMaxZ;
     }
 
     private void Reset()
@@ -54,17 +96,30 @@ public class ThresholdBehaviour : IMovementBehaviour
         // }
     }
 
-    public override void OnMovementStart(ExerciseMovement movement)
-    {
+    public override void OnMovementStart(ExerciseMovement movement) {
+        Difficulty diff = DifficultyManager.Instance.SelectedDifficulty;
+        if (diff == Difficulty.Easy) {
+            holdTime = EasyHoldTime;
+            minX = EasyMinX; maxX = EasyMaxX;
+            minY = EasyMinY; maxY = EasyMaxY;
+            minZ = EasyMinZ; maxZ = EasyMaxZ;
+        } else if (diff == Difficulty.Medium) {
+            holdTime = MediumHoldTime;
+            minX = MediumMinX; maxX = MediumMaxX;
+            minY = MediumMinY; maxY = MediumMaxY;
+            minZ = MediumMinZ; maxZ = MediumMaxZ;
+        } else if (diff == Difficulty.Hard) {
+            holdTime = HardHoldTime;
+            minX = HardMinX; maxX = HardMaxX;
+            minY = HardMinY; maxY = HardMaxY;
+            minZ = HardMinZ; maxZ = HardMaxZ;
+        }
         OnMovementUpdate(movement);
     }
 
     private Vector3 headsetPos;
     private Vector3 rightArmPos;
     private Vector3 leftArmPos;
-
-    private PositionChecker currentChecker;
-    private PositionCheckerSO chosenSO;
 
     private Vector3 currentHeadsetPos;
     private float minimalPos;
@@ -118,36 +173,26 @@ public class ThresholdBehaviour : IMovementBehaviour
             // DifficultyManager.Instance.SelectedDifficulty = DifficultyManager.Instance.AdvisedDifficulty;
             string chosenDifficulty = DifficultyManager.Instance.SelectedDifficulty.ToString();
 
-            bool setPosition = GenericExerciseReferences.Instance.NeedsPosition;
 
 
             // Checks if the current exercise difficulty needs position checker
-            bool setPositionNeeded = setPosition == true ? true : false;
             // Checks currently chosen difficulty to see if the exercise/minigame needs position check
-            bool checkDifficulty = chosenDifficulty == "Easy" ? GenericExerciseReferences.Instance.EasyDifficulty :
-                                   chosenDifficulty == "Medium" ? GenericExerciseReferences.Instance.MediumDifficulty :
-                                   chosenDifficulty == "Hard" ? GenericExerciseReferences.Instance.HardDifficulty : false;
 
-            PositionChecker currentChecker = GenericExerciseReferences.Instance.currentPosSO;
-
-            Vector3 minBound = new Vector3(currentChecker.MinX, currentChecker.MinY, currentChecker.MinZ);
-            Vector3 maxBound = new Vector3(currentChecker.MaxX, currentChecker.MaxY, currentChecker.MaxZ);
+            Vector3 minBound = new Vector3(minX, minY, minZ);
+            Vector3 maxBound = new Vector3(maxX, maxY, maxZ);
 
             minimalPos = headsetPos.y - minBound.y;
             maximalPos = headsetPos.y - maxBound.y;
 
-            // Checks to see if the feedback for position check needs to be turned on.
-            bool turnOnFeedback = setPositionNeeded == true ? checkDifficulty == true ? true : false : false;
 
-            GenericExerciseReferences.Instance.FeedbackLine.SetActive(turnOnFeedback);
-            GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(turnOnFeedback);
-            GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(turnOnFeedback);
+            GenericExerciseReferences.Instance.FeedbackLine.SetActive(true);
+            GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(true);
+            GenericExerciseReferences.Instance.RenderLineMaximal.SetActive(true);
 
             Vector3 defaultZ = new Vector3(0, 0, 1);
 
             GenericExerciseReferences.Instance.RenderLineMinimal.transform.position = (headsetPos + defaultZ) - minBound;
             GenericExerciseReferences.Instance.RenderLineMaximal.transform.position = (headsetPos + defaultZ) - maxBound;
-            //Add another feedback stuff using the turnOnFeedback
 
             if (InBoundsY())
             {

@@ -31,13 +31,6 @@ public class GenericExerciseReferences : MonoBehaviour {
     public TextMeshProUGUI InformationText;
     public GameObject EyesClosedSphere;
 
-    [Header("Position Specific References for Exercises")]
-    public bool NeedsPosition;
-    public bool EasyDifficulty;
-    public bool MediumDifficulty;
-    public bool HardDifficulty;
-    public PositionChecker currentPosSO;
-
     [Header("Feedback for exercises that needs specific positions")]
     public GameObject FeedbackLine;
     public GameObject RenderLineMinimal;
