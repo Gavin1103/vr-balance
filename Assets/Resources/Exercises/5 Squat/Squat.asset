@@ -17,7 +17,8 @@ MonoBehaviour:
   Description: Lower your hips into a seated position to strengthen your legs and
     core, hold briefly, and then return standing. Make sure your knees bend outwards
     while holding.
-  Requirements: []
+  Requirements:
+  - 'Enough space to stand still without external support nearby.  '
   BackendEnum: Squat
   RepsAndSetsConfig: {fileID: 11400000, guid: 240427beae9df8c45ba0807a783fe87d, type: 2}
   Movements:

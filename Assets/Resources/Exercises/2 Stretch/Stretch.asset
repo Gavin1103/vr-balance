@@ -17,7 +17,7 @@ MonoBehaviour:
   Description: Gently extend your muscles through guided poses to improve flexibility
     and reduce tension. Prepares your body greatly before performing strength exercises.
   Requirements:
-  - 'Enough space to stand still without external support nearby.  '
+  - 'Enough space to move without external support nearby.  '
   BackendEnum: Stretch
   RepsAndSetsConfig: {fileID: 11400000, guid: e688479a5ef2bff428926c161845c39b, type: 2}
   Movements:
