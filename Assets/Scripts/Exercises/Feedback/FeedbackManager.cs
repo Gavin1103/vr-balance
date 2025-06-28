@@ -8,7 +8,7 @@ public class FeedbackManager : MonoBehaviour {
     [Header("UI Feedback")]
     public GameObject FeedbackTextPrefab;
     public Toggle particleToggle;
-    public bool particlesAllowed;
+    public bool particlesAllowed = true;
     [System.Serializable]
     public class FeedbackData {
         public ParticleSystem particlePrefabs;
@@ -38,48 +38,38 @@ public class FeedbackManager : MonoBehaviour {
         foreach (var data in feedbackDataList) {
             feedbackMap[data.type] = data;
         }
-        particlesAllowed = true;
         particleToggle.onValueChanged.AddListener(OnToggleChanged);
     }
+    // Spawn any feedback
+    public void SpawnFeedback(string text, Color color, Vector3 spawnPosition, string soundName = null, ParticleSystem particles = null) {
+        SoundManager.soundInstance.PlaySFX(soundName);
 
-
-    public void CalculateAndDisplayFeedbackText(float score, float maxScore, Vector3 spawnPosition) {
-        FeedbackType type = GetFeedbackType(score, maxScore);
-        DisplayFeedback(type, spawnPosition);
-    }
-
-    public void DisplayMissFeedback(Vector3 spawnPosition) {
-        DisplayFeedback(FeedbackType.Miss, spawnPosition);
-    }
-
-    private void OnToggleChanged(bool value) {
-        particlesAllowed = value;
-    }
-
-    public void DisplayFeedback(FeedbackType type, Vector3 spawnPosition) {
-        FeedbackData data = feedbackMap[type];
-
-        // Play sound
-        SoundManager.soundInstance.PlaySFX(data.soundName);
-
-        // Display text
         GameObject obj = Instantiate(FeedbackTextPrefab, spawnPosition, Quaternion.identity);
         FeedbackText feedbackText = obj.GetComponent<FeedbackText>();
-        feedbackText.Setup(data.text, data.color);
+        feedbackText.Setup(text, color);
 
-        // Spawn particles
-        if (data.particlePrefabs != null && particlesAllowed) {
-            ParticleSystem ps = Instantiate(data.particlePrefabs, spawnPosition, Quaternion.identity);
+        if (particles != null && particlesAllowed) {
+            ParticleSystem ps = Instantiate(particles, spawnPosition, Quaternion.identity);
             var mainModule = ps.main;
-            mainModule.startColor = data.color;
+            mainModule.startColor = color;
             ps.Play();
-
-            // Optional: parenten aan de feedbacktekst zodat het samen verdwijnt
             ps.transform.SetParent(obj.transform, true);
         }
     }
 
-    public FeedbackType GetFeedbackType(float score, float maxScore) {
+    // Handle generic feedback
+    public void CalculateAndDisplayGenericFeedbackText(float score, float maxScore, Vector3 spawnPosition) {
+        FeedbackType type = GetGenericFeedbackType(score, maxScore);
+        DisplayFeedback(type, spawnPosition);
+    }
+    public void DisplayMissFeedback(Vector3 spawnPosition) {
+        DisplayFeedback(FeedbackType.Miss, spawnPosition);
+    }
+    public void DisplayFeedback(FeedbackType type, Vector3 spawnPosition) {
+        FeedbackData data = feedbackMap[type];
+        SpawnFeedback(data.text, data.color, spawnPosition, data.soundName, data.particlePrefabs);
+    }
+    public FeedbackType GetGenericFeedbackType(float score, float maxScore) {
         float ratio = score / maxScore;
 
         if (ratio >= 0.95f) return FeedbackType.Perfect;
@@ -87,5 +77,10 @@ public class FeedbackManager : MonoBehaviour {
         if (ratio >= 0.70f) return FeedbackType.Good;
         if (ratio >= 0.50f) return FeedbackType.Okay;
         return FeedbackType.Bad;
+    }
+    
+    // Setting
+    private void OnToggleChanged(bool value) {
+        particlesAllowed = value;
     }
 }

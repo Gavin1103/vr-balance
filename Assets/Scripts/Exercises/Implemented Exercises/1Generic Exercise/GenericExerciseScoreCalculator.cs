@@ -72,6 +72,6 @@ public class GenericExerciseScoreCalculator {
 
         // Otherwise, normal feedback
         ScoreManager.Instance.AddScore(score);
-        FeedbackManager.Instance.CalculateAndDisplayFeedbackText(score, maxScore, popupSpawnPosition);
+        FeedbackManager.Instance.CalculateAndDisplayGenericFeedbackText(score, maxScore, popupSpawnPosition);
     }
 }

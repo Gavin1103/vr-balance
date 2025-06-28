@@ -10,6 +10,11 @@ public class BalanceTestExerciseReferences : MonoBehaviour {
     [Header("Saving data")]
     public SaveHeadPositionData saveHeadPositionData;
     public BalanceTestRunner balanceTestRunner;
+    [Header("Feedback particles")]
+    public ParticleSystem perfectParticles;
+    public ParticleSystem greatParticles;
+    public ParticleSystem goodParticles;
+    public ParticleSystem missParticles;
 
     void Awake() {
         Instance = this;

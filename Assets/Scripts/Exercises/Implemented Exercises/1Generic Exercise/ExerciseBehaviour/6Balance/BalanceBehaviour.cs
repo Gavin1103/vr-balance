@@ -42,7 +42,33 @@ public class BalanceBehaviour : IMovementBehaviour {
 
             yield return null;
         }
-        movement.exercise.ScoreCalculator.DecideFeedback(movement.currentScore, movement.TotalScore);
+
+        float avgSway = CalculateAverageSway(HeadPositions);
+        DisplaySwayFeedback(avgSway);
+    }
+    
+    private float CalculateAverageSway(List<Vector3> positions) {
+        if (positions == null || positions.Count < 2) return 0f;
+
+        float total = 0f;
+        for (int i = 1; i < positions.Count; i++) {
+            total += Vector3.Distance(positions[i], positions[i - 1]);
+        }
+        return total / (positions.Count - 1);
+    }
+
+    private void DisplaySwayFeedback(float sway) {
+        Vector3 pos = GenericExerciseReferences.Instance.MovementImageObject.transform.position + new Vector3(0, 0.5f, 0);
+
+        if (sway < 0.0003f) {
+            FeedbackManager.Instance.SpawnFeedback("PERFECT!", Color.green, pos, "Action Image Perfect", BalanceTestExerciseReferences.Instance.perfectParticles);
+        } else if (sway < 0.001f) {
+            FeedbackManager.Instance.SpawnFeedback("GOOD", Color.yellow, pos, "Action Image Great", BalanceTestExerciseReferences.Instance.greatParticles);
+        } else if (sway < 0.005f) {
+            FeedbackManager.Instance.SpawnFeedback("OK", Color.gray, pos, "Action Image Good", BalanceTestExerciseReferences.Instance.goodParticles);
+        } else {
+            FeedbackManager.Instance.SpawnFeedback("TOO MUCH SWAY", Color.red, pos, "Action Image Miss", BalanceTestExerciseReferences.Instance.missParticles);
+        }
     }
 
     public override void OnMovementEnd(ExerciseMovement movement) {
