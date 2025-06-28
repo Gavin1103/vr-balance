@@ -15,6 +15,7 @@ public class GenericExerciseReferences : MonoBehaviour
     public AffordancePulse LeftPulseAffordance;
     public AffordancePulse RightPulseAffordance;
     public AffordancePulse HeadsetPulseAffordance;
+    public GameObject PercentagesObject;
     public TextMeshProUGUI LeftTextPercentage;
     public TextMeshProUGUI RightTextPercentage;
     public TextMeshProUGUI HeadTextPercentage;

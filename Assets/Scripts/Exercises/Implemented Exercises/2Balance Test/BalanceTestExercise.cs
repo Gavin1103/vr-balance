@@ -11,6 +11,7 @@ public class BalanceTestExercise : GenericExercise {
     public override void StartExercise() {
         base.StartExercise();
         refs.RepsAndSetsObject.SetActive(false);
+        refs.PercentagesObject.SetActive(false);
         HeightCalibration();
 
         BalanceTestRunner balanceTestRunner = BalanceTestExerciseReferences.Instance.balanceTestRunner;
@@ -32,6 +33,7 @@ public class BalanceTestExercise : GenericExercise {
 
     public override void ExerciseEnded() {
         base.ExerciseEnded();
+        refs.PercentagesObject.SetActive(true);
 
         SaveHeadSway();
     }
