@@ -135,10 +135,6 @@ public class ThresholdBehaviour : IMovementBehaviour
 
         restPosition = ExerciseManager.Instance.Headset.transform.position.y + 0.03f;
 
-        GenericExerciseReferences.Instance.LeftStickAffordance.SetActive(false);
-        GenericExerciseReferences.Instance.RightStickAffordance.SetActive(false);
-        GenericExerciseReferences.Instance.HeadsetAffordance.SetActive(false);
-
         // Hold at target & accumulate score
         float elapsedWhileHolding = 0f;
         // Debug.Log(ExerciseManager.Instance.Headset.position);
@@ -224,10 +220,6 @@ public class ThresholdBehaviour : IMovementBehaviour
 
     public override void OnMovementEnd(ExerciseMovement movement)
     {
-        GenericExerciseReferences.Instance.LeftStickAffordance.SetActive(true);
-        GenericExerciseReferences.Instance.RightStickAffordance.SetActive(true);
-        GenericExerciseReferences.Instance.HeadsetAffordance.SetActive(true);
-
         // Lijn uitzetten
         GenericExerciseReferences.Instance.FeedbackLine.SetActive(false);
         GenericExerciseReferences.Instance.RenderLineMinimal.SetActive(false);
