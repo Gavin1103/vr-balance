@@ -7,4 +7,6 @@ public enum ExerciseEnum {
     GluteBridge,
     Squat,
     Lunge,
+    Archery,
+    FruitWarrior,
 }
