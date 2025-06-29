@@ -6,6 +6,7 @@ public class ArcheryExercise : Exercise
 {
     private float minForce = 10f;
     private float maxForce = 50f;
+    private float pullDistance;
 
     private GameObject bowInstance;
     private Transform bowHand;
@@ -17,6 +18,8 @@ public class ArcheryExercise : Exercise
     private Coroutine spawnTargetsCoroutine;
     private BowPullZone pullZone;
     private Transform bowStringVisual;
+    private Transform middleRingBone;
+    private AffordancePulse pulseEffect;
 
     private GameObject arrowPrefab => ArcheryExerciseReferences.Instance.ArrowPrefab;
     private GameObject bowPrefab => ArcheryExerciseReferences.Instance.BowPrefab;
@@ -41,7 +44,8 @@ public class ArcheryExercise : Exercise
         arrowSpawnPoint = bowInstance.transform.Find("ArrowSpawnPoint");
         pullZone = bowInstance.transform.Find("PullZone").GetComponent<BowPullZone>();
         bowStringVisual = bowInstance.transform.Find("BowString");
-
+        middleRingBone = bowInstance.transform.Find("Armature/Root/MiddleBone");
+        // pulseEffect = bowStringVisual.GetComponentInChildren<AffordancePulse>();
 
         spawnTargetsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnTargets());
 
@@ -50,18 +54,18 @@ public class ArcheryExercise : Exercise
     }
 
     public override void PlayExercise() {
-        bowStringVisual.GetComponentInChildren<AffordancePulse>().enabled = pullZone.handInside;
+        // pulseEffect.enabled = pullZone.handInside;
 
         if (isPulling && currentArrow != null)
         {
             // Pull vector from bow to right hand
             Vector3 pullDir = rightHand.position - arrowSpawnPoint.position;
-            float pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
+            pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
 
             // Visually move string
-            bowStringVisual.position = Vector3.Lerp(arrowSpawnPoint.position, rightHand.position, 0.5f);
-
-            // scale pulse effect or color change
+            middleRingBone.position = rightHand.position;
+        } else {
+            middleRingBone.position = Vector3.zero;
         }
     }
 
@@ -69,7 +73,7 @@ public class ArcheryExercise : Exercise
     {
         if (currentArrow == null && pullZone.handInside)
         {
-            currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
+            currentArrow = GameObject.Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
             currentArrow.transform.parent = arrowSpawnPoint;
 
             Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
