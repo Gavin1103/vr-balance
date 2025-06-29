@@ -40,6 +40,7 @@ public class DashboardUI : MonoBehaviour
 
         AddForcedExerciseButton("Fireflies");
         AddForcedExerciseButton("Archery");
+        AddForcedExerciseButton("Fruit Warrior");
     }
 
     private void AddForcedExerciseButton(string exerciseTitle)
