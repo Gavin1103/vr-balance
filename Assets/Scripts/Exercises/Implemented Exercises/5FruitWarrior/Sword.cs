@@ -7,10 +7,9 @@ public class Sword : MonoBehaviour
     {
         if (other.CompareTag("Fruit"))
         {
-            ScoreManager.Instance.AddScore(10);
+            ScoreManager.Instance.AddScore(35);
             FeedbackManager.Instance.DisplayFeedback(FeedbackType.Great, other.gameObject.transform.position);
             Destroy(other.gameObject);
-            Destroy(gameObject);
         }
     }
 }
