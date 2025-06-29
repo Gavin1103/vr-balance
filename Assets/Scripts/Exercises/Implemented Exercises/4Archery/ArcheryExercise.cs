@@ -27,14 +27,16 @@ public class ArcheryExercise : Exercise
     public override void StartExercise()
     {
         base.StartExercise();
+        
+        bowInstance = GameObject.Instantiate(bowPrefab, ExerciseManager.Instance.LeftStick.position, ExerciseManager.Instance.LeftStick.rotation);
+        bowInstance.transform.SetParent(ExerciseManager.Instance.LeftStick, worldPositionStays: false);
 
-        bowInstance = GameObject.Instantiate(bowPrefab, bowSpawnPoint.position, bowSpawnPoint.rotation);
         arrowSpawnPoint = bowInstance.transform.Find("ArrowSpawnPoint");
 
         spawnTargetsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnTargets());
 
         ArcheryInputManager.OnTriggerPulled += OnTriggerPulled;
-        ArcheryInputManager.OnTriggerReleased += OnTriggerReleased; 
+        ArcheryInputManager.OnTriggerReleased += OnTriggerReleased;
     }
 
     protected override void PlayExercise()
@@ -65,7 +67,7 @@ public class ArcheryExercise : Exercise
             Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
             rb.isKinematic = false;
             rb.useGravity = true;
-            rb.velocity = arrowSpawnPoint.forward * 25f;
+            rb.linearVelocity = arrowSpawnPoint.forward * 25f;
 
             currentArrow = null;
             isPulling = false;
