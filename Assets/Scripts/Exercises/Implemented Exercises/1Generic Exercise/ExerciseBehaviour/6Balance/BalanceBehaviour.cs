@@ -103,7 +103,7 @@ public class BalanceBehaviour : IMovementBehaviour {
         swayValues.Clear();
     }
     
-    public int maxPoints = 100; // Limit graph size
+    public int maxPoints = 10000; // Limit graph size
     private float maxSway = 0.005f; // Max sway expected, for scaling Y axis
 
     public void AddPoint(float sway)
@@ -146,7 +146,7 @@ public class BalanceBehaviour : IMovementBehaviour {
         float graphHeight = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.y;
 
         float xPos = Mathf.Clamp01(time / holdTime) * graphWidth;
-        float yPos = (swayValues[index] / maxSway) * graphHeight;
+        float yPos = Mathf.Clamp01(swayValues[index] / maxSway) * graphHeight;
 
         dots[index].GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
     }
