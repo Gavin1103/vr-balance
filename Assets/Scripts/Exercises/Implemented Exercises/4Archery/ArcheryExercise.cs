@@ -39,7 +39,6 @@ public class ArcheryExercise : Exercise
 
     protected override void PlayExercise()
     {
-        // Nothing here yet
     }
 
     private void OnTriggerPulled()
