@@ -11,7 +11,7 @@ const { hasRole } = useRoleAccess()
 
 function logout() {
   auth.logout()
-  router.push({ name: 'login' }).then(() => {
+  router.push({ name: '' }).then(() => {
     window.location.reload()
   })
 }
