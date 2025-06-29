@@ -1,17 +1,26 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class CloseEyesBehaviour : IMovementBehaviour {
-    private float fadeDuration = 1.5f;
+    private float fadeInDuration = 2f;
+    private float fadeOutDuration = 0.75f;
+
+    private GameObject sphere;
     private Coroutine fadeCoroutine;
 
+    public TextMeshProUGUI text;
+    private Coroutine textFadeCoroutine;
+
     public CloseEyesBehaviour() { 
+        sphere = GenericExerciseReferences.Instance.EyesClosedSphere;
+        text = sphere.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        var mat = text.fontMaterial;
+        mat.SetFloat("_Surface", 1);
     }
 
     public override void OnMovementStart(ExerciseMovement movement) {
-        var sphere = GenericExerciseReferences.Instance.EyesClosedSphere;
         sphere.SetActive(true);
-        MapManager.Instance.CurrentActiveMap.SetActive(false);
 
         // Start fading in the sphere material
         var mono = GenericExerciseReferences.Instance as MonoBehaviour;
@@ -21,9 +30,10 @@ public class CloseEyesBehaviour : IMovementBehaviour {
                 SetMaterialTransparent(renderer.material);
 
                 if (fadeCoroutine != null) mono.StopCoroutine(fadeCoroutine);
-                fadeCoroutine = mono.StartCoroutine(FadeMaterialAlpha(renderer.material, 0f, 1f, fadeDuration));
+                fadeCoroutine = mono.StartCoroutine(FadeMaterialAlpha(renderer.material, 0f, 1f, fadeInDuration));
             }
         }
+        FadeIn();
     }
     public override IEnumerator OnMovementUpdate(ExerciseMovement movement) {
         yield return null;
@@ -35,10 +45,10 @@ public class CloseEyesBehaviour : IMovementBehaviour {
             var renderer = sphere.GetComponent<Renderer>();
             if (renderer != null) {
                 if (fadeCoroutine != null) mono.StopCoroutine(fadeCoroutine);
-                fadeCoroutine = mono.StartCoroutine(FadeOutAndDisable(sphere, renderer.material, 1f, 0f, fadeDuration));
+                fadeCoroutine = mono.StartCoroutine(FadeOutAndDisable(sphere, renderer.material, 1f, 0f, fadeOutDuration));
             }
         }
-        MapManager.Instance.CurrentActiveMap.SetActive(true);
+        FadeOut();
     }
 
     private IEnumerator FadeMaterialAlpha(Material mat, float from, float to, float duration) {
@@ -71,5 +81,31 @@ public class CloseEyesBehaviour : IMovementBehaviour {
     {
         yield return FadeMaterialAlpha(mat, from, to, duration);
         obj.SetActive(false);
+    }
+    
+    public void FadeIn() {
+        if (textFadeCoroutine != null)
+            ExerciseManager.Instance.StopCoroutine(textFadeCoroutine);
+        textFadeCoroutine = ExerciseManager.Instance.StartCoroutine(FadeTextAlpha(0f, 1f, fadeInDuration));
+    }
+
+    public void FadeOut() {
+        if (textFadeCoroutine != null)
+            ExerciseManager.Instance.StopCoroutine(textFadeCoroutine);
+        textFadeCoroutine = ExerciseManager.Instance.StartCoroutine(FadeTextAlpha(1f, 0f, fadeOutDuration));
+    }
+
+    private IEnumerator FadeTextAlpha(float fromAlpha, float toAlpha, float fadeDuration) {
+        float elapsed = 0f;
+        while (elapsed < fadeDuration) {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(fromAlpha, toAlpha, elapsed / fadeDuration);
+
+            var c = text.faceColor;
+            text.faceColor = new Color32(c.r, c.g, c.b, (byte)(alpha * 255));
+            yield return null;
+        }
+        Color finalColor = text.color;
+        text.color = new Color(finalColor.r, finalColor.g, finalColor.b, toAlpha);
     }
 }
