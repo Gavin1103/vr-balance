@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 6056212108221526503}
   - component: {fileID: 9194535544992017312}
   - component: {fileID: -694891048913303190}
+  - component: {fileID: -1405160449244145175}
   m_Layer: 0
   m_Name: Fruit
   m_TagString: Untagged
@@ -248,3 +249,30 @@ MonoBehaviour:
   despawnTime: 4
   upwardForce: 8
   torqueForce: 5
+--- !u!54 &-1405160449244145175
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7827798655585289915}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
