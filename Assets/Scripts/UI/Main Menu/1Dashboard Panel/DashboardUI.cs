@@ -31,29 +31,35 @@ public class DashboardUI : MonoBehaviour
     [SerializeField] private GameObject exercisePanel;
     [SerializeField] private Button exerciseTabButton;
     // Force firefly
-    private void AddFireflyButton()
+    private void AddForcedExerciseButtons()
     {
         foreach (Transform child in advisedContainer)
         {
             Destroy(child.gameObject);
         }
 
-        // forcing. the code here should def be replaced in ze future
+        AddForcedExerciseButton("Fireflies");
+        AddForcedExerciseButton("Archery");
+    }
+
+    private void AddForcedExerciseButton(string exerciseTitle)
+    {
         GameObject buttonObj = Instantiate(advisedExerciseButtonPrefab, advisedContainer);
-        buttonObj.GetComponentInChildren<TMP_Text>().text = "Fireflies";
-        Exercise exercise = ExerciseManager.Instance.FindExerciseByTitle("Fireflies");
+        buttonObj.GetComponentInChildren<TMP_Text>().text = exerciseTitle;
+        Exercise exercise = ExerciseManager.Instance.FindExerciseByTitle(exerciseTitle);
         Image image = buttonObj.transform.Find("Image").GetComponent<Image>();
         image.sprite = exercise.Image;
-        buttonObj.GetComponent<Button>().onClick.AddListener(OnFireflyExerciseButtonPressed);
+        buttonObj.GetComponent<Button>().onClick.AddListener(() => OnForcedExerciseButtonPressed(exerciseTitle));
     }
-    public void OnFireflyExerciseButtonPressed() {
+    public void OnForcedExerciseButtonPressed(string exerciseTitle)
+    {
         mainMenuUI.SwitchToPanel(exercisePanel, exerciseTabButton);
-        ExerciseManager.Instance.SelectExerciseByTitle("Fireflies");
+        ExerciseManager.Instance.SelectExerciseByTitle(exerciseTitle);
     }
 
     void OnEnable()
     {
-        AddFireflyButton();
+        AddForcedExerciseButtons();
 
         // Check if user is logged in or guest
         isGuest = !User.IsLoggedIn();
