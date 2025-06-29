@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class ArcheryExercise : Exercise
 {
-    private float minForce = 10f;
-    private float maxForce = 50f;
+    private float minForce = 0.001f;
+    private float maxForce = 10f;
     private float pullDistance;
 
     private GameObject bowInstance;
@@ -94,8 +94,6 @@ public class ArcheryExercise : Exercise
 
             float power = Mathf.Lerp(minForce, maxForce, pullDistance);
             rb.linearVelocity = arrowSpawnPoint.forward * power;
-            Debug.Log(power);
-            Debug.Log(pullDistance);
 
             currentArrow = null;
             isPulling = false;
