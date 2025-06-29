@@ -28,8 +28,8 @@ public class ArcheryExercise : Exercise
     {
         base.StartExercise();
         
-        bowInstance = GameObject.Instantiate(bowPrefab, ExerciseManager.Instance.LeftStick.position, ExerciseManager.Instance.LeftStick.rotation);
-        bowInstance.transform.SetParent(ExerciseManager.Instance.LeftStick, worldPositionStays: false);
+        bowInstance = GameObject.Instantiate(bowPrefab, bowSpawnPoint.position, ExerciseManager.Instance.LeftStick.rotation);
+        bowInstance.transform.SetParent(ExerciseManager.Instance.LeftStick);
 
         arrowSpawnPoint = bowInstance.transform.Find("ArrowSpawnPoint");
 
