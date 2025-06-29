@@ -37,7 +37,7 @@ public class ArcheryExercise : Exercise
     public override void StartExercise()
     {
         base.StartExercise();
-        
+
         bowInstance = GameObject.Instantiate(bowPrefab, bowSpawnPoint.position, leftHand.rotation);
         bowInstance.transform.SetParent(leftHand);
 
@@ -53,16 +53,20 @@ public class ArcheryExercise : Exercise
         ArcheryInputManager.OnTriggerReleased += OnTriggerReleased;
     }
 
-    public override void PlayExercise() {
+    public override void PlayExercise()
+    {
         // pulseEffect.enabled = pullZone.handInside;
 
-        if (isPulling && currentArrow != null) {
+        if (isPulling && currentArrow != null)
+        {
             // Pull vector from bow to right hand
             Vector3 pullDir = rightHand.position - arrowSpawnPoint.position;
             pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
 
             middleRingBone.position = rightHand.position;
-        } else {
+        }
+        else
+        {
             middleRingBone.localPosition = Vector3.zero;
         }
     }
@@ -109,8 +113,8 @@ public class ArcheryExercise : Exercise
         while (true)
         {
             Vector3 randomPos = targetArea.position + new Vector3(
-                Random.Range(-1f, 1f), 
-                Random.Range(-0.5f, 1f), 
+                Random.Range(-1f, 1f),
+                Random.Range(-0.5f, 1f),
                 Random.Range(-0.5f, 0.5f)
             );
 
@@ -121,6 +125,7 @@ public class ArcheryExercise : Exercise
 
     public override void ExerciseEnded()
     {
+        SaveExercise();
         if (bowInstance != null)
             GameObject.Destroy(bowInstance);
 
@@ -129,5 +134,25 @@ public class ArcheryExercise : Exercise
 
         ArcheryInputManager.OnTriggerPulled -= OnTriggerPulled;
         ArcheryInputManager.OnTriggerReleased -= OnTriggerReleased;
+    }
+    
+    private void SaveExercise() {
+        CompletedExerciseDTO dto = new CompletedExerciseDTO {
+            exercise = "Archery",
+            earnedPoints = (int)ScoreManager.Instance.Score,
+            difficulty = DifficultyManager.Instance.SelectedDifficulty,
+            completedAt = System.DateTime.UtcNow
+        };
+
+       ExerciseManager.Instance.StartCoroutine(excerciseSerice.SaveExercise(
+           dto,
+           onSuccess: ApiResponse => {
+               Debug.Log(ApiResponse.message);
+           },
+           onError: error => {
+               Debug.Log(error.message);
+           },
+           "standard" // This should be different to collect unique data
+       ));
     }
 }

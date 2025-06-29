@@ -19,7 +19,7 @@ public class FruitWarriorExercise : Exercise
     public override void StartExercise()
     {
         base.StartExercise();
-        
+
         leftSword = GameObject.Instantiate(FruitWarriorExerciseReferences.Instance.Sword, FruitWarriorExerciseReferences.Instance.LeftSwordSpawnPoint.position, ExerciseManager.Instance.LeftStick.rotation);
         rightSword = GameObject.Instantiate(FruitWarriorExerciseReferences.Instance.Sword, FruitWarriorExerciseReferences.Instance.RightSwordSpawnPoint.position, ExerciseManager.Instance.RightStick.rotation);
         leftSword.transform.SetParent(ExerciseManager.Instance.LeftStick);
@@ -44,7 +44,8 @@ public class FruitWarriorExercise : Exercise
         spawnFruitsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnFruits());
     }
 
-    public override void PlayExercise() {
+    public override void PlayExercise()
+    {
 
     }
 
@@ -71,10 +72,31 @@ public class FruitWarriorExercise : Exercise
 
     public override void ExerciseEnded()
     {
+        SaveExercise();
         GameObject.Destroy(leftSword);
         GameObject.Destroy(rightSword);
 
         if (spawnFruitsCoroutine != null)
             ExerciseManager.Instance.StopCoroutine(spawnFruitsCoroutine);
+    }
+    
+    private void SaveExercise() {
+        CompletedExerciseDTO dto = new CompletedExerciseDTO {
+            exercise = "FruitWarrior",
+            earnedPoints = (int)ScoreManager.Instance.Score,
+            difficulty = DifficultyManager.Instance.SelectedDifficulty,
+            completedAt = System.DateTime.UtcNow
+        };
+
+       ExerciseManager.Instance.StartCoroutine(excerciseSerice.SaveExercise(
+           dto,
+           onSuccess: ApiResponse => {
+               Debug.Log(ApiResponse.message);
+           },
+           onError: error => {
+               Debug.Log(error.message);
+           },
+           "standard" // This should be different to collect unique data
+       ));
     }
 }
