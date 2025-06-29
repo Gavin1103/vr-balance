@@ -8,6 +8,12 @@ public class BalanceBehaviour : IMovementBehaviour {
 
     private float holdTime;
     private float elapsedWhileHolding = 0f;
+    
+    // Graph
+    private List<GameObject> dots = new List<GameObject>();
+    private List<float> swayValues = new List<float>();
+    private float timeSinceLastPoint = 0f;
+    private float pointInterval = 0.1f; // Add a point every 0.1s
 
     public BalanceBehaviour(float holdTime) {
         this.holdTime = holdTime;
@@ -18,6 +24,8 @@ public class BalanceBehaviour : IMovementBehaviour {
         GenericExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(true);
         GenericExerciseReferences.Instance.HoldMovementText.text = holdTime.ToString("0.0") + "s";
         GenericExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(0, GenericExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
+
+        BalanceTestExerciseReferences.Instance.headswayGraph.SetActive(true);
     }
 
     public override IEnumerator OnMovementUpdate(ExerciseMovement movement) {
@@ -38,7 +46,18 @@ public class BalanceBehaviour : IMovementBehaviour {
                 movement.LeftStickTarget, movement.RightStickTarget, movement.HeadTarget);
             movement.currentScore += movement.exercise.ScoreCalculator.CalculateDurationScore(movement.TotalScore, holdTime);
 
-            HeadPositions.Add(ExerciseManager.Instance.Headset.transform.position);
+
+            Vector3 currentHeadPos = ExerciseManager.Instance.Headset.transform.position;
+            HeadPositions.Add(currentHeadPos);
+            // Calculate sway distance from previous point
+            if (HeadPositions.Count > 1) {
+                float sway = Vector3.Distance(HeadPositions[HeadPositions.Count - 1], HeadPositions[HeadPositions.Count - 2]);
+                timeSinceLastPoint += Time.deltaTime;
+                if (timeSinceLastPoint >= pointInterval) {
+                    AddPoint(sway);
+                    timeSinceLastPoint = 0f;
+                }
+            }
 
             yield return null;
         }
@@ -74,5 +93,64 @@ public class BalanceBehaviour : IMovementBehaviour {
     public override void OnMovementEnd(ExerciseMovement movement) {
         GenericExerciseReferences.Instance.HoldMovementText.transform.parent.gameObject.SetActive(false);
         GenericExerciseReferences.Instance.HoldImageLine.sizeDelta = new Vector2(0, GenericExerciseReferences.Instance.HoldImageLine.sizeDelta.y);
+        BalanceTestExerciseReferences.Instance.headswayGraph.SetActive(false);
+        // Clear all dots of the graph
+        var container = BalanceTestExerciseReferences.Instance.graphContainer;
+        for (int i = container.childCount - 1; i >= 0; i--) {
+            GameObject.Destroy(container.GetChild(i).gameObject);
+        }
+        dots.Clear();
+        swayValues.Clear();
+    }
+    
+    public int maxPoints = 100; // Limit graph size
+    private float maxSway = 0.005f; // Max sway expected, for scaling Y axis
+
+    public void AddPoint(float sway)
+    {
+        swayValues.Add(sway);
+        if (sway > maxSway) maxSway = sway; // Optionally update max sway dynamically
+
+        // Create new dot
+        GameObject dot = Object.Instantiate(BalanceTestExerciseReferences.Instance.dotPrefab, BalanceTestExerciseReferences.Instance.graphContainer);
+        dots.Add(dot);
+
+        if (dots.Count > maxPoints)
+        {
+            Object.Destroy(dots[0]);
+            dots.RemoveAt(0);
+            swayValues.RemoveAt(0);
+            // Shift all dots left by one step:
+            UpdateDotsPositions();
+        }
+        else
+        {
+            UpdateDotPosition(dots.Count - 1);
+        }
+    }
+
+    private void UpdateDotsPositions()
+    {
+        float graphWidth = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.x;
+        float graphHeight = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.y;
+        int count = dots.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            float xPos = (i / (float)(maxPoints - 1)) * graphWidth;
+            float yPos = (swayValues[i] / maxSway) * graphHeight;
+            dots[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
+        }
+    }
+
+    private void UpdateDotPosition(int index)
+    {
+        float graphWidth = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.x;
+        float graphHeight = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.y;
+        int count = dots.Count;
+
+        float xPos = ((count - 1) / (float)(maxPoints - 1)) * graphWidth;
+        float yPos = (swayValues[index] / maxSway) * graphHeight;
+        dots[index].GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
     }
 }

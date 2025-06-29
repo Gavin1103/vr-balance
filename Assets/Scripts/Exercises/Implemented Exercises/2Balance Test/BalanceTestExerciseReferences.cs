@@ -15,6 +15,11 @@ public class BalanceTestExerciseReferences : MonoBehaviour {
     public ParticleSystem greatParticles;
     public ParticleSystem goodParticles;
     public ParticleSystem missParticles;
+    [Header("Graph")]
+    public GameObject headswayGraph;
+    public RectTransform graphContainer;
+    public GameObject dotPrefab;
+
 
     void Awake() {
         Instance = this;
