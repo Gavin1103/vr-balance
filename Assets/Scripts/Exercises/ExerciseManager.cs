@@ -54,6 +54,12 @@ public class ExerciseManager : MonoBehaviour {
     
     void Update() {
         currentExercise?.PlayExercise();
+        
+        // DEBUG Press M to simulate completing the balance test with Easy difficulty
+        if (Input.GetKeyDown(KeyCode.M)) {
+            Debug.Log("Debug: Simulating balance test complete. Setting advised difficulty to Easy.");
+            DifficultyManager.Instance.SetAdvisedDifficulty(0, Difficulty.Easy);
+        }
     }
 
     private void GenerateExerciseButtons() {

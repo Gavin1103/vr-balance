@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Fruit : MonoBehaviour
 {
-    [SerializeField] private float despawnTime = 4f;
+    [SerializeField] private float despawnTime = 3f;
 
-    [SerializeField] private float upwardForce = 8f;
+    [SerializeField] private float upwardForce = 120f;
     [SerializeField] private float torqueForce = 5f;
     private Rigidbody rb;
 
