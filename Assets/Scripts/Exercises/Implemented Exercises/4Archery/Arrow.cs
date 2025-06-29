@@ -18,6 +18,7 @@ public class Arrow : MonoBehaviour
         if (other.CompareTag("Target"))
         {
             ScoreManager.Instance.AddScore(10);
+            FeedbackManager.Instance.DisplayFeedback(FeedbackType.Great, other.gameObject.transform.position);
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

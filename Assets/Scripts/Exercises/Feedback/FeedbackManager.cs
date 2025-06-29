@@ -18,14 +18,6 @@ public class FeedbackManager : MonoBehaviour {
         public string soundName;
     }
 
-    public enum FeedbackType {
-        Perfect,
-        Great,
-        Good,
-        Okay,
-        Bad,
-        Miss
-    }
 
     [Header("Feedback map")]
     public List<FeedbackData> feedbackDataList;
