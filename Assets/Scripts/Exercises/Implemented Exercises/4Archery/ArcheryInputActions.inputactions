@@ -29,8 +29,19 @@
                 },
                 {
                     "name": "",
-                    "id": "3ea2240c-ce87-44e6-a3f2-ecffd097c11c",
-                    "path": "<XRController>{RightHand}/{PrimaryTrigger}",
+                    "id": "157dc537-14eb-4f2c-a1d5-0510eac7eb3a",
+                    "path": "<MetaAimHand>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b0a41ad-b3f2-4e1f-9891-2d66a10ff319",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
