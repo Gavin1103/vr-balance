@@ -8,6 +8,7 @@ TagManager:
   - Target
   - LeftHand
   - RightHand
+  - Fruit
   layers:
   - Default
   - TransparentFX

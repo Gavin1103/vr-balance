@@ -40,9 +40,8 @@ public class FruitWarriorExercise : Exercise
             GameObject fruitPrefab = refData.Fruit[Random.Range(0, refData.Fruit.Length)];
 
             Vector3 spawnPos = refData.FruitSpawnPoint.position;
-            spawnPos.y = 0f;
             spawnPos.x += Random.Range(-1f, 1f);
-            spawnPos.z += Random.Range(-1f, 1f);
+            spawnPos.z += Random.Range(-0.3f, 0.3f);
 
             GameObject fruit = GameObject.Instantiate(fruitPrefab, spawnPos, Random.rotation);
 
