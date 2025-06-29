@@ -8,6 +8,9 @@ public class FruitWarriorExercise : Exercise
     private GameObject rightSword;
 
     private Coroutine spawnFruitsCoroutine;
+
+    private float minDelay = 1f;
+    private float maxDelay = 2f;
     public FruitWarriorExercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image)
         : base(title, category, description, requirements, image)
     {
@@ -21,6 +24,22 @@ public class FruitWarriorExercise : Exercise
         rightSword = GameObject.Instantiate(FruitWarriorExerciseReferences.Instance.Sword, FruitWarriorExerciseReferences.Instance.RightSwordSpawnPoint.position, ExerciseManager.Instance.RightStick.rotation);
         leftSword.transform.SetParent(ExerciseManager.Instance.LeftStick);
         rightSword.transform.SetParent(ExerciseManager.Instance.RightStick);
+
+        switch (DifficultyManager.Instance.SelectedDifficulty)
+        {
+            case Difficulty.Easy:
+                minDelay = 1.5f;
+                maxDelay = 2.5f;
+                break;
+            case Difficulty.Medium:
+                minDelay = 1f;
+                maxDelay = 2f;
+                break;
+            case Difficulty.Hard:
+                minDelay = 0.4f;
+                maxDelay = 1.2f;
+                break;
+        }
 
         spawnFruitsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnFruits());
     }
@@ -45,7 +64,7 @@ public class FruitWarriorExercise : Exercise
 
             GameObject fruit = GameObject.Instantiate(fruitPrefab, spawnPos, Random.rotation);
 
-            yield return new WaitForSeconds(Random.Range(1f, 2f));
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
         }
     }
 
