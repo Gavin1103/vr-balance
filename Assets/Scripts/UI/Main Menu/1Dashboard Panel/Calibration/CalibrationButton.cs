@@ -17,6 +17,10 @@ public class CalibrationButton : MonoBehaviour
 
             calibrate.CalculateHeadArmDistance(headset, rightArm, leftArm);
         }
+        else
+        {
+            calibrate.UnknownLengths();
+        }
     }
 
     public void OpenCalibrationMenu()

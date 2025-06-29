@@ -123,6 +123,13 @@ public class Calibrate : MonoBehaviour
         rightArmTextField.text = rightArmLength.ToString("F2") + "m";
     }
 
+    public void UnknownLengths()
+    {
+        lengthTextField.text = "?m";
+        leftArmTextField.text = "?m";
+        rightArmTextField.text = "?m";
+    }
+
     public List<string> addCalibration = new List<string>();
 
     public void SaveLocalCalibration(Vector3 headset, Vector3 rightArm, Vector3 leftArm)
