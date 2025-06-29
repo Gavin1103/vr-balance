@@ -19,6 +19,7 @@ public class GenericExerciseSO : ExerciseSO {
             image: Image
         );
         exercise.Movements = movements;
+        exercise.Requisites = Requisites;
         exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();
 
         return exercise;

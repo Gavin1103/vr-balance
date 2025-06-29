@@ -20,6 +20,7 @@ MonoBehaviour:
   Requirements:
   - 'Enough space to stand still without external support nearby.  '
   Image: {fileID: 21300000, guid: 2f78e4a824173ba49ae7907e3a993fd4, type: 3}
+  Requisites: {fileID: 11400000, guid: 9a40a245e4dcafc449cc9ae8b8b1a13a, type: 2}
   BackendEnum: Balance
   RepsAndSetsConfig: {fileID: 11400000, guid: 0154f4791c1c9434f81ed18ae0677b5d, type: 2}
   Movements:

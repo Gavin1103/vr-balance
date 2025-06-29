@@ -19,6 +19,7 @@ MonoBehaviour:
   Requirements:
   - 'Enough space to move without external support nearby.  '
   Image: {fileID: 21300000, guid: 2a69f7a051ff7d242bb777c81cbed7ed, type: 3}
+  Requisites: {fileID: 11400000, guid: d77ad22efd0154649af56b312d2b830f, type: 2}
   BackendEnum: Stretch
   RepsAndSetsConfig: {fileID: 11400000, guid: e688479a5ef2bff428926c161845c39b, type: 2}
   Movements:

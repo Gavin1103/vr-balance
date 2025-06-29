@@ -9,7 +9,8 @@ public abstract class Exercise {
     public string Description;
     public List<string> Requirements;
     public Sprite Image;
-
+    public ExerciseRequisitesSO Requisites;
+    
     protected Difficulty dif {
         get {
             return DifficultyManager.Instance.SelectedDifficulty;

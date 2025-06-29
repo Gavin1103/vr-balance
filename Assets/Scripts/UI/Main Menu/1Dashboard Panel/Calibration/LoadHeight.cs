@@ -13,6 +13,17 @@ public static class LoadHeight
     public static void LoadHeightData()
     {
         string path = Application.persistentDataPath + "/UserHeightList.json";
+
+        if (!File.Exists(path))
+        {
+            // File doesn't exist, assume default height
+            LoadData.Clear();
+            Vector3 defaultHeight = new Vector3(0, 1.7f, 0);
+            LoadData.Add(defaultHeight);
+            Debug.LogWarning("UserHeightList.json not found. Assuming default height of 1.7m...");
+            return;
+        }
+
         string json = File.ReadAllText(path);
         HeightList loadHeight = JsonUtility.FromJson<HeightList>(json);
         AddCalibration = loadHeight.heightList;
@@ -21,10 +32,9 @@ public static class LoadHeight
 
         if (AddCalibration == null || AddCalibration.Count == 0)
         {
-            // Assume default height if nothing is loaded
-            Vector3 defaultHeight = new Vector3(0, 1.7f, 0); // (ASsume 1.7m)
+            Vector3 defaultHeight = new Vector3(0, 1.7f, 0);
             LoadData.Add(defaultHeight);
-            Debug.LogWarning("The user didn't calibrate his height first, now we will asume he's 1.7m ...");
+            Debug.LogWarning("The user didn't calibrate their height. Assuming default height of 1.7m...");
             return;
         }
 

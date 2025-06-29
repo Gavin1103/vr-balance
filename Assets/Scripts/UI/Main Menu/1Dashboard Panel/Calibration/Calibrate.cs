@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 public class Calibrate : MonoBehaviour
 {
+    public static bool HasCalibrated => LoadHeight.LoadData.Count >= 3;
+
     public bool calibrateOn;
 
     public float calibrateTimer;
@@ -76,6 +78,7 @@ public class Calibrate : MonoBehaviour
             SaveLocalCalibration(calibratedHeadsetPosition, calibratedRightArmPosition, calibratedLeftArmPosition);
             CalculateHeadArmDistance(calibratedHeadsetPosition, calibratedRightArmPosition, calibratedLeftArmPosition);
             LoadHeight.LoadHeightData();
+
             checker = 0;
         }      
     }

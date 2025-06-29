@@ -41,6 +41,8 @@ public class ExerciseManager : MonoBehaviour {
     [Header("Balance Test")]
     public GameObject BalanceTestWarning;
     private BalanceTestExercise BalanceTestExercise;
+    [Header("Calibration")]
+    public GameObject CalibrationWarning;
 
     void Awake() {
         Instance = this;
@@ -109,21 +111,34 @@ public class ExerciseManager : MonoBehaviour {
         }
         SelectedExerciseRequirements.text = requirementText;
 
-        // Set video explanation
-
-        // Check balance test
-        bool isBalanceTest = exercise.Title.ToLower().Contains("balance");
-        if (DifficultyManager.Instance.AdvisedDifficulty == Difficulty.None && !isBalanceTest)
+        bool canStart = true;
+        // Check balance test requirement
+        if (DifficultyManager.Instance.AdvisedDifficulty == Difficulty.None && exercise.Requisites.RequiresBalanceTest)
         {
-            StartExerciseButton.interactable = false;
             BalanceTestWarning.SetActive(true);
+            canStart = false;
         }
         else
         {
-            StartExerciseButton.interactable = true;
             BalanceTestWarning.SetActive(false);
         }
 
+        // Check calibration requirement
+        if (!Calibrate.HasCalibrated && exercise.Requisites.RequiresCalibration)
+        {
+            CalibrationWarning.SetActive(true);
+            canStart = false;
+        }
+        else
+        {
+            CalibrationWarning.SetActive(false);
+        }
+
+        // Apply final state to the button
+        StartExerciseButton.interactable = canStart;
+
+
+        bool isBalanceTest = exercise.Title.ToLower().Contains("balance");
         if (isBalanceTest)
         {
             DifficultyManager.Instance.ShowDropdown(false);
