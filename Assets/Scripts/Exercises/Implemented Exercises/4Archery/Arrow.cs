@@ -19,8 +19,7 @@ public class Arrow : MonoBehaviour
         {
             ScoreManager.Instance.AddScore(10);
             Destroy(col.gameObject);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject, 1f);
     }
 }
