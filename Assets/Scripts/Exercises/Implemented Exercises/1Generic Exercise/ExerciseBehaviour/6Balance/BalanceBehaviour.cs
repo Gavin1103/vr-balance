@@ -109,9 +109,10 @@ public class BalanceBehaviour : IMovementBehaviour {
     public void AddPoint(float sway)
     {
         swayValues.Add(sway);
-        if (sway > maxSway) maxSway = sway; // Optionally update max sway dynamically
 
-        // Create new dot
+        if (sway > maxSway)
+            maxSway = sway;
+
         GameObject dot = Object.Instantiate(BalanceTestExerciseReferences.Instance.dotPrefab, BalanceTestExerciseReferences.Instance.graphContainer);
         dots.Add(dot);
 
@@ -120,13 +121,9 @@ public class BalanceBehaviour : IMovementBehaviour {
             Object.Destroy(dots[0]);
             dots.RemoveAt(0);
             swayValues.RemoveAt(0);
-            // Shift all dots left by one step:
-            UpdateDotsPositions();
         }
-        else
-        {
-            UpdateDotPosition(dots.Count - 1);
-        }
+
+        UpdateDotPosition(dots.Count - 1, elapsedWhileHolding);
     }
 
     private void UpdateDotsPositions()
@@ -143,14 +140,15 @@ public class BalanceBehaviour : IMovementBehaviour {
         }
     }
 
-    private void UpdateDotPosition(int index)
+    private void UpdateDotPosition(int index, float time)
     {
         float graphWidth = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.x;
         float graphHeight = BalanceTestExerciseReferences.Instance.graphContainer.sizeDelta.y;
-        int count = dots.Count;
 
-        float xPos = ((count - 1) / (float)(maxPoints - 1)) * graphWidth;
+        float xPos = Mathf.Clamp01(time / holdTime) * graphWidth;
         float yPos = (swayValues[index] / maxSway) * graphHeight;
+
         dots[index].GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
     }
+
 }
