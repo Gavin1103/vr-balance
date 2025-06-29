@@ -1,22 +1,34 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public static class ArcheryInputManager
+public class ArcheryInputManager : MonoBehaviour
 {
+    public static ArcheryInputManager Instance { get; private set; }
+
     public static event System.Action OnTriggerPulled;
     public static event System.Action OnTriggerReleased;
 
-    public static void Update()
-    {
-        Debug.Log("penis");
-        if (Input.GetButtonDown("Fire1"))
-        {
-            OnTriggerPulled?.Invoke();
-            Debug.Log("helloo");
-        }
+    private ArcheryInputActions inputActions;
 
-        if (Input.GetButtonUp("Fire1")) {
-            OnTriggerReleased?.Invoke();
-            Debug.Log("dont anger me");
-        }
+    private void Awake()
+    {
+        Instance = this;
+        inputActions = new ArcheryInputActions();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+
+        inputActions.Gameplay.Fire.started += ctx => OnTriggerPulled?.Invoke();
+        inputActions.Gameplay.Fire.canceled += ctx => OnTriggerReleased?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Gameplay.Fire.started -= ctx => OnTriggerPulled?.Invoke();
+        inputActions.Gameplay.Fire.canceled -= ctx => OnTriggerReleased?.Invoke();
+
+        inputActions.Disable();
     }
 }

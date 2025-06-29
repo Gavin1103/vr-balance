@@ -69,7 +69,6 @@ public class ArcheryExercise : Exercise
     {
         while (true)
         {
-            ArcheryInputManager.Update();
             Vector3 randomPos = targetArea.position + new Vector3(
                 Random.Range(-1f, 1f), 
                 Random.Range(-0.5f, 1f), 
