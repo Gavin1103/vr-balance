@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a124d1fa9394f4149b996a9a909fe4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  despawnTime: 3
 --- !u!54 &8192848585532049678
 Rigidbody:
   m_ObjectHideFlags: 0

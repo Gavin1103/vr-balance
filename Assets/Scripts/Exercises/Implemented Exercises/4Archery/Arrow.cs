@@ -13,12 +13,12 @@ public class Arrow : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider other)
     {
-        if (col.gameObject.CompareTag("Target"))
+        if (other.CompareTag("Target"))
         {
             ScoreManager.Instance.AddScore(10);
-            Destroy(col.gameObject);
+            Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }
