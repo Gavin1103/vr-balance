@@ -25,11 +25,10 @@ public abstract class Exercise {
 
     public virtual void StartExercise() {
         // Called from ExerciseManager
-        PlayExercise();
     }
 
-    protected virtual void PlayExercise() {
-        // When inheritting, implement exercise logic here
+    public virtual void PlayExercise() {
+        // When inheritting, implement exercise logic here. This is called every frame by the ExerciseManager
     }
 
     public virtual void ExerciseEnded() {

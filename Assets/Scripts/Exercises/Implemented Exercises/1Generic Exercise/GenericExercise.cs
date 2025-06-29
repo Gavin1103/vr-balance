@@ -57,11 +57,7 @@ public class GenericExercise : Exercise {
         currentMovementIndex = 0;
         currentRepIndex = 0;
         currentSetIndex = 0;
-
-        base.StartExercise();
-    }
-
-    protected override void PlayExercise() {
+        
         refs.MovementImageObject.transform.localPosition = new Vector3(300, 0, 0);
         refs.ActionImageLine.sizeDelta = new Vector2(0, refs.ActionImageLine.sizeDelta.y);
 

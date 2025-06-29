@@ -51,6 +51,10 @@ public class ExerciseManager : MonoBehaviour {
         BalanceTestExercise = Exercises.Find(e => e.Title.ToLower().Contains("balance")) as BalanceTestExercise;
         GenerateExerciseButtons();
     }
+    
+    void Update() {
+        currentExercise?.PlayExercise();
+    }
 
     private void GenerateExerciseButtons() {
         foreach (Exercise exercise in Exercises) {

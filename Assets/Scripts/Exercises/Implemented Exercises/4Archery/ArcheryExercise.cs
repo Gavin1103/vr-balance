@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class ArcheryExercise : Exercise
 {
+    private float minForce = 10f;
+    private float maxForce = 50f;
+
     private GameObject bowInstance;
     private Transform bowHand;
     private Transform arrowSpawnPoint;
@@ -12,6 +15,8 @@ public class ArcheryExercise : Exercise
     private bool isPulling;
 
     private Coroutine spawnTargetsCoroutine;
+    private BowPullZone pullZone;
+    private Transform bowStringVisual;
 
     private GameObject arrowPrefab => ArcheryExerciseReferences.Instance.ArrowPrefab;
     private GameObject bowPrefab => ArcheryExerciseReferences.Instance.BowPrefab;
@@ -19,6 +24,8 @@ public class ArcheryExercise : Exercise
     private Transform bowSpawnPoint => ArcheryExerciseReferences.Instance.BowSpawnPoint;
     private Transform targetArea => ArcheryExerciseReferences.Instance.TargetArea;
 
+    private Transform leftHand => ExerciseManager.Instance.LeftStick;
+    private Transform rightHand => ExerciseManager.Instance.RightStick;
     public ArcheryExercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image)
         : base(title, category, description, requirements, image)
     {
@@ -28,10 +35,13 @@ public class ArcheryExercise : Exercise
     {
         base.StartExercise();
         
-        bowInstance = GameObject.Instantiate(bowPrefab, bowSpawnPoint.position, ExerciseManager.Instance.LeftStick.rotation);
-        bowInstance.transform.SetParent(ExerciseManager.Instance.LeftStick);
+        bowInstance = GameObject.Instantiate(bowPrefab, bowSpawnPoint.position, leftHand.rotation);
+        bowInstance.transform.SetParent(leftHand);
 
         arrowSpawnPoint = bowInstance.transform.Find("ArrowSpawnPoint");
+        pullZone = bowInstance.transform.Find("PullZone").GetComponent<BowPullZone>();
+        bowStringVisual = bowInstance.transform.Find("BowString");
+
 
         spawnTargetsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnTargets());
 
@@ -39,21 +49,33 @@ public class ArcheryExercise : Exercise
         ArcheryInputManager.OnTriggerReleased += OnTriggerReleased;
     }
 
-    protected override void PlayExercise()
-    {
+    public override void PlayExercise() {
+        bowStringVisual.GetComponentInChildren<AffordancePulse>().enabled = pullZone.handInside;
+
+        if (isPulling && currentArrow != null)
+        {
+            // Pull vector from bow to right hand
+            Vector3 pullDir = rightHand.position - arrowSpawnPoint.position;
+            float pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
+
+            // Visually move string
+            bowStringVisual.position = Vector3.Lerp(arrowSpawnPoint.position, rightHand.position, 0.5f);
+
+            // scale pulse effect or color change
+        }
     }
 
     private void OnTriggerPulled()
     {
-        if (currentArrow == null)
+        if (currentArrow == null && pullZone.handInside)
         {
-            currentArrow = GameObject.Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
+            currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
             currentArrow.transform.parent = arrowSpawnPoint;
 
             Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
             rb.useGravity = false;
             rb.isKinematic = true;
-            
+
             isPulling = true;
         }
     }
@@ -67,10 +89,16 @@ public class ArcheryExercise : Exercise
             Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
             rb.isKinematic = false;
             rb.useGravity = true;
-            rb.linearVelocity = arrowSpawnPoint.forward * 25f;
+
+            float power = Mathf.Lerp(minForce, maxForce, pullDistance);
+            rb.linearVelocity = arrowSpawnPoint.forward * power;
 
             currentArrow = null;
             isPulling = false;
+            pullDistance = 0f;
+
+            // Reset string visual
+            bowStringVisual.localPosition = Vector3.zero;
         }
     }
 
