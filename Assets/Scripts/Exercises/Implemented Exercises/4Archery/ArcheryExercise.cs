@@ -93,7 +93,7 @@ public class ArcheryExercise : Exercise
             rb.useGravity = true;
 
             float power = Mathf.Lerp(minForce, maxForce, pullDistance);
-            rb.linearVelocity = arrowSpawnPoint.forward * power;
+            rb.velocity = arrowSpawnPoint.forward * power;
 
             currentArrow = null;
             isPulling = false;
