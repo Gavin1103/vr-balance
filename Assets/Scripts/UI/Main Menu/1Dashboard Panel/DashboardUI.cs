@@ -38,7 +38,6 @@ public class DashboardUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        AddForcedExerciseButton("Fireflies");
         AddForcedExerciseButton("Archery");
         AddForcedExerciseButton("Fruit Warrior");
     }
