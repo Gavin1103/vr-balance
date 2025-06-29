@@ -63,8 +63,8 @@ public class ArcheryExercise : Exercise
             pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
 
             // Visually move string
-            Vector3 targetLocalPos = bowStringVisual.InverseTransformPoint(rightHand.position);
-            middleRingBone.localPosition = targetLocalPos;
+            // Vector3 targetWorldPos = rightHand.position;
+            middleRingBone.position = rightHand.position;
         } else {
             middleRingBone.localPosition = Vector3.zero;
         }
