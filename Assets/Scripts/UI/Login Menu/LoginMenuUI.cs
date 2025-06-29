@@ -8,7 +8,7 @@ public class LoginMenuUI : MonoBehaviour {
     [SerializeField] private GameObject mainMenu;
 
     void Start() {
-        SoundManager.soundInstance.PlaySFX("Startup");
+        SoundManager.Instance.PlaySFX("Startup");
         User.Logout();
     }
     

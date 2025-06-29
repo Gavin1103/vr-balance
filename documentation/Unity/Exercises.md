@@ -147,7 +147,7 @@ public class ExerciseManager : MonoBehaviour {
     }
 
     void StartExercise(Exercise exercise) {
-        SoundManager.soundInstance.PlaySFX("Exercise Start");
+        SoundManager.Instance.PlaySFX("Exercise Start");
         ScoreManager.Instance.ResetScore();
         MainUI.SetActive(false);
         ExerciseUI.SetActive(true);
@@ -158,7 +158,7 @@ public class ExerciseManager : MonoBehaviour {
     IEnumerator WaitBeforeStarting(Exercise exercise) {
         float countdownTime = 4f;
         ExtraInfoObject.SetActive(true);
-        SoundManager.soundInstance.PlaySFX("SFX-Countdown_1");
+        SoundManager.Instance.PlaySFX("SFX-Countdown_1");
 
         while (countdownTime > 0f) {
             ExtraInfoText.text = Mathf.Ceil(countdownTime).ToString();
@@ -356,7 +356,7 @@ public class GenericExercise : Exercise {
             currentSetIndex++;
         }
 
-        SoundManager.soundInstance.PlaySFX("Exercise End");
+        SoundManager.Instance.PlaySFX("Exercise End");
         currentMovementIndex--;
         ExerciseManager.Instance.ExerciseEnded();
     }

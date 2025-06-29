@@ -101,7 +101,7 @@ public class GenericExercise : Exercise {
             currentSetIndex++;
         }
         // End of exercise
-        SoundManager.soundInstance.PlaySFX("Exercise End");
+        SoundManager.Instance.PlaySFX("Exercise End");
         currentMovementIndex--;
         ExerciseManager.Instance.ExerciseEnded();
     }

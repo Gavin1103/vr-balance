@@ -46,7 +46,7 @@ public class FruitWarriorExercise : Exercise
 
             GameObject fruit = GameObject.Instantiate(fruitPrefab, spawnPos, Random.rotation);
 
-            yield return new WaitForSeconds(Random.Range(0.2f, 0.7f));
+            yield return new WaitForSeconds(Random.Range(1f, 2f));
         }
     }
 

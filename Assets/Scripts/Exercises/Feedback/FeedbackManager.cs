@@ -34,7 +34,7 @@ public class FeedbackManager : MonoBehaviour {
     }
     // Spawn any feedback
     public void SpawnFeedback(string text, Color color, Vector3 spawnPosition, string soundName = null, ParticleSystem particles = null) {
-        SoundManager.soundInstance.PlaySFX(soundName);
+        SoundManager.Instance.PlaySFX(soundName);
 
         GameObject obj = Instantiate(FeedbackTextPrefab, spawnPosition, Quaternion.identity);
         FeedbackText feedbackText = obj.GetComponent<FeedbackText>();

@@ -78,7 +78,7 @@ public void DisplayFeedback(FeedbackType type, Vector3 spawnPosition) {
     FeedbackData data = feedbackMap[type];
 
     // Play sound
-    SoundManager.soundInstance.PlaySFX(data.soundName);
+    SoundManager.Instance.PlaySFX(data.soundName);
 
     // Display text
     GameObject obj = Instantiate(FeedbackTextPrefab, spawnPosition, Quaternion.identity);

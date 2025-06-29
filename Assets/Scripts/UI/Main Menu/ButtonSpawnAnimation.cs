@@ -38,7 +38,7 @@ public class ButtonSpawnAnimation : MonoBehaviour {
         if (button != null)
             button.interactable = true;
 
-        SoundManager.soundInstance.PlaySFX("Button Hover");
+        SoundManager.Instance.PlaySFX("Button Hover");
         float elapsed = 0f;
 
         while (elapsed < duration) {

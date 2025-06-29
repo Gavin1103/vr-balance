@@ -10,8 +10,8 @@ public class FireFlyExercise : Exercise {
 
     public override void StartExercise() {
         FireFlyWaveManager.FireFlyInstance.StartWaves();
-        // SoundManager.soundInstance.PlayMusic("BackgroundMusic");
-        // SoundManager.soundInstance.PlayAmbience("ForestAmbience");
+        // SoundManager.Instance.PlayMusic("BackgroundMusic");
+        // SoundManager.Instance.PlayAmbience("ForestAmbience");
     }
 
     public override void ExerciseEnded() {

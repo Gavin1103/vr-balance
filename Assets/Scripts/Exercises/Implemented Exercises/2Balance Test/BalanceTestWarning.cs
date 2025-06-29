@@ -13,10 +13,10 @@ public class BalanceTestWarning : MonoBehaviour {
     }
 
     public void OnHover() {
-        SoundManager.soundInstance.PlaySFX("Button Hover");
+        SoundManager.Instance.PlaySFX("Button Hover");
     }
     public void OnClick() {
-        SoundManager.soundInstance.PlaySFX("Button Click");
+        SoundManager.Instance.PlaySFX("Button Click");
         ExerciseManager.Instance.SelectBalanceTestExercise();
     }
 }

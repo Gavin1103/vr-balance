@@ -67,7 +67,7 @@ public class FireFly : MonoBehaviour, Icatchable {
     public void Catch(FireFlyNet.NetType netType) {
         if (allowedNetTypes.Contains(netType)) {
             OnCaught?.Invoke(); // Trigger the event for other systems (like WaveManager)
-            SoundManager.soundInstance.PlaySFX("FireFlyCatch");
+            SoundManager.Instance.PlaySFX("FireFlyCatch");
             ScoreManager.Instance.AddScore(100);
             Destroy(gameObject);
         }

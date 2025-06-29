@@ -14,8 +14,8 @@ public class MainMenuUI : MonoBehaviour
     void Start()
     {
         OpenDashboard();
-        SoundManager.soundInstance.EnableAllSound();
-        SoundManager.soundInstance.PlayMusic("Jazz_chill");
+        SoundManager.Instance.EnableAllSound();
+        SoundManager.Instance.PlayMusic("Jazz_chill");
 
     }
 

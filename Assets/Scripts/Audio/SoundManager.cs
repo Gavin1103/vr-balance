@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
-    public static SoundManager soundInstance { get; private set; }
+    public static SoundManager Instance { get; private set; }
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
@@ -13,7 +13,7 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClipLibrarySO ambientLibrary;
 
     protected virtual void Awake() {
-        soundInstance = this;
+        Instance = this;
     }
 
     public void PlaySFX(string name) {
