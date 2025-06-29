@@ -1,19 +1,19 @@
 # ninja log v5
-45	2065	7729186051330204	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ad2157d655605ac
-2355	2589	7729186056612426	C:/Users/amine/Desktop/Projects/12Motion Virtual Physiotherapy/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i2a5130/obj/arm64-v8a/libgame.so	43100ff2f0373cb9
-26	2063	7729186051350651	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	84319e8f368b7cfa
-19	2072	7729186051432456	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2c413096030a2cf8
-59	2113	7729186051886370	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4177895d0114b638
-52	2082	7729186051552651	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	b35403633585ce01
-38	2112	7729186051871208	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	65f8268de7b9be0b
-65	2280	7729186053560046	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	33d30f22615a3ef7
-7	2354	7729186054289037	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	52d8877405e824dc
-21	993	7729190120819337	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	84319e8f368b7cfa
+1309	1408	7729190125025593	C:/Users/amine/Desktop/Projects/12Motion Virtual Physiotherapy/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i2a5130/obj/arm64-v8a/libgame.so	43100ff2f0373cb9
 43	1004	7729190120941594	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ad2157d655605ac
-51	1037	7729190121242226	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	b35403633585ce01
+21	993	7729190120819337	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	84319e8f368b7cfa
+35	1111	7729190122041337	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4177895d0114b638
 14	1039	7729190121277618	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2c413096030a2cf8
 27	1080	7729190121710432	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	65f8268de7b9be0b
-35	1111	7729190122041337	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4177895d0114b638
+51	1037	7729190121242226	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	b35403633585ce01
 61	1262	7729190123531108	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	33d30f22615a3ef7
 7	1309	7729190123991665	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	52d8877405e824dc
-1309	1408	7729190125025593	C:/Users/amine/Desktop/Projects/12Motion Virtual Physiotherapy/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i2a5130/obj/arm64-v8a/libgame.so	43100ff2f0373cb9
+31	1044	7729233493691186	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ad2157d655605ac
+14	1048	7729233493732341	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	84319e8f368b7cfa
+19	1082	7729233494080874	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2c413096030a2cf8
+37	1105	7729233494326204	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	b35403633585ce01
+25	1130	7729233494603729	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	65f8268de7b9be0b
+43	1155	7729233494829708	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4177895d0114b638
+50	1302	7729233496295531	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	33d30f22615a3ef7
+8	1374	7729233496997106	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	52d8877405e824dc
+1374	1515	7729233498451296	C:/Users/amine/Desktop/Projects/12Motion Virtual Physiotherapy/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i2a5130/obj/arm64-v8a/libgame.so	43100ff2f0373cb9
