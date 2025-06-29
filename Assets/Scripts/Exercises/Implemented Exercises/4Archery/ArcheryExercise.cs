@@ -34,7 +34,7 @@ public class ArcheryExercise : Exercise
         spawnTargetsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnTargets());
 
         ArcheryInputManager.OnTriggerPulled += OnTriggerPulled;
-        ArcheryInputManager.OnTriggerReleased += OnTriggerReleased;
+        ArcheryInputManager.OnTriggerReleased += OnTriggerReleased; 
     }
 
     protected override void PlayExercise()

@@ -7,13 +7,16 @@ public static class ArcheryInputManager
 
     public static void Update()
     {
+        Debug.Log("penis");
         if (Input.GetButtonDown("Fire1"))
         {
             OnTriggerPulled?.Invoke();
             Debug.Log("helloo");
         }
 
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1")) {
             OnTriggerReleased?.Invoke();
+            Debug.Log("dont anger me");
+        }
     }
 }
