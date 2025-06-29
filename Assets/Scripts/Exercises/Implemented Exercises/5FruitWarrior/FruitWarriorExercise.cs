@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DTO.Request.Exercise.@base;
 
 public class FruitWarriorExercise : Exercise
 {
@@ -11,6 +12,9 @@ public class FruitWarriorExercise : Exercise
 
     private float minDelay = 1f;
     private float maxDelay = 2f;
+
+    private ExerciseService excerciseSerice = new ExerciseService();
+
     public FruitWarriorExercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image)
         : base(title, category, description, requirements, image)
     {

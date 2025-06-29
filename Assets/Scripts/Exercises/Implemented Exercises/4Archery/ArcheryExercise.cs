@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DTO.Request.Exercise.@base;
 
 public class ArcheryExercise : Exercise
 {
@@ -29,6 +30,9 @@ public class ArcheryExercise : Exercise
 
     private Transform leftHand => ExerciseManager.Instance.LeftStick;
     private Transform rightHand => ExerciseManager.Instance.RightStick;
+
+    private ExerciseService excerciseSerice = new ExerciseService();
+
     public ArcheryExercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image)
         : base(title, category, description, requirements, image)
     {
