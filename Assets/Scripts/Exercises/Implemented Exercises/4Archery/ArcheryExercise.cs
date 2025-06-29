@@ -56,14 +56,11 @@ public class ArcheryExercise : Exercise
     public override void PlayExercise() {
         // pulseEffect.enabled = pullZone.handInside;
 
-        if (isPulling && currentArrow != null)
-        {
+        if (isPulling && currentArrow != null) {
             // Pull vector from bow to right hand
             Vector3 pullDir = rightHand.position - arrowSpawnPoint.position;
             pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
 
-            // Visually move string
-            // Vector3 targetWorldPos = rightHand.position;
             middleRingBone.position = rightHand.position;
         } else {
             middleRingBone.localPosition = Vector3.zero;
