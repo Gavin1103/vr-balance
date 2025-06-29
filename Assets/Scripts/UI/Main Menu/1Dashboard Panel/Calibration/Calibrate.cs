@@ -27,7 +27,6 @@ public class Calibrate : MonoBehaviour
     public TMP_Text leftArmTextField;
     public TMP_Text rightArmTextField;
 
-
     void Start()
     {
         calibrateTime = calibrateTimer;
