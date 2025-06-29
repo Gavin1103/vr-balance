@@ -47,6 +47,11 @@ public class ArcheryExercise : Exercise
         {
             currentArrow = GameObject.Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
             currentArrow.transform.parent = arrowSpawnPoint;
+
+            Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            
             isPulling = true;
         }
     }
@@ -56,9 +61,12 @@ public class ArcheryExercise : Exercise
         if (isPulling && currentArrow != null)
         {
             currentArrow.transform.parent = null;
+
             Rigidbody rb = currentArrow.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.linearVelocity = arrowSpawnPoint.forward * 25f;
+            rb.useGravity = true;
+            rb.velocity = arrowSpawnPoint.forward * 25f;
+
             currentArrow = null;
             isPulling = false;
         }
