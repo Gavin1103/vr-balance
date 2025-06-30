@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afe4b5e0b0db874481e69890af7346f, type: 3}
   m_Name: Requisites
   m_EditorClassIdentifier: 
-  RequiresBalanceTest: 0
+  RequiresBalanceTest: 1
   RequiresCalibration: 0
