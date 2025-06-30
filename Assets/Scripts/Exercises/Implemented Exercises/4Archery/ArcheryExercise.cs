@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using DTO.Request.Exercise.@base;
-using System.Collections;
 
 public class ArcheryExercise : Exercise
 {
@@ -143,7 +142,7 @@ public class ArcheryExercise : Exercise
                 GameObject target = GameObject.Instantiate(targetPrefab, randomPos, Quaternion.identity);
                 activeTargets.Add(target);
 
-                StartCoroutine(DespawnAfterTime(target, targetLifetime));
+                ExerciseManager.Instance.StartCoroutine(DespawnAfterTime(target, targetLifetime));
             }
 
             yield return new WaitForSeconds(spawnInterval);
@@ -162,7 +161,7 @@ public class ArcheryExercise : Exercise
     {
         FeedbackManager.Instance.DisplayMissFeedback(target.transform.position);
         activeTargets.Remove(target);
-        Destroy(target);
+        Object.Destroy(target);
     }
 
     public override void ExerciseEnded()
@@ -178,7 +177,7 @@ public class ArcheryExercise : Exercise
         {
             if (target != null)
             {
-                Destroy(target);
+                Object.Destroy(target);
             }
         }
         activeTargets.Clear();
