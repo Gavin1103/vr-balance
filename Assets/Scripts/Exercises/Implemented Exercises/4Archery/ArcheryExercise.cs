@@ -173,6 +173,15 @@ public class ArcheryExercise : Exercise
         if (spawnTargetsCoroutine != null)
             ExerciseManager.Instance.StopCoroutine(spawnTargetsCoroutine);
 
+        foreach (var target in activeTargets)
+        {
+            if (target != null)
+            {
+                Destroy(target);
+            }
+        }
+        activeTargets.Clear();
+
         ArcheryInputManager.OnTriggerPulled -= OnTriggerPulled;
         ArcheryInputManager.OnTriggerReleased -= OnTriggerReleased;
     }
