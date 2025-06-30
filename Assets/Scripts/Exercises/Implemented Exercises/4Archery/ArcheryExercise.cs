@@ -5,32 +5,32 @@ using DTO.Request.Exercise.@base;
 
 public class ArcheryExercise : Exercise
 {
-    private float minForce = 0.001f;
-    private float maxForce = 10f;
-    private float pullDistance;
+    private float minForce = 0.001f; // When you didnt pull the bow at all
+    private float maxForce = 10f; // When you pulled the bow super hard
 
+
+    // A lot of references and variables that shouldn't really be looked at
+    private float spawnInterval;
+    private float targetLifetime;
+    private List<GameObject> activeTargets = new List<GameObject>();
+    private float pullDistance;
     private GameObject bowInstance;
     private Transform bowHand;
     private Transform arrowSpawnPoint;
-
     private GameObject currentArrow;
     private bool isPulling;
-
     private Coroutine spawnTargetsCoroutine;
     private BowPullZone pullZone;
     private Transform bowStringVisual;
     private Transform middleRingBone;
     private AffordancePulse pulseEffect;
-
     private GameObject arrowPrefab => ArcheryExerciseReferences.Instance.ArrowPrefab;
     private GameObject bowPrefab => ArcheryExerciseReferences.Instance.BowPrefab;
     private GameObject targetPrefab => ArcheryExerciseReferences.Instance.TargetPrefab;
     private Transform bowSpawnPoint => ArcheryExerciseReferences.Instance.BowSpawnPoint;
     private Transform targetArea => ArcheryExerciseReferences.Instance.TargetArea;
-
     private Transform leftHand => ExerciseManager.Instance.LeftStick;
     private Transform rightHand => ExerciseManager.Instance.RightStick;
-
     private ExerciseService excerciseSerice = new ExerciseService();
 
     public ArcheryExercise(string title, ExerciseCategory category, string description, List<string> requirements, Sprite image)
@@ -41,6 +41,21 @@ public class ArcheryExercise : Exercise
     public override void StartExercise()
     {
         base.StartExercise();
+
+        switch (DifficultyManager.Instance.SelectedDifficulty)
+        {
+            case Difficulty.Easy:
+                spawnInterval = 3f;
+                break;
+            case Difficulty.Medium:
+                spawnInterval = 2f;
+                break;
+            case Difficulty.Hard:
+                spawnInterval = 1.5f;
+                break;
+        }
+        targetLifetime = spawnInterval * 3f;
+
 
         bowInstance = GameObject.Instantiate(bowPrefab, bowSpawnPoint.position, leftHand.rotation);
         bowInstance.transform.SetParent(leftHand);
@@ -116,15 +131,37 @@ public class ArcheryExercise : Exercise
     {
         while (true)
         {
-            Vector3 randomPos = targetArea.position + new Vector3(
-                Random.Range(-1f, 1f),
-                Random.Range(-0.5f, 1f),
-                Random.Range(-0.5f, 0.5f)
-            );
+            if (activeTargets.Count < 3)
+            {
+                Vector3 randomPos = targetArea.position + new Vector3(
+                    Random.Range(-1f, 1f),
+                    Random.Range(-0.5f, 1f),
+                    Random.Range(-0.5f, 0.5f)
+                );
 
-            GameObject target = GameObject.Instantiate(targetPrefab, randomPos, Quaternion.identity);
-            yield return new WaitForSeconds(1f);
+                GameObject target = GameObject.Instantiate(targetPrefab, randomPos, Quaternion.identity);
+                activeTargets.Add(target);
+
+                StartCoroutine(DespawnAfterTime(target, targetLifetime));
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
         }
+    }
+    private IEnumerator DespawnAfterTime(GameObject target, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (target != null)
+        {
+            Despawn(target);
+        }
+    }
+    private void Despawn(GameObject target)
+    {
+        FeedbackManager.Instance.DisplayMissFeedback(target.transform.position);
+        activeTargets.Remove(target);
+        Destroy(target);
     }
 
     public override void ExerciseEnded()
