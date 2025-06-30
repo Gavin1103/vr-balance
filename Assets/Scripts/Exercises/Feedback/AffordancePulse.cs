@@ -5,6 +5,7 @@ public class AffordancePulse : MonoBehaviour
 {
     public float pulseDuration = 0.5f;
     public float pulseScale = 10f;
+    public Vector3 axisMask = new Vector3(1, 1, 1); // (1, 1, 1) = all axes pulse, (1, 0, 0) = X only, etc.
 
     private Vector3 originalScale;
     private bool pulsing = true;
@@ -52,7 +53,9 @@ public class AffordancePulse : MonoBehaviour
         while (t < duration)
         {
             float lerpT = t / duration;
-            transform.localScale = Vector3.Lerp(startScale, targetScale, lerpT);
+            Vector3 lerped = Vector3.Lerp(startScale, targetScale, lerpT);
+            transform.localScale = Vector3.Scale(lerped, axisMask) + Vector3.Scale(originalScale, Vector3.one - axisMask);
+
             SetAlpha(Mathf.Lerp(startAlpha, targetAlpha, lerpT));
             t += Time.deltaTime;
             yield return null;

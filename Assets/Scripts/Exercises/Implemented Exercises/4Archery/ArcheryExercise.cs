@@ -64,7 +64,7 @@ public class ArcheryExercise : Exercise
         pullZone = bowInstance.transform.Find("PullZone").GetComponent<BowPullZone>();
         bowStringVisual = bowInstance.transform.Find("BowString");
         middleRingBone = bowInstance.transform.Find("Armature/Root/MiddleBone");
-        // pulseEffect = bowStringVisual.GetComponentInChildren<AffordancePulse>();
+        pulseEffect = bowStringVisual.GetComponentInChildren<AffordancePulse>();
 
         spawnTargetsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnTargets());
 
@@ -74,7 +74,7 @@ public class ArcheryExercise : Exercise
 
     public override void PlayExercise()
     {
-        // pulseEffect.enabled = pullZone.handInside;
+        pulseEffect.enabled = pullZone.handInside;
 
         if (isPulling && currentArrow != null)
         {
