@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pulseDuration: 0.5
-  pulseScale: 10
+  pulseScale: 25
   axisMask: {x: 1, y: 1, z: 0}
 --- !u!1001 &6539636889646109647
 PrefabInstance:
