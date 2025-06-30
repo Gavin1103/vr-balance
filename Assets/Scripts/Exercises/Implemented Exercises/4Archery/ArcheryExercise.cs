@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using DTO.Request.Exercise.@base;
+using System.Collections;
 
 public class ArcheryExercise : Exercise
 {
