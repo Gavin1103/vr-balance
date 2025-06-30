@@ -15,6 +15,13 @@ public class SoundManager : MonoBehaviour {
     protected virtual void Awake() {
         Instance = this;
     }
+    
+    void Start() {
+        var data = SettingsManager.Instance.CurrentSettings;
+        SetSFXVolume(data.sfxVolume);
+        SetMusicVolume(data.musicVolume);
+        SetAmbientVolume(data.ambientVolume);
+    }
 
     public void PlaySFX(string name) {
         var clip = sfxLibrary.GetClip(name);
@@ -61,9 +68,7 @@ public class SoundManager : MonoBehaviour {
     public void SetMusicVolume(float value) {
         musicSource.volume = value;
     }
-
     public void SetAmbientVolume(float value) {
         ambientSource.volume = value;
     }
-
 }

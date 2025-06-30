@@ -7,8 +7,6 @@ public class FeedbackManager : MonoBehaviour {
 
     [Header("UI Feedback")]
     public GameObject FeedbackTextPrefab;
-    public Toggle particleToggle;
-    public bool particlesAllowed = true;
     [System.Serializable]
     public class FeedbackData {
         public ParticleSystem particlePrefabs;
@@ -23,6 +21,8 @@ public class FeedbackManager : MonoBehaviour {
     public List<FeedbackData> feedbackDataList;
     private Dictionary<FeedbackType, FeedbackData> feedbackMap;
 
+    private bool particlesAllowed { get { return SettingsManager.Instance.CurrentSettings.vfxEnabled; } }
+
     void Awake() {
         Instance = this;
 
@@ -30,8 +30,8 @@ public class FeedbackManager : MonoBehaviour {
         foreach (var data in feedbackDataList) {
             feedbackMap[data.type] = data;
         }
-        particleToggle.onValueChanged.AddListener(OnToggleChanged);
     }
+
     // Spawn any feedback
     public void SpawnFeedback(string text, Color color, Vector3 spawnPosition, string soundName = null, ParticleSystem particles = null) {
         SoundManager.Instance.PlaySFX(soundName);
@@ -69,10 +69,5 @@ public class FeedbackManager : MonoBehaviour {
         if (ratio >= 0.70f) return FeedbackType.Good;
         if (ratio >= 0.50f) return FeedbackType.Okay;
         return FeedbackType.Bad;
-    }
-    
-    // Setting
-    private void OnToggleChanged(bool value) {
-        particlesAllowed = value;
     }
 }
