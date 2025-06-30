@@ -61,6 +61,17 @@ public class SoundManager : MonoBehaviour {
         musicSource.enabled = true;
         ambientSource.enabled = true;
     }
+    
+    public void StopMusic() {
+        musicSource.Stop();
+        musicSource.clip = null;
+    }
+
+    public void StopAmbience() {
+        ambientSource.Stop();
+        ambientSource.clip = null;
+    }
+
 
     public void SetSFXVolume(float value) {
         sfxSource.volume = value;

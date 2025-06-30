@@ -21,6 +21,7 @@ MonoBehaviour:
   - 'Enough space to stand still without external support nearby.  '
   Image: {fileID: 21300000, guid: 09b86b82306e8d2449242f99050c8c21, type: 3}
   Requisites: {fileID: 11400000, guid: 5b4144b7e35469d46b19be99329a2bd8, type: 2}
+  ExplanationVideo: {fileID: 32900000, guid: 4891cdd1b3cd08f46b4b768ca71d2bc9, type: 3}
   BackendEnum: Squat
   RepsAndSetsConfig: {fileID: 11400000, guid: 240427beae9df8c45ba0807a783fe87d, type: 2}
   Movements:

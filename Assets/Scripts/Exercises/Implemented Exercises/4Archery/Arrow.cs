@@ -19,7 +19,10 @@ public class Arrow : MonoBehaviour
         {
             ScoreManager.Instance.AddScore(200);
             FeedbackManager.Instance.DisplayFeedback(FeedbackType.Great, other.gameObject.transform.position);
-            Destroy(other.gameObject);
+
+            Target target = other.GetComponent<Target>();
+            target.DestroyTarget();
+
             Destroy(gameObject);
         }
     }

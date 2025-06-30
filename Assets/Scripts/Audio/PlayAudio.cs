@@ -15,4 +15,14 @@ public class PlayAudio : MonoBehaviour {
         if (!string.IsNullOrEmpty(ambienceName))
             SoundManager.Instance.PlayAmbience(ambienceName);
     }
+
+    private void OnDisable() {
+        // Stop music if this component started it
+        if (!string.IsNullOrEmpty(musicName))
+            SoundManager.Instance.StopMusic();
+
+        // Stop ambience if this component started it
+        if (!string.IsNullOrEmpty(ambienceName))
+            SoundManager.Instance.StopAmbience();
+    }
 }

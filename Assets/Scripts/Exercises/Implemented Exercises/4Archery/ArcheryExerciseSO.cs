@@ -6,6 +6,7 @@ public class ArcheryExerciseSO : ExerciseSO {
     public override Exercise CreateExercise() {
         ArcheryExercise exercise = new ArcheryExercise(Title, Category, Description, Requirements, Image);
         exercise.Requisites = Requisites;
+        exercise.ExplanationVideo = ExplanationVideo;
         return exercise;
     }
 }

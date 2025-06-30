@@ -20,6 +20,7 @@ MonoBehaviour:
   - 'Enough space to stand still without external support nearby.  '
   Image: {fileID: 21300000, guid: 5af3a1b9791e3824a809a677d57aa7e9, type: 3}
   Requisites: {fileID: 11400000, guid: f1266a2052677044daf6c192b1fc7277, type: 2}
+  ExplanationVideo: {fileID: 32900000, guid: 4891cdd1b3cd08f46b4b768ca71d2bc9, type: 3}
   BackendEnum: Lunge
   RepsAndSetsConfig: {fileID: 11400000, guid: c6ee023237f51bd40b436b3f0d31f1c4, type: 2}
   Movements:

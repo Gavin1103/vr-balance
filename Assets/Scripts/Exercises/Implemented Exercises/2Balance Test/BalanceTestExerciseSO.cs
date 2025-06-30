@@ -15,6 +15,7 @@ public class BalanceTestExerciseSO : GenericExerciseSO {
         );
         exercise.Movements = movements;
         exercise.Requisites = Requisites;
+        exercise.ExplanationVideo = ExplanationVideo;
         exercise.RepsAndSetsConfig = RepsAndSetsConfig.CreateConfig();
         
         return exercise;

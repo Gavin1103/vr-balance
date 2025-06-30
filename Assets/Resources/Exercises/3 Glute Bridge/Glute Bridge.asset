@@ -22,6 +22,7 @@ MonoBehaviour:
   - 'Optional: small cushion for neck support.  '
   Image: {fileID: 21300000, guid: 634b83f054fee014c9f353e353034006, type: 3}
   Requisites: {fileID: 11400000, guid: 86072c114c2c8144d919eb157a5e77b5, type: 2}
+  ExplanationVideo: {fileID: 32900000, guid: 4891cdd1b3cd08f46b4b768ca71d2bc9, type: 3}
   BackendEnum: GluteBridge
   RepsAndSetsConfig: {fileID: 11400000, guid: 25ca41c865f18104cb225d55f2480849, type: 2}
   Movements:

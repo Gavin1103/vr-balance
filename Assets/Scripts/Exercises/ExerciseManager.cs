@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.Video;
 
 public class ExerciseManager : MonoBehaviour {
     public static ExerciseManager Instance { get; private set; }
@@ -28,7 +29,7 @@ public class ExerciseManager : MonoBehaviour {
     public TMP_Text SelectedExerciseRequirements;
     private Button currentSelectedExerciseButton;
     private TMP_Text currentSelectedExerciseText;
-    public GameObject VideoPlayer;
+    public VideoPlayer videoPlayer;
     public Button StartExerciseButton;
     [Header("Extra Info UI")]
     public GameObject ExtraInfoObject;
@@ -86,8 +87,8 @@ public class ExerciseManager : MonoBehaviour {
     {
         SelectedExerciseInfo.SetActive(true);
         ExercisesMenu.SetActive(false);
-        // VideoPlayer.SetActive(true);
-        // the video player should change video here 
+        videoPlayer.clip = exercise.ExplanationVideo;
+        videoPlayer.Play();
 
         // Find new button and text
         foreach (Transform child in AllRowsContainer)

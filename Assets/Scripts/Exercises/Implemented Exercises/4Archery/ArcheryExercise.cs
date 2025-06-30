@@ -5,14 +5,14 @@ using DTO.Request.Exercise.@base;
 
 public class ArcheryExercise : Exercise
 {
-    private float minForce = 0.001f; // When you didnt pull the bow at all
-    private float maxForce = 10f; // When you pulled the bow super hard
+    private float minForce = 0.002f; // When you didnt pull the bow at all
+    private float maxForce = 25f; // When you pulled the bow super hard
+    private float spawnInterval; // Adjusted in StartExercise();
+    private float targetLifetime; // Adjusted in StartExercise();
 
+    public List<GameObject> activeTargets = new List<GameObject>();
 
     // A lot of references and variables that shouldn't really be looked at
-    private float spawnInterval;
-    private float targetLifetime;
-    private List<GameObject> activeTargets = new List<GameObject>();
     private float pullDistance;
     private GameObject bowInstance;
     private Transform bowHand;
@@ -45,10 +45,10 @@ public class ArcheryExercise : Exercise
         switch (DifficultyManager.Instance.SelectedDifficulty)
         {
             case Difficulty.Easy:
-                spawnInterval = 3f;
+                spawnInterval = 4f;
                 break;
             case Difficulty.Medium:
-                spawnInterval = 2f;
+                spawnInterval = 2.5f;
                 break;
             case Difficulty.Hard:
                 spawnInterval = 1.5f;
@@ -65,6 +65,8 @@ public class ArcheryExercise : Exercise
         bowStringVisual = bowInstance.transform.Find("BowString");
         middleRingBone = bowInstance.transform.Find("Armature/Root/MiddleBone");
         pulseEffect = bowStringVisual.GetComponentInChildren<AffordancePulse>();
+        pulseEffect.gameObject.SetActive(false);
+        pullZone.pulse = pulseEffect;
 
         spawnTargetsCoroutine = ExerciseManager.Instance.StartCoroutine(SpawnTargets());
 
@@ -74,11 +76,10 @@ public class ArcheryExercise : Exercise
 
     public override void PlayExercise()
     {
-        pulseEffect.enabled = pullZone.handInside;
-
         if (isPulling && currentArrow != null)
         {
             // Pull vector from bow to right hand
+            pulseEffect.enabled = false;
             Vector3 pullDir = rightHand.position - arrowSpawnPoint.position;
             pullDistance = Mathf.Clamp(pullDir.magnitude, 0f, 1f);
 
@@ -123,49 +124,30 @@ public class ArcheryExercise : Exercise
             pullDistance = 0f;
 
             // Reset string visual
-            bowStringVisual.localPosition = Vector3.zero;
+            bowStringVisual.position = Vector3.zero;
         }
     }
 
-    private IEnumerator SpawnTargets()
-    {
-        while (true)
-        {
-            if (activeTargets.Count < 3)
-            {
+    private IEnumerator SpawnTargets() {
+        while (true) {
+            if (activeTargets.Count < 3) {
                 Vector3 randomPos = targetArea.position + new Vector3(
                     Random.Range(-1f, 1f),
-                    Random.Range(-0.5f, 1f),
+                    Random.Range(-0.5f, 0f),
                     Random.Range(-0.5f, 0.5f)
                 );
 
-                GameObject target = GameObject.Instantiate(targetPrefab, randomPos, Quaternion.identity);
-                activeTargets.Add(target);
-
-                ExerciseManager.Instance.StartCoroutine(DespawnAfterTime(target, targetLifetime));
+                GameObject targetObj = GameObject.Instantiate(targetPrefab, randomPos, Quaternion.identity);
+                Target target = targetObj.GetComponent<Target>();
+                target.StartDespawnCountdown(targetLifetime, this);
+                activeTargets.Add(targetObj);
             }
 
             yield return new WaitForSeconds(spawnInterval);
         }
     }
-    private IEnumerator DespawnAfterTime(GameObject target, float delay)
-    {
-        yield return new WaitForSeconds(delay);
 
-        if (target != null)
-        {
-            Despawn(target);
-        }
-    }
-    private void Despawn(GameObject target)
-    {
-        FeedbackManager.Instance.DisplayMissFeedback(target.transform.position);
-        activeTargets.Remove(target);
-        Object.Destroy(target);
-    }
-
-    public override void ExerciseEnded()
-    {
+    public override void ExerciseEnded() {
         SaveExercise();
         if (bowInstance != null)
             GameObject.Destroy(bowInstance);
@@ -173,11 +155,9 @@ public class ArcheryExercise : Exercise
         if (spawnTargetsCoroutine != null)
             ExerciseManager.Instance.StopCoroutine(spawnTargetsCoroutine);
 
-        foreach (var target in activeTargets)
-        {
-            if (target != null)
-            {
-                Object.Destroy(target);
+        foreach (var targetObj in activeTargets) {
+            if (targetObj != null) {
+                GameObject.Destroy(targetObj);
             }
         }
         activeTargets.Clear();
@@ -202,7 +182,7 @@ public class ArcheryExercise : Exercise
            onError: error => {
                Debug.Log(error.message);
            },
-           "standard" // This should be different to collect unique data
+           "standard" // This should be different to collect unique data like amount of targets slain or how fast you hit them on average
        ));
     }
 }

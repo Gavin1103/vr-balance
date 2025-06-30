@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public abstract class Exercise {
     public string Title;
@@ -10,6 +11,7 @@ public abstract class Exercise {
     public List<string> Requirements;
     public Sprite Image;
     public ExerciseRequisitesSO Requisites;
+    public VideoClip ExplanationVideo;
     
     protected Difficulty dif {
         get {

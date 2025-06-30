@@ -19,3 +19,4 @@ MonoBehaviour:
   - Have good aim
   Image: {fileID: 21300000, guid: c0fbd00dc40a9354f83ad6bf5353b3e0, type: 3}
   Requisites: {fileID: 11400000, guid: 4b203d27481353c4e869d32364fd360c, type: 2}
+  ExplanationVideo: {fileID: 32900000, guid: 418aa499d7c097649951f90f7ce1a22d, type: 3}

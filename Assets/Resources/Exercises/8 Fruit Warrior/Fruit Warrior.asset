@@ -19,3 +19,4 @@ MonoBehaviour:
   - No one near you to stab
   Image: {fileID: 21300000, guid: 95d3d3d3e1f22b04d8847f8b30a26511, type: 3}
   Requisites: {fileID: 11400000, guid: 4a9165a714832fd4d9697b7e6d44cd5c, type: 2}
+  ExplanationVideo: {fileID: 32900000, guid: 4891cdd1b3cd08f46b4b768ca71d2bc9, type: 3}
