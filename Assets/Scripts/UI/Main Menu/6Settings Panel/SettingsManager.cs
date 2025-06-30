@@ -8,13 +8,7 @@ public class SettingsManager : MonoBehaviour {
     public SettingsData CurrentSettings { get; private set; } = new SettingsData();
 
     private void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(gameObject);
-            return;
-        }
-
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         path = Application.persistentDataPath + "/settings.json";
 
         LoadSettings();
