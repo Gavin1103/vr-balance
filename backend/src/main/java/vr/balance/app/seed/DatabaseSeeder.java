@@ -62,7 +62,9 @@ public class DatabaseSeeder implements CommandLineRunner {
                 new UserSeedData("patrick@vrbalance.com", "patrick", "patrick", "0000", RoleEnum.PATIENT),
                 new UserSeedData("ilias@vrbalance.com", "ililas", "ililas", "0000", RoleEnum.PATIENT),
                 new UserSeedData("amine@vrbalance.com", "amine", "amine", "0000", RoleEnum.PATIENT),
-                new UserSeedData("hoemeirra@vrbalance.com", "hoemeirra", "hoemeirra", "0000", RoleEnum.PATIENT)
+                new UserSeedData("hoemeirra@vrbalance.com", "hoemeirra", "hoemeirra", "0000", RoleEnum.PATIENT),
+
+                new UserSeedData("motion@vrbalance.com", "motion", "motion", "0", RoleEnum.PATIENT)
         );
 
         for (UserSeedData data : usersToCreate) {
