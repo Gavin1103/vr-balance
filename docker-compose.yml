@@ -1,0 +1,52 @@
+name: vr-balance
+
+# Everything is served on one domain through the frontend container:
+#   /                      -> Vue app
+#   /api, /swagger-ui      -> backend (proxied by nginx)
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-vrbalance}
+      POSTGRES_USER: ${POSTGRES_USER:-vrbalance}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    image: vr-balance-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-vrbalance}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-vrbalance}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set (min. 32 characters)}
+      CORS_ALLOWED_ORIGINS: ${PUBLIC_URL:-http://localhost:8090}
+      OPENAPI_SERVER_URL: ${PUBLIC_URL:-http://localhost:8090}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY:-}
+      SEED_ENABLED: ${SEED_ENABLED:-true}
+
+  frontend:
+    build: ./frontend
+    image: vr-balance-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${APP_PORT:-8090}:8080"
+
+volumes:
+  db-data:

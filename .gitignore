@@ -78,3 +78,6 @@ crashlytics-build.properties
 .DS_Store
 
 .idea/
+
+# Docker compose secrets
+/.env

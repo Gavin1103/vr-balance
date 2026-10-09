@@ -3,10 +3,12 @@ package vr.balance.app.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import vr.balance.app.models.User;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
@@ -31,7 +33,19 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final Key key;
+
+    /**
+     * Uses the configured secret ({@code app.jwt.secret}, at least 32 characters) so tokens
+     * survive restarts and work across replicas. Falls back to a random key when none is set.
+     *
+     * @param secret the HMAC secret, or an empty string to generate one
+     */
+    public JwtService(@Value("${app.jwt.secret:}") String secret) {
+        this.key = secret.isBlank()
+                ? Keys.secretKeyFor(SignatureAlgorithm.HS256)
+                : Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     /**
      * Generates a JWT token for the given user and authentication method.

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -55,9 +56,9 @@ public class SwaggerProductionConfig {
      * @return the customized {@link OpenAPI} object
      */
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI customOpenAPI(@Value("${app.openapi.server-url}") String serverUrl) {
         Server server = new Server();
-        server.setUrl("https://vrbalance-api.up.railway.app");
+        server.setUrl(serverUrl);
         server.setDescription("Production API");
 
         return new OpenAPI().servers(List.of(server));

@@ -1,5 +1,6 @@
 package vr.balance.app.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -12,9 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * It registers a {@link WebMvcConfigurer} bean that customizes CORS mappings
  * for all incoming HTTP requests.
  *
- * <p>During development, the local frontend (`http://localhost:5173`) can be
- * enabled by uncommenting the relevant line. This line should be disabled or
- * removed in production to avoid exposing the API to local environments.
+ * <p>Allowed origins are read from {@code app.cors.allowed-origins} (comma-separated),
+ * which can be overridden with the {@code CORS_ALLOWED_ORIGINS} environment variable.
  */
 @Configuration
 public class CorsConfig {
@@ -29,16 +29,12 @@ public class CorsConfig {
      * @return the configured {@code WebMvcConfigurer} with custom CORS rules
      */
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public WebMvcConfigurer corsConfigurer(@Value("${app.cors.allowed-origins}") String[] allowedOrigins) {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(
-//                                "http://localhost:5173", // dev website (frontend)
-                                "https://vrbalance.up.railway.app", // website (frontend)
-                                "https://vrbalance-api.up.railway.app" // swagger UI
-                        )
+                        .allowedOrigins(allowedOrigins)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

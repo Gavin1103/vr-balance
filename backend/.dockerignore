@@ -1,0 +1,13 @@
+.gradle
+build
+bin
+out
+lib
+.idea
+.vscode
+*.iml
+**/.DS_Store
+Dockerfile
+.dockerignore
+.railway
+HELP.md
