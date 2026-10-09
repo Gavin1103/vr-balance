@@ -3,6 +3,10 @@ name: vr-balance
 # Everything is served on one domain through the frontend container:
 #   /                      -> Vue app
 #   /api, /swagger-ui      -> backend (proxied by nginx)
+#
+# Images are built by GitHub Actions and pushed to GHCR. On the server:
+#   docker compose pull && docker compose up -d
+# To build locally instead: docker compose up -d --build
 
 services:
   db:
@@ -22,7 +26,7 @@ services:
 
   backend:
     build: ./backend
-    image: vr-balance-backend
+    image: ${IMAGE_REGISTRY:-ghcr.io/gavin1103}/vr-balance-backend:${IMAGE_TAG:-latest}
     restart: unless-stopped
     depends_on:
       db:
@@ -40,7 +44,7 @@ services:
 
   frontend:
     build: ./frontend
-    image: vr-balance-frontend
+    image: ${IMAGE_REGISTRY:-ghcr.io/gavin1103}/vr-balance-frontend:${IMAGE_TAG:-latest}
     restart: unless-stopped
     depends_on:
       backend:

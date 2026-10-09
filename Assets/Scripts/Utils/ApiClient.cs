@@ -21,7 +21,7 @@ namespace Utils
         /// The backend base url
         /// </summary>
         // private static readonly string BaseUrl = "http://localhost:8080/api";
-        private static readonly string BaseUrl = "https://vrbalance-api.up.railway.app/api";
+        private static readonly string BaseUrl = "https://vr-balance.gavintjin.nl/api";
 
         /// <summary>
         /// Sends an HTTPS(dev-HTTP) POST request to the specified endpoint and processes the response as JSON.
